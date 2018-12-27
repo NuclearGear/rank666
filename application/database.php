@@ -15,11 +15,11 @@ return [
     // 服务器地址
     'hostname'        => '127.0.0.1',
     // 数据库名
-    'database'        => 'www_91rank_com',
+    'database'        => 'du',
     // 用户名
-    'username'        => 'www_91rank_com',
+    'username'        => 'root',
     // 密码
-    'password'        => 'rKAcAiSdna',
+    'password'        => 'root',
     // 端口
     'hostport'        => '3306',
     // 连接dsn
