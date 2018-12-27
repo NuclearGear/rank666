@@ -17,9 +17,9 @@ return [
     // 数据库名
     'database'        => 'du',
     // 用户名
-    'username'        => 'root',
+    'username'        => 'www_91rank_com',
     // 密码
-    'password'        => 'root',
+    'password'        => 'rKAcAiSdna',
     // 端口
     'hostport'        => '3306',
     // 连接dsn
