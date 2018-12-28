@@ -1,60 +1,12 @@
 </body>
 </html>
 <!-- Javascripts -->
-<script src="static/assets/plugins/jquery/jquery-3.1.0.min.js"></script>
-<script src="static/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
-<script src="static/assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-<script src="static/assets/plugins/uniform/js/jquery.uniform.standalone.js"></script>
-<script src="static/assets/plugins/switchery/switchery.min.js"></script>
-<script src="static/assets/js/ecaps.min.js"></script>
+<script src="/static/assets/plugins/jquery/jquery-3.1.0.min.js"></script>
+<script src="/static/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+<script src="/static/assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+<script src="/static/assets/plugins/uniform/js/jquery.uniform.standalone.js"></script>
+<script src="/static/assets/plugins/switchery/switchery.min.js"></script>
+<script src="/static/assets/js/ecaps.min.js"></script>
 <!-- 图表插件 -->
-<script src="static/js/echarts.js"></script>
+<script src="/static/js/echarts.js"></script>
 <!-- 图表插件 -->
-<script>
-    var myChart = echarts.init(document.getElementById('echart_1'));
-
-    var title_arr = [];
-    var sold_arr = [];
-    $.get("/index/index/ajaxBySoldNum",{}, function (ret) {
-        for(var i in ret.data){
-            title_arr.push(ret.data[i]['title']);
-            sold_arr.push(ret.data[i]['soldNum']);
-        }
-        option = {
-            title: {
-                text: '总销量排名',
-            },
-            tooltip: {
-                trigger: 'axis',
-            },
-            legend: {
-                data: ['2011年']
-            },
-            grid: {
-                left: '3%',
-                right: '4%',
-                bottom: '3%',
-                containLabel: true
-            },
-            xAxis: {
-                type: 'value',
-                boundaryGap: [0, 0.01]
-            },
-            yAxis: {
-                type: 'category',
-                name:'center',
-                data: title_arr
-            },
-            series: [
-                {
-                    name: '销量',
-                    type: 'bar',
-                    data: sold_arr
-                },
-            ]
-        };
-        myChart.setOption(option)
-    });
-
-
-</script>
