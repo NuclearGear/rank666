@@ -68,12 +68,12 @@ class Index
             $data['sizeName'] = array_unique($data['sizeName']);
         }
 
-
-
-
-
-
         return returnJson($data, 200, '成功');
+    }
+
+    // 尺码转换
+    public function sizeChange(){
+        return view('sizeChange');
     }
 
 
