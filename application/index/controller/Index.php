@@ -48,10 +48,11 @@ class Index
 
         $data['name'] = $product['title'];
         $data['sizeName'] = [];
+        $data['time'] = [];
         // 构造时间数组
         for($i=1;$i<=input('get.day');$i++){
             $time = Time::yesterdayNum($i);
-            $data['time'][] = date('Y-m-d', $time[0]);
+            array_unshift($data['time'],date('Y-m-d', $time[0]));
         }
         // 获取商品尺码
         $ret_data = db('product_size')->where('productId', '=', $product['productId'])->select();
@@ -64,14 +65,15 @@ class Index
                     $start = count($price_arr) - input('get.day');
                     $price_arr = array_slice($price_arr, $start, input('get.day'));
                     $new_price_arr = [];
-                    foreach ($price_arr as $k => $v){
-                        $new_price_arr[] = $v / 100;
+                    foreach ($price_arr as $k2 => $v2){
+                        $new_price_arr[] = $v2 / 100;
                     }
                     $data['sizeList'][] = [
                         'name' => $v['size'],
                         'type' => 'line',
                         'data' => $new_price_arr,
                     ];
+
                 }
             }
         }
