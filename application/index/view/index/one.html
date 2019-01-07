@@ -60,21 +60,6 @@
         var articleNumber = $('.articleNumber').val();
 
         $.get("{:url('index/AjaxProductOne')}",{day:day, articleNumber:articleNumber}, function (ret) {
-            var echart_option = [];
-            for(var i in ret.data){
-
-                var price_arr = [];
-                var size_option = {
-                    'name': i,
-                    'type': 'line',
-                    'data':price_arr
-                };
-                for(var j in ret.data[i]){
-                    price_arr.push(ret.data[i][j])
-                }
-                echart_option.push(size_option)
-            }
-
             option = {
                 title: {
                     text: ret.data.name,
@@ -105,7 +90,7 @@
                 yAxis: {
                     type: 'value'
                 },
-                series: echart_option
+                series: ret.data['sizeList']
             };
             myChart.setOption(option)
         });

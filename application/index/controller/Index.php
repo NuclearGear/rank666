@@ -48,19 +48,30 @@ class Index
 
         $data['name'] = $product['title'];
         $data['sizeName'] = [];
+        // 构造时间数组
         for($i=1;$i<=input('get.day');$i++){
             $time = Time::yesterdayNum($i);
-
-            $ret_data = db('product_size')->where('spiderTime', 'between', $time)
-                                                ->where('productId', '=', $product['productId'])
-                                                ->select();
-            if ($ret_data){
-                $data['time'][] = date('Y-m-d', $time[0]);
-                foreach ($ret_data as $k => $v){
-                    $data['sizeName'][] = $v['size'];
-                    if ($v['size'] && $v['price']){
-                        $data[$v['size']][] = $v['price'] / 100;
+            $data['time'][] = date('Y-m-d', $time[0]);
+        }
+        // 获取商品尺码
+        $ret_data = db('product_size')->where('productId', '=', $product['productId'])->select();
+        if ($ret_data){
+            // 构造尺码数组
+            foreach ($ret_data as $k => $v){
+                $data['sizeName'][] = $v['size'];
+                if ($v['size'] && $v['price']){
+                    $price_arr = json_decode($v['price'], true);
+                    $start = count($price_arr) - input('get.day');
+                    $price_arr = array_slice($price_arr, $start, input('get.day'));
+                    $new_price_arr = [];
+                    foreach ($price_arr as $k => $v){
+                        $new_price_arr[] = $v / 100;
                     }
+                    $data['sizeList'][] = [
+                        'name' => $v['size'],
+                        'type' => 'line',
+                        'data' => $new_price_arr,
+                    ];
                 }
             }
         }
@@ -75,6 +86,15 @@ class Index
     public function sizeChange(){
         return view('sizeChange');
     }
+
+    public function autoSize(){
+        for($i = 1;$i<=11;$i++){
+            $str[] = rand(50000, 300000);
+        }
+        echo '[' . implode(',', $str) . ']';
+        die;
+    }
+
 
 
 }
