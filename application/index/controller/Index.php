@@ -50,7 +50,7 @@ class Index
         }
 
 
-        $data['diff'] = $query->paginate(20);
+        $data['diff'] = $query->paginate(20,false,['query' => $data['where']]);
 
         return view('diff', ['data' => $data]);
     }
