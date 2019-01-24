@@ -1,0 +1,112 @@
+{include file="public/header"}
+
+<!-- Page Container -->
+<div class="page-container">
+    <!-- Page Sidebar -->
+    {include file="public/sidebar"}
+    <!-- /Page Sidebar -->
+
+    <!-- Page Content -->
+    <div class="page-content">
+        <!-- Page Inner -->
+        <div class="page-inner">
+            <div class="page-title">
+                <h3 class="breadcrumb-header">毒—App</h3>
+            </div>
+            <div id="main-wrapper">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-white">
+                            <div class="panel-heading clearfix">
+                                <h4 class="panel-title">差价统计</h4>
+                            </div>
+                            <div class="row">
+                                <FORM method="get" class="form" action="{:url('index/diff')}">
+                                    <div class="form-group col-md-2">
+                                        <label>名称</label>
+                                        <input type="text" class="form-control" name="title" value="{$data.where.title}" placeholder="名称">
+                                    </div>
+                                    <div class="form-group col-md-1">
+                                        <label>尺码-开始</label>
+                                        <input type="text" class="form-control" name="sizeStart" value="{$data.where.sizeStart}" placeholder="尺码-开始">
+                                    </div>
+                                    <div class="form-group col-md-1">
+                                        <label>尺码-结束</label>
+                                        <input type="text" class="form-control" name="sizeEnd" value="{$data.where.sizeEnd}"  placeholder="尺码-结束">
+                                    </div>
+                                    <div class="form-group col-md-1">
+                                        <label>差价排序</label>
+                                        <select name="diffPrice" style="margin-bottom:15px;" class="form-control">
+                                            <option value="desc" {$data.where.diffPrice == 'desc' ? 'selected' : ''}>降序</option>
+                                            <option value=""     {$data.where.diffPrice == '' ? 'selected' : ''}>无</option>
+                                            <option value="asc"  {$data.where.diffPrice == 'asc' ? 'selected' : ''}>升序</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-1">
+                                        <label>销量排序</label>
+                                        <select name="soldNum" style="margin-bottom:15px;" class="form-control">
+                                            <option value=""     {$data.where.soldNum == '' ? 'selected' : ''}>无</option>
+                                            <option value="desc" {$data.where.soldNum == 'desc' ? 'selected' : ''}>降序</option>
+                                            <option value="asc"  {$data.where.soldNum == 'asc' ? 'selected' : ''}>升序</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-1">
+                                        <label>搜索结果</label>
+                                        <button class="btn btn-primary">搜索</button>
+                                    </div>
+                                </FORM>
+                            </div>
+                            <div class="panel-body">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>名称</th>
+                                            <th>货号</th>
+                                            <th>尺码</th>
+                                            <th>图片</th>
+                                            <th>差价</th>
+                                            <th>毒-价格</th>
+                                            <th>stockX-价格</th>
+                                            <th>毒-销量</th>
+                                            <th>购买链接</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {volist name="data.diff" id="v"}
+                                        <tr>
+                                            <th scope="row">{$v.id}</th>
+                                            <td width="400">{$v.title}</td>
+                                            <td>{$v.articleNumber}</td>
+                                            <td>{$v.size}</td>
+                                            <td><img src="{$v.imageUrl}" width="50"></td>
+                                            <td>{$v.diffPrice}</td>
+                                            <td>{$v.duPrice}</td>
+                                            <td>{$v.stockxPrice}</td>
+                                            <td>{$v.soldNum}</td>
+                                            <td>
+                                                <a href="https://stockx.com/search?s={$v.articleNumber}" target="_blank" class="btn btn-success btn-addon">
+                                                    <i class="fa fa-spin fa-refresh"></i> 购买
+                                                </a>
+                                           </td>
+                                        </tr>
+                                        {/volist}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <center>
+                                    {$data.diff->render()}
+                                </center>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- Row -->
+            </div><!-- Main Wrapper -->
+
+        </div><!-- /Page Inner -->
+    </div><!-- /Page Content -->
+</div><!-- /Page Container -->
+
+
+{include file="public/footer"}

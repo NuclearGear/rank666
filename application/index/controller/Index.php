@@ -16,16 +16,35 @@ class Index
         return returnJson($data, 200, '成功');
     }
 
-    // 5天内的所有信息
-    public function day5(){
-        // 获取昨日时间戳
-        $time_arr = Time::yesterdayNum(1);
+    // 获取差价数据
+    public function diff(){
+        $data['where']['title'] = input('get.title');
+        $data['where']['sizeStart'] = input('get.sizeStart');
+        $data['where']['sizeEnd'] = input('get.sizeEnd');
+        $data['where']['diffPrice'] = input('get.diffPrice');
+        $data['where']['soldNum'] = input('get.soldNum');
 
-        $data = db('product')->limit(50)->order('soldNum')->select();
-        $ids = db('products_sold')->limit(50)->order('soldNum')->select();
+        $query = db('diff');
+        if ($data['where']['title']){
+            $query->where('title', 'like', '%' . input('get.title') . '%');
+        }
+        if ($data['where']['sizeStart']){
+            $query->where('size', '>=', input('sizeStart'));
+        }
+        if ($data['where']['sizeEnd']){
+            $query->where('size', '<=', input('sizeEnd'));
+        }
+        if ($data['where']['diffPrice']){
+            $query->order('diffPrice ' . input('get.diffPrice'));
+        }
+        if ($data['where']['soldNum']){
+            $query->order('soldNum ' . input('get.soldNum'));
+        }
 
+        $data['diff'] = $query->paginate(20);
+        var_dump()
 
-        return view('day5', ['data' => $data]);
+        return view('diff', ['data' => $data]);
     }
 
     // 单品统计
@@ -95,6 +114,20 @@ class Index
         }
         echo '[' . implode(',', $str) . ']';
         die;
+    }
+
+    // 获取差价商品
+    public function moneyGoods(){
+        $stockx = db('stockx_product_size')->limit(3000)->order('id desc')->select();
+
+        $findGoods = [];
+        foreach ($stockx as $k => $v){
+            $ret = db('product')->where(['articleNumber' => $v['styleId']])->find();
+            if ($ret){
+                $findGoods[] = $ret['articleNumber'];
+            }
+        }
+        dump($findGoods);
     }
 
 
