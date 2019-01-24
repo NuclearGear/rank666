@@ -42,7 +42,6 @@ class Index
         }
 
         $data['diff'] = $query->paginate(20);
-        var_dump()
 
         return view('diff', ['data' => $data]);
     }
