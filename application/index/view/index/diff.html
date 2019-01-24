@@ -26,6 +26,10 @@
                                         <label>名称</label>
                                         <input type="text" class="form-control" name="title" value="{$data.where.title}" placeholder="名称">
                                     </div>
+                                    <div class="form-group col-md-2">
+                                        <label>货号</label>
+                                        <input type="text" class="form-control" name="articleNumber" value="{$data.where.articleNumber}" placeholder="名称">
+                                    </div>
                                     <div class="form-group col-md-1">
                                         <label>尺码-开始</label>
                                         <input type="text" class="form-control" name="sizeStart" value="{$data.where.sizeStart}" placeholder="尺码-开始">
@@ -45,9 +49,17 @@
                                     <div class="form-group col-md-1">
                                         <label>销量排序</label>
                                         <select name="soldNum" style="margin-bottom:15px;" class="form-control">
-                                            <option value=""     {$data.where.soldNum == '' ? 'selected' : ''}>无</option>
                                             <option value="desc" {$data.where.soldNum == 'desc' ? 'selected' : ''}>降序</option>
+                                            <option value=""     {$data.where.soldNum == '' ? 'selected' : ''}>无</option>
                                             <option value="asc"  {$data.where.soldNum == 'asc' ? 'selected' : ''}>升序</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-1">
+                                        <label>利率排序</label>
+                                        <select name="ceil" style="margin-bottom:15px;" class="form-control">
+                                            <option value="desc" {$data.where.ceil == 'desc' ? 'selected' : ''}>降序</option>
+                                            <option value=""     {$data.where.ceil == '' ? 'selected' : ''}>无</option>
+                                            <option value="asc"  {$data.where.ceil == 'asc' ? 'selected' : ''}>升序</option>
                                         </select>
                                     </div>
                                     <div class="form-group col-md-1">
@@ -70,6 +82,7 @@
                                             <th>毒-价格</th>
                                             <th>stockX-价格</th>
                                             <th>毒-销量</th>
+                                            <th>利率比</th>
                                             <th>购买链接</th>
                                         </tr>
                                         </thead>
@@ -85,6 +98,7 @@
                                             <td>{$v.duPrice}</td>
                                             <td>{$v.stockxPrice}</td>
                                             <td>{$v.soldNum}</td>
+                                            <td>{$v.ceil}%</td>
                                             <td>
                                                 <a href="https://stockx.com/search?s={$v.articleNumber}" target="_blank" class="btn btn-success btn-addon">
                                                     <i class="fa fa-spin fa-refresh"></i> 购买
