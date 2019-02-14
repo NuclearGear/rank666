@@ -58,7 +58,6 @@ class Index
     // 单品统计
     public function one(){
         return view('one');
-
     }
 
     // 单品统计
@@ -66,46 +65,50 @@ class Index
         if (!input('?get.articleNumber')){
             return returnJson('', 201, '请传商品Id！');
         }
-        if (!input('?get.day')){
-            return returnJson('', 201, '请传天数！');
-        }
         $data = [];
-
+        // 获取商品信息
         $product = db('product')->where(['articleNumber' => input('get.articleNumber')])->find();
-
+        if (!$product){
+            return returnJson('', 202, '商品不存在！');
+        }
         $data['name'] = $product['title'];
+        $data['image'] = $product['logoUrl'];
+
+
+        $size = db('product_size')->where(['articleNumber' => input('get.articleNumber')])->order('spiderTime desc')->select();
+
         $data['sizeName'] = [];
         $data['time'] = [];
         // 构造时间数组
-        for($i=1;$i<=input('get.day');$i++){
-            $time = Time::yesterdayNum($i);
-            array_unshift($data['time'],date('Y-m-d', $time[0]));
+        foreach ($size as $k => $v){
+            $data['time'][] = date('Y-m-d', $v['spiderTime']);
         }
-        // 获取商品尺码
-        $ret_data = db('product_size')->where('productId', '=', $product['productId'])->select();
-        if ($ret_data){
-            // 构造尺码数组
-            foreach ($ret_data as $k => $v){
-                $data['sizeName'][] = $v['size'];
-                if ($v['size'] && $v['price']){
-                    $price_arr = json_decode($v['price'], true);
-                    $start = count($price_arr) - input('get.day');
-                    $price_arr = array_slice($price_arr, $start, input('get.day'));
-                    $new_price_arr = [];
-                    foreach ($price_arr as $k2 => $v2){
-                        $new_price_arr[] = $v2 / 100;
-                    }
-                    $data['sizeList'][] = [
-                        'name' => $v['size'],
-                        'type' => 'line',
-                        'data' => $new_price_arr,
-                    ];
-
-                }
+        $data['time'] = array_values(array_unique($data['time']));
+        /** 构造尺码数组 */
+        $data['size'] = [];
+        if ($size){
+            foreach ($size as $k => $v){
+                $data['size'][$v['size']][] = $v['price'] / 100;
             }
-        }
-        if ($data['sizeName']){
-            $data['sizeName'] = array_unique($data['sizeName']);
+            foreach ($data['size'] as $k => $v){
+                $data['sizeName'][] = strval($k);
+                $data['sizeList'][] = [
+                    'name' => $k,
+                    'type' => 'line',
+                    'data' => $v,
+                    'markPoint' => [
+                        'data' => [
+                            ['type' => 'max', 'name' => '最大值'],
+                            ['type' => 'min', 'name' => '最小值'],
+                        ],
+                    ],
+                    'markLine' => [
+                        'data' => [
+                            ['type' => 'average', 'name' => '平均值'],
+                        ],
+                    ]
+                ];
+            }
         }
 
         return returnJson($data, 200, '成功');

@@ -1,5 +1,4 @@
 {include file="public/header"}
-
 <!-- Page Container -->
 <div class="page-container">
     <!-- Page Sidebar -->
@@ -22,13 +21,15 @@
                             <input class="form-control articleNumber" value="575441-602" placeholder="货号">
                         </div>
                     </div>
+                    <button type="submit" class="btn btn-danger sure-btn">统计</button>
                     <div class="row">
                         <div class="form-group col-sm-3" for="exampleInputEmail3">
-                            <label class="sr-only">统计天数</label>
-                            <input class="form-control day" value="7" placeholder="统计天数">
+                            <label class="sr-only">图片</label>
+                            <img src="" class="product-img" width="250">
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-danger sure-btn">统计</button>
+
+
                 </div>
             </div>
 
@@ -60,9 +61,10 @@
         var articleNumber = $('.articleNumber').val();
 
         $.get("{:url('index/AjaxProductOne')}",{day:day, articleNumber:articleNumber}, function (ret) {
+            $('.product-img').attr('src', ret.data['image']);
             option = {
                 title: {
-                    text: ret.data.name,
+                    text: ret.data['name'],
                     top:30,
                 },
                 tooltip: {
@@ -78,7 +80,14 @@
                     containLabel: true
                 },
                 toolbox: {
+                    show: true,
                     feature: {
+                        dataZoom: {
+                            yAxisIndex: 'none'
+                        },
+                        dataView: {readOnly: false},
+                        magicType: {type: ['line', 'bar']},
+                        restore: {},
                         saveAsImage: {}
                     }
                 },
@@ -88,7 +97,16 @@
                     data: ret.data['time']
                 },
                 yAxis: {
-                    type: 'value'
+                    type: 'value',
+                    axisLabel: {
+                        formatter: '{value} 元'
+                    },
+                    min: function(value) {
+                        return value.min - 100;
+                    },
+                    max: function(value) {
+                        return value.max + 100;
+                    }
                 },
                 series: ret.data['sizeList']
             };
