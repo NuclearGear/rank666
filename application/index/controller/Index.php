@@ -67,21 +67,22 @@ class Index
         }
         $data = [];
         // 获取商品信息
-        $product = db('product')->where(['articleNumber' => input('get.articleNumber')])->find();
+        $product = db('product')->whereOr(['articleNumber' => input('get.articleNumber')])->whereOr('title', 'like', '%' . input('get.articleNumber') . '%')->find();
         if (!$product){
             return returnJson('', 202, '商品不存在！');
         }
         $data['name'] = $product['title'];
         $data['image'] = $product['logoUrl'];
+        $data['articleNumber'] = $product['articleNumber'];
 
 
-        $size = db('product_size')->where(['articleNumber' => input('get.articleNumber')])->order('spiderTime desc')->select();
+        $size = db('product_size')->where(['articleNumber' => $product['articleNumber']])->order('spiderTime desc')->select();
 
         $data['sizeName'] = [];
         $data['time'] = [];
         // 构造时间数组
         foreach ($size as $k => $v){
-            $data['time'][] = date('Y-m-d', $v['spiderTime']);
+            array_unshift($data['time'],date('Y-m-d', $v['spiderTime']));
         }
         $data['time'] = array_values(array_unique($data['time']));
         /** 构造尺码数组 */

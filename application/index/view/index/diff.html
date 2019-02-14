@@ -83,6 +83,7 @@
                                             <th>stockX-价格</th>
                                             <th>毒-销量</th>
                                             <th>利率比</th>
+                                            <th>统计时间</th>
                                             <th>购买链接</th>
                                         </tr>
                                         </thead>
@@ -99,6 +100,7 @@
                                             <td>{$v.stockxPrice}</td>
                                             <td>{$v.soldNum}</td>
                                             <td>{$v.ceil}%</td>
+                                            <td>{$v.createTime|date="Y-m-d H:i:s",###}</td>
                                             <td>
                                                 <a href="https://stockx.com/search?s={$v.articleNumber}" target="_blank" class="btn btn-success btn-addon">
                                                     <i class="fa fa-spin fa-refresh"></i> 购买

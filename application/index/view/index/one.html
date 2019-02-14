@@ -19,6 +19,8 @@
                         <div class="form-group col-sm-3" for="exampleInputEmail3">
                             <label class="sr-only">货号</label>
                             <input class="form-control articleNumber" value="575441-602" placeholder="货号">
+                            <span class="help-block ret-title"></span>
+                            <span class="help-block ret-articleNumber"></span>
                         </div>
                     </div>
                     <button type="submit" class="btn btn-danger sure-btn">统计</button>
@@ -55,13 +57,25 @@
 {include file="public/footer"}
 
 <script>
+    // enter 键
+    $("body").keydown(function() {
+        if (event.keyCode == "13") {
+            $('.sure-btn').click();
+        }
+    });
+
     $('.sure-btn').click(function () {
         var myChart = echarts.init(document.getElementById('echart_1'));
         var day = $('.day').val();
         var articleNumber = $('.articleNumber').val();
 
         $.get("{:url('index/AjaxProductOne')}",{day:day, articleNumber:articleNumber}, function (ret) {
-            $('.product-img').attr('src', ret.data['image']);
+            if (ret.retcode != 200){
+                alert('商品不存在');
+                return false;
+            }
+            $('.ret-title').html(ret.data['name']);
+            $('.ret-articleNumber').html(ret.data['articleNumber']);
             option = {
                 title: {
                     text: ret.data['name'],
@@ -102,10 +116,10 @@
                         formatter: '{value} 元'
                     },
                     min: function(value) {
-                        return value.min - 100;
+                        return value.min - 500;
                     },
                     max: function(value) {
-                        return value.max + 100;
+                        return value.max + 500;
                     }
                 },
                 series: ret.data['sizeList']
