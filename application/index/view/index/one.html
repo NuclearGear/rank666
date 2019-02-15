@@ -19,17 +19,25 @@
                         <div class="form-group col-sm-3" for="exampleInputEmail3">
                             <label class="sr-only">货号</label>
                             <input class="form-control articleNumber" value="575441-602" placeholder="货号">
-                            <span class="help-block ret-title"></span>
-                            <span class="help-block ret-articleNumber"></span>
+
                         </div>
                     </div>
                     <button type="submit" class="btn btn-danger sure-btn">统计</button>
                     <div class="row">
+                        <div class="form-group col-sm-1" for="exampleInputEmail3">
+                            <span class="help-block ret-articleNumber"></span>
+                        </div>
+                        <div class="form-group col-sm-4" for="exampleInputEmail3">
+                            <span class="help-block ret-title"></span>
+                        </div>
+
+                    </div>
+                    <div class="row">
                         <div class="form-group col-sm-3" for="exampleInputEmail3">
-                            <label class="sr-only">图片</label>
                             <img src="" class="product-img" width="250">
                         </div>
                     </div>
+
 
 
                 </div>
@@ -74,6 +82,7 @@
                 alert('商品不存在');
                 return false;
             }
+            $('.product-img').attr('src', ret.data['image']);
             $('.ret-title').html(ret.data['name']);
             $('.ret-articleNumber').html(ret.data['articleNumber']);
             option = {
