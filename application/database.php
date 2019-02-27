@@ -58,13 +58,13 @@ $pro_database = [
     // 数据库类型
     'type'            => 'mysql',
     // 服务器地址
-    'hostname'        => '103.51.145.44',
+    'hostname'        => '144.48.9.105',
     // 数据库名
-    'database'        => 'www_91rank_com',
+    'database'        => 'rank666_com',
     // 用户名
-    'username'        => 'www_91rank_com',
+    'username'        => 'rank666_com',
     // 密码
-    'password'        => 'rKAcAiSdna',
+    'password'        => 'RdPK775JrWY3Psnb',
     // 端口
     'hostport'        => '3306',
     // 连接dsn
@@ -99,4 +99,10 @@ $pro_database = [
     'sql_explain'     => false,
 ];
 
-return $dev_database;
+if ($_SERVER['SERVER_ADDR'] == '127.0.0.1'){
+    $database = $dev_database;
+}else{
+    $database = $pro_database;
+}
+
+return $database;
