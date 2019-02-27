@@ -61,6 +61,11 @@ class Index
     }
 
     // 单品统计
+    public function search(){
+        return view('search');
+    }
+
+    // 单品统计
     public function AjaxProductOne(){
         if (!input('?get.articleNumber')){
             return returnJson('', 201, '请传商品Id！');

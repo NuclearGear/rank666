@@ -1,0 +1,136 @@
+{include file="public/header"}
+<!-- Page Container -->
+<div class="page-container">
+
+    <!-- Page Content -->
+    <div class="page-content">
+
+        <!-- Page Inner -->
+        <div class="page-inner">
+            <div class="page-title">
+                <h3 class="breadcrumb-header">毒—App</h3>
+            </div>
+            <div class="panel panel-white">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="form-group col-sm-3" for="exampleInputEmail3">
+                            <label class="sr-only">货号</label>
+                            <input class="form-control articleNumber" value="575441-602" placeholder="货号">
+
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-danger sure-btn">统计</button>
+                    <div class="row">
+                        <div class="form-group col-sm-1" for="exampleInputEmail3">
+                            <span class="help-block ret-articleNumber"></span>
+                        </div>
+                        <div class="form-group col-sm-4" for="exampleInputEmail3">
+                            <span class="help-block ret-title"></span>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-sm-3" for="exampleInputEmail3">
+                            <img src="" class="product-img" width="250">
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+
+            <div id="main-wrapper">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-white">
+                            <div class="panel-heading clearfix">
+                                <h4 class="panel-title">单品统计-按天数</h4>
+                            </div>
+                            <div class="panel-body" id="echart_1" style="height: 700px;">
+
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- Row -->
+            </div><!-- Main Wrapper -->
+        </div><!-- /Page Inner -->
+    </div><!-- /Page Content -->
+</div><!-- /Page Container -->
+
+
+{include file="public/footer"}
+
+<script>
+    // enter 键
+    $("body").keydown(function() {
+        if (event.keyCode == "13") {
+            $('.sure-btn').click();
+        }
+    });
+
+    $('.sure-btn').click(function () {
+        var myChart = echarts.init(document.getElementById('echart_1'));
+        var day = $('.day').val();
+        var articleNumber = $('.articleNumber').val();
+
+        $.get("{:url('index/AjaxProductOne')}",{day:day, articleNumber:articleNumber}, function (ret) {
+            if (ret.retcode != 200){
+                alert('商品不存在');
+                return false;
+            }
+            $('.product-img').attr('src', ret.data['image']);
+            $('.ret-title').html(ret.data['name']);
+            $('.ret-articleNumber').html(ret.data['articleNumber']);
+            option = {
+                title: {
+                    text: ret.data['name'],
+                    top:30,
+                },
+                tooltip: {
+                    trigger: 'axis'
+                },
+                legend: {
+                    data:ret.data['sizeName']
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                toolbox: {
+                    show: true,
+                    feature: {
+                        dataZoom: {
+                            yAxisIndex: 'none'
+                        },
+                        dataView: {readOnly: false},
+                        magicType: {type: ['line', 'bar']},
+                        restore: {},
+                        saveAsImage: {}
+                    }
+                },
+                xAxis: {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: ret.data['time']
+                },
+                yAxis: {
+                    type: 'value',
+                    axisLabel: {
+                        formatter: '{value} 元'
+                    },
+                    min: function(value) {
+                        return value.min - 500;
+                    },
+                    max: function(value) {
+                        return value.max + 500;
+                    }
+                },
+                series: ret.data['sizeList']
+            };
+            myChart.setOption(option)
+        });
+    });
+</script>
