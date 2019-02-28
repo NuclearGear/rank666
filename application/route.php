@@ -19,6 +19,4 @@ return [
     ],
     'search' => 'index/index/search',
     'menu' => 'index/index/menu',
-    'diff' => 'index/index/diff',
-
 ];
