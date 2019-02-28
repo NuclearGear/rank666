@@ -132,7 +132,11 @@
                                             </td>
 
                                             <td style="line-height: 40px">{$v.diffPrice}</td>
-                                            <td style="line-height: 40px">{$v.profit}</td>
+                                            <td style="line-height: 40px">
+                                                <a href="javascript:;" class="info-tool" data-toggle="tooltip" data-placement="top" data-original-title="{$v.priceInfo}">
+                                                    {$v.profit}
+                                                </a>
+                                                </td>
                                             <td style="line-height: 40px">{$v.ceil}%</td>
                                             <td style="line-height: 40px">{$v.createTime|date="Y-m-d H:i:s",###}</td>
                                             <td>
@@ -161,3 +165,8 @@
 
 
 {include file="public/footer"}
+<script>
+    $(document).ready(function(){
+        $('.info-tool').tooltip();
+    });
+</script>
