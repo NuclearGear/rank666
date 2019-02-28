@@ -71,7 +71,7 @@ class Index
         }
         $data = [];
         // 获取商品信息
-        $product = db('du_product')->whereOr(['articleNumber' => input('get.articleNumber')])->whereOr('title', 'like', '%' . input('get.articleNumber') . '%')->find();
+        $product = db('du_product')->whereOr(['articleNumber' => input('get.articleNumber')])->whereOr('title', 'like', input('get.articleNumber'))->find();
         if (!$product){
             return returnJson('', 202, '商品不存在！');
         }
