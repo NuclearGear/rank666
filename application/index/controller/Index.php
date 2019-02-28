@@ -4,7 +4,7 @@ namespace app\index\controller;
 class Index
 {
     public function index(){
-        return view('sold');
+        return view('search');
     }
 
     // 获取销量排名前50
@@ -48,6 +48,10 @@ class Index
 
         $data['diff'] = $query->paginate(20,false,['query' => $data['where']]);
         return view('diff', ['data' => $data]);
+    }
+
+    public function menu(){
+        return view('sold');
     }
 
     // 单品统计
