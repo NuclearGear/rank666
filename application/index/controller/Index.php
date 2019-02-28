@@ -4,14 +4,12 @@ namespace app\index\controller;
 class Index
 {
     public function index(){
-        $data = db('product')->limit(50)->order('soldNum')->select();
-
-        return view('sold', ['data' => $data]);
+        return view('sold');
     }
 
     // 获取销量排名前50
     public function ajaxBySoldNum(){
-        $data = db('product')->field('articleNumber,soldNum')->limit(50)->order('soldNum desc')->select();
+        $data = db('du_product')->field('articleNumber,soldNum')->limit(50)->order('soldNum desc')->select();
 
         return returnJson($data, 200, '成功');
     }
@@ -26,32 +24,29 @@ class Index
         $data['where']['soldNum']       = input('get.soldNum');
         $data['where']['ceil']          = input('get.ceil');
 
+
         $query = db('diff');
         if ($data['where']['title']){
-            $query->where('title', 'like', '%' . input('get.title') . '%');
+            $query->whereOr('duTitle', 'like', input('get.title'));
+            $query->whereOr('stockxTitle', 'like', input('get.title'));
         }
         if ($data['where']['articleNumber']){
-            $query->where('articleNumber', 'like', '%' . input('get.articleNumber') . '%');
+            $query->where('articleNumber', 'like', input('get.articleNumber'));
         }
-        if ($data['where']['sizeStart']){
-            $query->where('size', '>=', input('sizeStart'));
-        }
-        if ($data['where']['sizeEnd']){
-            $query->where('size', '<=', input('sizeEnd'));
+        if ($data['where']['sizeStart'] || $data['where']['sizeEnd']){
+            $query->whereBetween('size', [input('sizeStart'), input('sizeEnd')]);
         }
         if ($data['where']['diffPrice']){
-            $query->order('diffPrice ' . input('get.diffPrice'));
+            $query->order('diffPrice',input('get.diffPrice'));
         }
         if ($data['where']['soldNum']){
-            $query->order('soldNum ' . input('get.soldNum'));
+            $query->order('duSoldNum',input('get.soldNum'));
         }
         if ($data['where']['ceil']){
-            $query->order('ceil ' . input('get.ceil'));
+            $query->order('ceil',input('get.ceil'));
         }
 
-
         $data['diff'] = $query->paginate(20,false,['query' => $data['where']]);
-
         return view('diff', ['data' => $data]);
     }
 
@@ -72,7 +67,7 @@ class Index
         }
         $data = [];
         // 获取商品信息
-        $product = db('product')->whereOr(['articleNumber' => input('get.articleNumber')])->whereOr('title', 'like', '%' . input('get.articleNumber') . '%')->find();
+        $product = db('du_product')->whereOr(['articleNumber' => input('get.articleNumber')])->whereOr('title', 'like', '%' . input('get.articleNumber') . '%')->find();
         if (!$product){
             return returnJson('', 202, '商品不存在！');
         }
@@ -81,7 +76,7 @@ class Index
         $data['articleNumber'] = $product['articleNumber'];
 
 
-        $size = db('product_size')->where(['articleNumber' => $product['articleNumber']])->order('spiderTime desc')->select();
+        $size = db('du_size')->where(['articleNumber' => $product['articleNumber']])->order('spiderTime desc')->select();
 
         $data['sizeName'] = [];
         $data['time'] = [];
@@ -135,11 +130,11 @@ class Index
 
     // 获取差价商品
     public function moneyGoods(){
-        $stockx = db('stockx_product_size')->limit(3000)->order('id desc')->select();
+        $stockx = db('stockx_size')->limit(3000)->order('id desc')->select();
 
         $findGoods = [];
         foreach ($stockx as $k => $v){
-            $ret = db('product')->where(['articleNumber' => $v['styleId']])->find();
+            $ret = db('du_product')->where(['articleNumber' => $v['styleId']])->find();
             if ($ret){
                 $findGoods[] = $ret['articleNumber'];
             }

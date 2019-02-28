@@ -1,5 +1,14 @@
 {include file="public/header"}
 
+<style>
+    .table{
+        font-size: 14px;
+    }
+    .line40{
+        line-height: 40px;
+    }
+</style>
+
 <!-- Page Container -->
 <div class="page-container">
     <!-- Page Sidebar -->
@@ -73,16 +82,13 @@
                                     <table class="table">
                                         <thead>
                                         <tr>
-                                            <th>Id</th>
                                             <th>名称</th>
                                             <th>货号</th>
                                             <th>尺码</th>
                                             <th>图片</th>
+                                            <th>销量</th>
+                                            <th>价格</th>
                                             <th>差价</th>
-                                            <th>毒-价格</th>
-                                            <th>stockX-价格</th>
-                                            <th>毒-销量</th>
-                                            <th>stockx-销量</th>
                                             <th>利率比</th>
                                             <th>统计时间</th>
                                             <th>购买链接</th>
@@ -91,20 +97,40 @@
                                         <tbody>
                                         {volist name="data.diff" id="v"}
                                         <tr>
-                                            <th scope="row">{$v.id}</th>
-                                            <td width="400">{$v.title}</td>
-                                            <td>{$v.articleNumber}</td>
-                                            <td>{$v.size}</td>
+                                            <td width="450">
+                                                <img src="https://stockx-assets.imgix.net/logo/favicon.ico?auto=compress">
+                                                {$v.stockxTitle}<br/>
+                                                <img src="https://du.hupucdn.com/news_byte1022byte_9774f29b986b8773640120bf4c07cc2e_w100h100.png" width="16" height="16">
+                                                {$v.duTitle}
+                                            </td>
+                                            <td style="line-height: 40px">{$v.articleNumber}</td>
+                                            <td style="line-height: 40px">{$v.size}</td>
                                             <td><a href="{$v.imageUrl}" target="_blank"><img src="{$v.imageUrl}" width="50"></a></td>
-                                            <td>{$v.diffPrice}</td>
-                                            <td>{$v.duPrice}</td>
-                                            <td>{$v.stockxPrice}</td>
-                                            <td>{$v.soldNum}</td>
-                                            <td>{$v.xSoldNum}</td>
-                                            <td>{$v.ceil}%</td>
-                                            <td>{$v.createTime|date="Y-m-d H:i:s",###}</td>
                                             <td>
-                                                <a href="https://stockx.com/search?s={$v.articleNumber}" target="_blank" class="btn btn-success btn-addon">
+                                                <b>
+                                                <img src="https://stockx-assets.imgix.net/logo/favicon.ico?auto=compress">
+                                                {$v.stockxSoldNum}
+                                                <br/>
+                                                <img src="https://du.hupucdn.com/news_byte1022byte_9774f29b986b8773640120bf4c07cc2e_w100h100.png" width="16" height="16">
+                                                {$v.duSoldNum}
+                                                </b>
+                                            </td>
+                                            <td>
+                                                <b>
+                                                <img src="https://stockx-assets.imgix.net/logo/favicon.ico?auto=compress">
+                                                {$v.stockxPrice}
+                                                <br/>
+                                                <img src="https://du.hupucdn.com/news_byte1022byte_9774f29b986b8773640120bf4c07cc2e_w100h100.png" width="16" height="16">
+                                                {$v.duPrice}
+                                                </b>
+                                            </td>
+
+                                            <td style="line-height: 40px">{$v.diffPrice}</td>
+
+                                            <td style="line-height: 40px">{$v.ceil}%</td>
+                                            <td style="line-height: 40px">{$v.createTime|date="Y-m-d H:i:s",###}</td>
+                                            <td>
+                                                <a href="https://stockx.com/{$v.stockxShortName}" target="_blank" class="btn btn-success btn-addon">
                                                     <i class="fa fa-spin fa-refresh"></i> 购买
                                                 </a>
                                            </td>
