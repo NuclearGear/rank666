@@ -66,22 +66,81 @@ class Index
 
     // 单品统计
     public function AjaxProductOne(){
-        if (!input('?get.articleNumber')){
-            return returnJson('', 201, '请传商品Id！');
+        if (!input('?get.articleNumber') || !input('get.articleNumber')){
+            return returnJson('', 201, '请填写 货号 或 名称！');
         }
         $data = [];
         // 获取商品信息
-        $product = db('du_product')->whereOr(['articleNumber' => input('get.articleNumber')])->whereOr('title', 'like', input('get.articleNumber'))->find();
+        $product = db('du_product')->whereOr('title', 'like', input('get.articleNumber'))->whereOr('articleNumber', input('get.articleNumber'))->find();
         if (!$product){
             return returnJson('', 202, '商品不存在！');
         }
-        $data['name'] = $product['title'];
-        $data['image'] = $product['logoUrl'];
-        $data['articleNumber'] = $product['articleNumber'];
+
+        /** 获取 商品信息 */
+        $data['product'] = [
+            'title'         => $product['title'],
+            'image'         => $product['logoUrl'],
+            'articleNumber' => $product['articleNumber'],
+            'soldNum'       => $product['soldNum'],
+        ];
 
 
-        $size = db('du_size')->where(['articleNumber' => $product['articleNumber']])->order('spiderTime desc')->select();
+        /** 获取 尺码销量 */
+        $sold_arr = db('du_sold')->where('articleNumber', 'like', $product['articleNumber'])->order('size', 'asc')->select();
+        $data['soldList'] = [];
+        foreach ($sold_arr as $k => $v){
+            $data['soldList'][] = [
+                'size'    => $v['size'],
+                'soldNum' => $v['soldNum']
+            ];
+        }
 
+
+        /** 获取 尺码销量折线图 */
+        $data_sold = db('du_sold_record')->where(['articleNumber' => $product['articleNumber']])->order('size', 'asc')->select();
+        $data['soldSizeName'] = [];
+        $data['soldTime'] = [];
+        // 构造时间数组
+        foreach ($data_sold as $k => $v){
+            array_unshift($data['soldTime'],date('Y-m-d', $v['spiderTime']));
+        }
+        $data['soldTime'] = array_values(array_unique($data['soldTime']));
+
+        // 构造销量数组
+        $data['soldSize'] = [];
+        if ($data_sold){
+            foreach ($data_sold as $k => $v){
+                $data['soldSize'][$v['size']][] = $v['soldNum'];
+            }
+            foreach ($data['soldSize'] as $k => $v){
+                // 默认选中
+                if (floatval($k) >= 36 && floatval($k) <= 44){
+                    $data['soldSelected'][$k] = True;
+                }else{
+                    $data['soldSelected'][$k] = False;
+                }
+                $data['soldSizeName'][] = strval($k);
+                $data['soldSizeList'][] = [
+                    'name' => $k,
+                    'type' => 'line',
+                    'data' => $v,
+                    'markPoint' => [
+                        'data' => [
+                            ['type' => 'max', 'name' => '最大值'],
+                            ['type' => 'min', 'name' => '最小值'],
+                        ],
+                    ],
+                    'markLine' => [
+                        'data' => [
+                            ['type' => 'average', 'name' => '平均值'],
+                        ],
+                    ]
+                ];
+            }
+        }
+
+        /** 获取 尺码价格折线图 */
+        $size = db('du_size')->where(['articleNumber' => $product['articleNumber']])->order('size desc')->select();
         $data['sizeName'] = [];
         $data['time'] = [];
         // 构造时间数组
@@ -96,6 +155,12 @@ class Index
                 $data['size'][$v['size']][] = $v['price'] / 100;
             }
             foreach ($data['size'] as $k => $v){
+                // 默认选中
+                if (floatval($k) >= 36 && floatval($k) <= 44){
+                    $data['sizeSelected'][$k] = True;
+                }else{
+                    $data['sizeSelected'][$k] = False;
+                }
                 $data['sizeName'][] = strval($k);
                 $data['sizeList'][] = [
                     'name' => $k,
