@@ -102,7 +102,7 @@ class Index
         $data['soldTime'] = [];
         // 构造时间数组
         foreach ($data_sold as $k => $v){
-            array_unshift($data['soldTime'],date('Y-m-d', $v['spiderTime']));
+            array_push($data['soldTime'],date('Y-m-d', $v['spiderTime']));
         }
         $data['soldTime'] = array_values(array_unique($data['soldTime']));
 
@@ -145,7 +145,7 @@ class Index
         $data['time'] = [];
         // 构造时间数组
         foreach ($size as $k => $v){
-            array_unshift($data['time'],date('Y-m-d', $v['spiderTime']));
+            array_push($data['time'],date('Y-m-d', $v['spiderTime']));
         }
         $data['time'] = array_values(array_unique($data['time']));
         /** 构造尺码数组 */
