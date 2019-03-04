@@ -114,7 +114,7 @@ class Index
             }
             foreach ($data['soldSize'] as $k => $v){
                 // 默认选中
-                if (floatval($k) >= 36 && floatval($k) <= 44){
+                if (floatval($k) >= 40 && floatval($k) <= 43){
                     $data['soldSelected'][$k] = True;
                 }else{
                     $data['soldSelected'][$k] = False;
@@ -156,7 +156,7 @@ class Index
             }
             foreach ($data['size'] as $k => $v){
                 // 默认选中
-                if (floatval($k) >= 36 && floatval($k) <= 44){
+                if (floatval($k) >= 40 && floatval($k) <= 43){
                     $data['sizeSelected'][$k] = True;
                 }else{
                     $data['sizeSelected'][$k] = False;
