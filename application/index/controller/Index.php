@@ -1,6 +1,8 @@
 <?php
 namespace app\index\controller;
 
+use think\Cache;
+
 class Index
 {
     public function index(){
@@ -68,6 +70,12 @@ class Index
     public function AjaxProductOne(){
         if (!input('?get.articleNumber') || !input('get.articleNumber')){
             return returnJson('', 201, '请填写 货号 或 名称！');
+        }
+
+        $cacheKey = input('get.articleNumber');
+        $data = cache::get($cacheKey);
+        if ($data){
+            return returnJson($data, 200, '成功');
         }
 //        $_GET['articleNumber'] = 'CD0461-401';
         $data = [];
@@ -203,6 +211,8 @@ class Index
                 ];
             }
         }
+
+        cache::set($cacheKey, $data,3600 * 2);
 
         return returnJson($data, 200, '成功');
     }
