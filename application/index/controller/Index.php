@@ -69,6 +69,7 @@ class Index
         if (!input('?get.articleNumber') || !input('get.articleNumber')){
             return returnJson('', 201, '请填写 货号 或 名称！');
         }
+//        $_GET['articleNumber'] = 'CD0461-401';
         $data = [];
         // 获取商品信息
         $product = db('du_product')->whereOr('title', 'like', input('get.articleNumber'))->whereOr('articleNumber', input('get.articleNumber'))->find();
@@ -97,20 +98,42 @@ class Index
 
 
         /** 获取 尺码销量折线图 */
-        $data_sold = db('du_sold_record')->where(['articleNumber' => $product['articleNumber']])->order('size', 'asc')->select();
+        $data_sold = db('du_sold_record')->where(['articleNumber' => $product['articleNumber']])->order('spiderTime', 'asc')->select();
+
+        // 处理尺码销量数组
+        $temp_sold = [];
+        foreach ($data_sold as $k => $v){
+            $temp_sold[strval($v['spiderTime'])][strval($v['size'])] = $v['soldNum'];
+        }
+
+        $temp_save = [];
+        // 处理 若第一天 与 第二天销量相同导致没有数据的情况
+        foreach ($temp_sold as $k => $v) {
+            foreach ($data['soldList'] as $k2 => $v2) {
+                if (isset($v[$v2['size']])) {
+                    $temp_save[strval($v2['size'])] = $v[strval($v2['size'])];
+                } else {
+                    $temp_sold[$k][strval($v2['size'])] = $temp_save[strval($v2['size'])];
+                }
+            }
+        }
         $data['soldSizeName'] = [];
         $data['soldTime'] = [];
         // 构造时间数组
         foreach ($data_sold as $k => $v){
-            array_push($data['soldTime'],date('Y-m-d', $v['spiderTime']));
+            $data['soldTime'][] = date('Y-m-d', $v['spiderTime']);
         }
-        $data['soldTime'] = array_values(array_unique($data['soldTime']));
+        $data['soldTime'] = array_unique($data['soldTime']);
+        sort($data['soldTime']);
 
         // 构造销量数组
         $data['soldSize'] = [];
-        if ($data_sold){
-            foreach ($data_sold as $k => $v){
-                $data['soldSize'][$v['size']][] = $v['soldNum'];
+        if ($temp_sold){
+            foreach ($temp_sold as $k => $v){
+                foreach ($v as $k2 => $v2){
+                    $data['soldSize'][$k2][] = $v2;
+                }
+                ksort($data['soldSize']);
             }
             foreach ($data['soldSize'] as $k => $v){
                 // 默认选中
