@@ -108,12 +108,18 @@
                                         {volist name="data.diff" id="v"}
                                         <tr>
                                             <td width="450" class="elips">
+                                                <a href="/?articleNumber={$v.articleNumber}" target="_blank">
                                                 <img src="https://stockx-assets.imgix.net/logo/favicon.ico?auto=compress">
                                                 {$v.stockxTitle}<br/>
                                                 <img src="https://du.hupucdn.com/news_byte1022byte_9774f29b986b8773640120bf4c07cc2e_w100h100.png" width="16" height="16">
                                                 {$v.duTitle}
+                                                </a>
                                             </td>
-                                            <td style="line-height: 40px">{$v.articleNumber}</td>
+                                            <td style="line-height: 40px">
+                                                <a href="/?articleNumber={$v.articleNumber}" target="_blank">
+                                                    {$v.articleNumber}
+                                                </a>
+                                            </td>
                                             <td style="line-height: 40px">{$v.size}</td>
                                             <td><a href="{$v.imageUrl}" target="_blank"><img src="{$v.imageUrl}" width="50"></a></td>
                                             <td>
