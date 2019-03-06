@@ -216,12 +216,12 @@
             if (ret['retcode'] == 200){
                 obj.parent().parent().remove();
             }
-            console.log(ret)
+            console.log(ret);
         })
     });
     $('.clear-btn').click(function () {
         $.post("{:url('index/ajaxClear')}", {}, function (ret) {
-
+            location.reload();
         })
     })
 </script>
