@@ -7,6 +7,16 @@
 <script src="/static/assets/plugins/uniform/js/jquery.uniform.standalone.js"></script>
 <script src="/static/assets/plugins/switchery/switchery.min.js"></script>
 <script src="/static/assets/js/ecaps.min.js"></script>
+
+<script src="/static/assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 <!-- 图表插件 -->
 <script src="/static/js/echarts.js"></script>
 <!-- 图表插件 -->
+<script>
+    $('.date-picker').datepicker({
+        todayHighlight:true,
+        orientation: "top auto",
+        autoclose: true,
+        format: 'yyyy-mm-dd'
+    });
+</script>

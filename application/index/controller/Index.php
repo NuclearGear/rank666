@@ -252,6 +252,96 @@ class Index
         dump($findGoods);
     }
 
+    public function money(){
+        $data['where']['title']         = input('get.title');
+        $data['where']['articleNumber'] = input('get.articleNumber');
+        $query = db('money');
+
+        if ($data['where']['title']){
+            $query->where('Title', 'like', input('get.title'));
+        }
+        if ($data['where']['articleNumber']){
+            $query->where('articleNumber', 'like', input('get.articleNumber'));
+        }
+
+        $data['list'] = $query->paginate(100,false,['query' => $data['where']]);
+        $data['list_arr'] = $data['list']->toArray()['data'];
+
+        $data['total_cost'] = 0;
+        $data['total_profit'] = 0;
+        $data['total_num'] = 0;
+
+        foreach ($data['list_arr'] as $k => $v){
+            // 获取商品价格
+            $size = db('du_size')->where([
+                'articleNumber' => $v['articleNumber'],
+                'size'          => $v['size'],
+            ])->order('spiderTime', 'desc')->find();
+            if (!$size){
+                $add_data['price']  = '';
+                $add_data['charge'] = '';
+                $add_data['profit'] = '';
+                $add_data['ceil']   = '';
+            }
+
+            $price  = $size['price'] / 100;
+            $charge = round(($price * 0.095), 2);
+            $profit = $price + $charge - $v['cost'];
+            $ceil   = round(($profit / $v['cost']) * 100, 2);
+
+            $data['list_arr'][$k]['price']  = $price;
+            $data['list_arr'][$k]['charge'] = $charge;
+            $data['list_arr'][$k]['profit'] = $profit;
+            $data['list_arr'][$k]['ceil']   = $ceil;
+
+            $data['total_cost'] += $profit;
+            $data['total_num'] ++;
+            $data['total_profit'] += $profit;
+        }
+
+
+        return view('money', ['data' => $data]);
+    }
+
+    // 添加购买商品
+    public function ajaxAdd(){
+        if (!input('?post.articleNumber') || !input('post.size') || !input('post.cost') || !input('post.buyDate')){
+            return returnJson('', 201, '请填写 货号、尺码、成本、购买日期！');
+        }
+
+        // 获取商品信息
+        $product = db('du_product')->where('articleNumber', input('post.articleNumber'))->find();
+        if (!$product){
+            return returnJson('', 202, '商品不存在！');
+        }
+
+        $add_data = [
+            'title'         => $product['title'],
+            'image'         => $product['logoUrl'],
+            'size'          => input('post.size'),
+            'articleNumber' => $product['articleNumber'],
+            'soldNum'       => $product['soldNum'],
+            'sellDate'      => $product['sellDate'],
+            'cost'          => input('post.cost'),
+            'buyDate'       => strtotime(input('post.buyDate')),
+        ];
+
+        $ret = db('money')->insert($add_data);
+        if (!$ret){
+            return returnJson('', 202, '添加失败！');
+        }
+
+        return returnJson($add_data, 200, '添加成功！');
+    }
+
+    // 删除购买商品
+    public function ajaxDel(){
+        if (input('?post.id')){
+            $ret = db('money')->delete(['_id' => input('post.id')]);
+            return returnJson($ret, 200, '删除成功！');
+        }
+    }
+
 
 
 }

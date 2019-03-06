@@ -107,6 +107,7 @@ $dev_mongo = [
     'type'            => 'think\mongo\Connection',
     // 服务器地址
     'hostname'        => '127.0.0.1',
+//    'hostname'        => '144.48.9.105',
     // 数据库名
     'database'        => 'du',
     // 用户名
