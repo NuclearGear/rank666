@@ -256,7 +256,7 @@ class Index
         $cacheKey = 'index_money';
         $data = cache::get($cacheKey);
         if ($data){
-            return returnJson($data, 200, '成功');
+            return view('money', ['data' => $data]);
         }
 
         $data['where']['title']         = input('get.title');
