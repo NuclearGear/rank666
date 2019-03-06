@@ -272,14 +272,15 @@ class Index
 
         $data['list'] = $query->paginate(100,false,['query' => $data['where']]);
         $data['list_arr'] = $data['list']->toArray()['data'];
-        if (!$data['list_arr']){
-            return view('money', ['data' => $data]);
-        }
 
         $data['total_cost'] = 0;
         $data['total_profit'] = 0;
         $data['total_num'] = 0;
         $data['total_ceil'] = 0;
+        
+        if (!$data['list_arr']){
+            return view('money', ['data' => $data]);
+        }
 
         foreach ($data['list_arr'] as $k => $v){
             // 获取商品价格
