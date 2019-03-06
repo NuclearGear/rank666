@@ -26,6 +26,7 @@ class Index
         $data['where']['diffPrice']     = input('get.diffPrice');
         $data['where']['soldNum']       = input('get.soldNum');
         $data['where']['ceil']          = input('get.ceil');
+        $data['where']['sellDate']      = input('get.sellDate');
 
 
         $query = db('diff');
@@ -39,9 +40,13 @@ class Index
         if ($data['where']['sizeStart'] || $data['where']['sizeEnd']){
             $query->whereBetween('size', [input('sizeStart'), input('sizeEnd')]);
         }
+        if ($data['where']['sellDate']){
+            $query->order('sellDate',input('get.sellDate'));
+        }
         if ($data['where']['diffPrice']){
             $query->order('diffPrice',input('get.diffPrice'));
         }
+
         if ($data['where']['soldNum']){
             $query->order('duSoldNum',input('get.soldNum'));
         }
