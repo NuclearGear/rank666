@@ -115,7 +115,6 @@ class Index
 
         /** 获取 尺码销量折线图 */
         $data_sold = db('du_sold_record')->where(['articleNumber' => $product['articleNumber']])->order('spiderTime', 'asc')->select();
-
         // 处理尺码销量数组
         $temp_sold = [];
         foreach ($data_sold as $k => $v){
@@ -129,10 +128,11 @@ class Index
                 if (isset($v[$v2['size']])) {
                     $temp_save[strval($v2['size'])] = $v[strval($v2['size'])];
                 } else {
-                    $temp_sold[$k][strval($v2['size'])] = $temp_save[strval($v2['size'])];
+                    $temp_sold[$k][strval($v2['size'])] = $v2['soldNum'];
                 }
             }
         }
+
         $data['soldSizeName'] = [];
         $data['soldTime'] = [];
         // 构造时间数组
