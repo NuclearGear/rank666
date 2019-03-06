@@ -300,7 +300,7 @@ class Index
             $data['list_arr'][$k]['profit'] = $profit;
             $data['list_arr'][$k]['ceil']   = $ceil;
 
-            $data['total_cost'] += $profit;
+            $data['total_cost'] += $v['cost'];
             $data['total_num'] ++;
             $data['total_profit'] += $profit;
         }
