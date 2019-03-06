@@ -253,6 +253,12 @@ class Index
     }
 
     public function money(){
+        $cacheKey = 'index_money';
+        $data = cache::get($cacheKey);
+        if ($data){
+            return returnJson($data, 200, '成功');
+        }
+
         $data['where']['title']         = input('get.title');
         $data['where']['articleNumber'] = input('get.articleNumber');
         $query = db('money');
@@ -299,6 +305,7 @@ class Index
             $data['total_profit'] += $profit;
         }
 
+        cache::set($cacheKey, $data, 3600);
 
         return view('money', ['data' => $data]);
     }
@@ -331,6 +338,7 @@ class Index
             return returnJson('', 202, '添加失败！');
         }
 
+        cache::clear('index_money');
         return returnJson($add_data, 200, '添加成功！');
     }
 
