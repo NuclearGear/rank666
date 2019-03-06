@@ -123,7 +123,6 @@
                                             <th>货号</th>
                                             <th>尺码</th>
                                             <th>图片</th>
-                                            <th>手续费(毒)</th>
                                             <th>成本</th>
                                             <th>价格</th>
                                             <th>纯利润</th>
@@ -148,10 +147,13 @@
                                             </td>
                                             <td>{$v.size}</td>
                                             <td><a href="{$v.image}" target="_blank"><img src="{$v.image}" width="50"></a></td>
-                                            <td>{$v.charge}</td>
                                             <td>{$v.cost}</td>
                                             <td>{$v.price}</td>
-                                            <td>{$v.profit}</td>
+                                            <a>
+                                                <a href="javascript:;" class="info-tool" data-toggle="tooltip" data-placement="top" data-original-title="手续费(毒)：{$v.charge}">
+                                                {$v.profit}
+                                                </a>
+                                            </td>
                                             <td>{$v.ceil}%</td>
                                             <td>{$v.buyDate|date="Y-m-d",###}</td>
                                             <td>
