@@ -292,7 +292,7 @@ class Index
 
             $price  = $size['price'] / 100;
             $charge = round(($price * 0.095), 2);
-            $profit = $price - $v['cost'] - $charge;
+            $profit = round(($price - $v['cost'] - $charge), 2);
             $ceil   = round(($profit / $v['cost']) * 100, 2);
 
             $data['list_arr'][$k]['price']  = $price;
