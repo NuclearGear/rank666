@@ -338,7 +338,7 @@ class Index
             return returnJson('', 202, '添加失败！');
         }
 
-        cache::clear('index_money');
+        cache::rm('index_money');
         return returnJson($add_data, 200, '添加成功！');
     }
 
