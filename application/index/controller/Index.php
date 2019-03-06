@@ -276,6 +276,7 @@ class Index
         $data['total_cost'] = 0;
         $data['total_profit'] = 0;
         $data['total_num'] = 0;
+        $data['total_ceil'] = 0;
 
         foreach ($data['list_arr'] as $k => $v){
             // 获取商品价格
@@ -303,7 +304,10 @@ class Index
             $data['total_cost'] += $v['cost'];
             $data['total_num'] ++;
             $data['total_profit'] += $profit;
+            $data['total_ceil'] += $ceil;
         }
+
+        $data['total_ceil'] = round(($data['total_ceil'] / $data['total_num']), 2);
 
         cache::set($cacheKey, $data, 3600);
 
