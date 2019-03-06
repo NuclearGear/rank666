@@ -55,6 +55,7 @@
                             <div class="panel-body">
                                 <div class="panel-heading clearfix">
                                     <h4 class="panel-title">
+                                        <span class="product-sellDate"></span><br/>
                                         <span class="product-articleNumber"></span><br/>
                                         <span class="product-title"></span>
                                     </h4>
@@ -111,7 +112,7 @@
 
 <script>
     $(function(){
-        if (getParam('articleNumber') != ''){
+        if (getParam('articleNumber') != null){
             $('.articleNumber').val(getParam('articleNumber'));
         }
         $('.sure-btn').click();
@@ -147,8 +148,9 @@
             }
             $('.ret-msg').hide();
 
+            $('.product-sellDate').html('发售：' + ret['data']['product']['sellDate']);           // 发售日期
             $('.product-title').html(ret['data']['product']['title']);                           // 名称
-            $('.product-articleNumber').html(ret['data']['product']['articleNumber']);           // 货号
+            $('.product-articleNumber').html('货号：' + ret['data']['product']['articleNumber']); // 货号
             $('.product-soldNum').html(ret['data']['product']['soldNum']);                       // 总销量
             $('.product-image').attr('src', ret['data']['product']['image']);                    // 图片
 

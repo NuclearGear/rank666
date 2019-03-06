@@ -91,6 +91,7 @@ class Index
             'image'         => $product['logoUrl'],
             'articleNumber' => $product['articleNumber'],
             'soldNum'       => $product['soldNum'],
+            'sellDate'      => $product['sellDate'],
         ];
 
 
