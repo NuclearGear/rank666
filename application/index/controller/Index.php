@@ -297,6 +297,9 @@ class Index
 
             $price  = $size['price'] / 100;
             $charge = round(($price * 0.095), 2);
+            if ($charge > 299){
+                $charge = 299;
+            }
             $profit = round(($price - $v['cost'] - $charge - 100), 2);
             $ceil   = round(($profit / $v['cost']) * 100, 2);
 
