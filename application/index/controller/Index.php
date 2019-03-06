@@ -6,6 +6,7 @@ use think\Cache;
 class Index
 {
     public function index(){
+
         return view('search');
     }
 
@@ -58,6 +59,7 @@ class Index
 
     // 单品统计
     public function one(){
+
         return view('one');
     }
 
