@@ -205,7 +205,7 @@
             if (ret['retcode'] != 200){
                 $('.add-alert').html(ret.msg).parent().show();
             }else{
-                $('.add-alert').removeClass('alert-danger').addClass('alert-success');
+                $('.add-alert').removeClass('alert-danger').addClass('alert-success').html(ret.msg);
                 location.reload();
             }
             console.log(ret)

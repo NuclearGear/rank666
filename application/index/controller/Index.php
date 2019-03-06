@@ -277,7 +277,7 @@ class Index
         $data['total_profit'] = 0;
         $data['total_num'] = 0;
         $data['total_ceil'] = 0;
-        
+
         if (!$data['list_arr']){
             return view('money', ['data' => $data]);
         }
