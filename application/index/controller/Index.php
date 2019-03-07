@@ -287,7 +287,7 @@ class Index
             $size = db('du_size')->where([
                 'articleNumber' => $v['articleNumber'],
                 'size'          => $v['size'],
-            ])->order('spiderTime', 'desc')->find();
+            ])->field('price')->order('spiderTime', 'desc')->find();
             if (!$size){
                 $add_data['price']  = '';
                 $add_data['charge'] = '';
