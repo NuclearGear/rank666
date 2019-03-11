@@ -314,7 +314,7 @@ class Index
             $data['total_ceil'] += $ceil;
         }
 
-        $data['total_ceil'] = round(($data['total_ceil'] / $data['total_num']), 2);
+        $data['total_ceil'] = round(($data['total_profit'] / $data['total_cost']) * 100, 2);
 
         cache::set($cacheKey, $data, 3600);
 
