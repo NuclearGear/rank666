@@ -9,20 +9,23 @@ namespace app\common\validate;
 
 use think\Validate;
 
-class User extends Validate
+class userCheck extends Validate
 {
     protected $rule = [
-        'username'   =>  'require|between:3,20',
-        'password'   =>  'require|confirm|between:6,30',
+        'username'   =>  'require|length:3,20',
+        'password'   =>  'require|length:6,30',
         'repassword' =>  'require|confirm:password'
     ];
 
     protected $message  =   [
-        'name.require'       => '请输入用户名',
-        'name.max'           => '用户名必须在 3~20 个字符之间',
-        'pass.require'       => '请输入密码',
-        'pass.between'       => '密码必须在 6~30 个字符之间',
-        'password.confirm'   => '密码与确认密码不一致',
+        'username.require'   => '请输入用户名',
+        'username.between'   => '用户名必须在 3~20 个字符之间',
+
+        'password.require'   => '请输入密码',
+        'password.length'    => '密码必须在 6~30 个字符之间',
+
+
+        'repassword.require' => '请输入确认密码',
         'repassword.confirm' => '密码与确认密码不一致',
     ];
 

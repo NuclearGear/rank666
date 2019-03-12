@@ -63,9 +63,9 @@
       // 注册
       $('.sure-register').click(function () {
           var form_data = {
-              'user'  :$('.register_user').val(),
-              'pass'  :$('.register_pass').val(),
-              'repass':$('.register_repass').val(),
+              'username'  :$('.register_user').val(),
+              'password'  :$('.register_pass').val(),
+              'repassword':$('.register_repass').val(),
           };
           $.post("{:url('user/ajax_register')}",form_data,function (ret) {
               console.log(ret)
