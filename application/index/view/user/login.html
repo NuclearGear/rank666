@@ -68,11 +68,14 @@
               'password'  :$('.login_pass').val(),
           };
           $.post("{:url('user/ajax_login')}",form_data,function (ret) {
-              layer.msg(ret.msg);
               if (ret.code == 200){
+                  layer.msg(ret.msg);
+
                   setTimeout(function () {
                       location.href = "{:url('user/center')}";
                   }, 1000);
+              }else{
+                  layer.msg(ret.msg,function () {});
               }
           })
       });
@@ -85,11 +88,14 @@
               'repassword':$('.register_repass').val(),
           };
           $.post("{:url('user/ajax_register')}",form_data,function (ret) {
-              layer.msg(ret.msg);
               if (ret.code == 200){
+                  layer.msg(ret.msg);
+                  
                   setTimeout(function () {
                       location.href = "{:url('user/center')}";
                   }, 1000);
+              }else{
+                  layer.msg(ret.msg,function () {});
               }
           })
       })
