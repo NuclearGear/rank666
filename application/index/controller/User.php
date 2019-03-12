@@ -38,13 +38,13 @@ class User extends Controller
     }
 
     public function ajax_login(){
-        // 验证 注册 场景
+        // 验证 登录 场景
         $validate = validate('UserCheck');
         if (!$validate->scene('login')->check(input('post.'))){
             return returnJson('', 201, $validate->getError());
         }
 
-        // 添加注册用户
+        // 查看用户是否存在
         $ret_add = UserModel::get([
             'username' => input('post.username'),
             'password' => md5(input('post.password')),
