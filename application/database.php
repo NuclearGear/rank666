@@ -9,7 +9,7 @@
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 
-$mongo = True;
+$mongo = false;
 
 
 
@@ -17,13 +17,13 @@ $dev_database = [
     // 数据库类型
     'type'            => 'mysql',
     // 服务器地址
-    'hostname'        => '127.0.0.1',
+    'hostname'        => '144.48.9.105',
     // 数据库名
-    'database'        => 'du',
+    'database'        => 'lt_test',
     // 用户名
-    'username'        => 'root',
+    'username'        => 'lt_test',
     // 密码
-    'password'        => 'root',
+    'password'        => '!!23Bayuesiri',
     // 端口
     'hostport'        => '3306',
     // 连接dsn
@@ -200,7 +200,7 @@ if ($_SERVER['SERVER_ADDR'] == '127.0.0.1'){
         $database = $dev_database;
     }
 }else{
-    if ($mongo){
+    if (True){
         $database = $pro_mongo;
     }else{
         $database = $pro_database;

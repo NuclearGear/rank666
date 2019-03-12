@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta charset="UTF-8">
+<title>Sign Up Login</title>
+<link rel="stylesheet" href="__PUBLIC__/login/css/style.css">
+</head>
+
+<body>
+<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+<link rel='stylesheet prefetch' href='https://fonts.googleapis.com/icon?family=Material+Icons'>
+<body>
+<div class="cotn_principal">
+  <div class="cont_centrar">
+    <div class="cont_login">
+      <div class="cont_info_log_sign_up">
+        <div class="col_md_login">
+          <div class="cont_ba_opcitiy">
+            <h2>登 陆</h2>
+            <p>如果没有账号，请先去注册.</p>
+            <button class="btn_login" onclick="cambiar_login()">登 陆</button>
+          </div>
+        </div>
+        <div class="col_md_sign_up">
+          <div class="cont_ba_opcitiy">
+            <h2>注 册</h2>
+            <p>快速注册</p>
+            <button class="btn_sign_up" onclick="cambiar_sign_up()">注 册</button>
+          </div>
+        </div>
+      </div>
+      <div class="cont_back_info">
+        <div class="cont_img_back_grey"> <img src="__PUBLIC__/login/img/po.jpg" alt="" /> </div>
+      </div>
+      <div class="cont_forms" >
+        <div class="cont_img_back_"> <img src="__PUBLIC__/login/img/po.jpg" alt="" /> </div>
+        <div class="cont_form_login"> <a href="#" onclick="ocultar_login_sign_up()" ><i class="material-icons">&#xE5C4;</i></a>
+          <h2>登 陆</h2>
+          <input type="text" class="login_user" placeholder="用户名" />
+          <input type="password" class="login_pass" placeholder="密码" />
+          <button class="btn_login" onclick="cambiar_login()">登 陆</button>
+        </div>
+        <div class="cont_form_sign_up"> <a href="#" onclick="ocultar_login_sign_up()"><i class="material-icons">&#xE5C4;</i></a>
+          <h2>注 册</h2>
+          <input type="text"     class="register_user" placeholder="用户名" />
+          <input type="password" class="register_pass" placeholder="密码" />
+          <input type="password" class="register_repass" placeholder="确认密码" />
+          <button class="btn_sign_up sure-register" onclick="cambiar_sign_up()">注 册</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="__PUBLIC__/login/js/index.js"></script>
+<script src="/static/assets/plugins/jquery/jquery-3.1.0.min.js"></script>
+</body>
+
+</body>
+<script>
+  $(function () {
+      $('.btn_login').click();
+
+      // 注册
+      $('.sure-register').click(function () {
+          var form_data = {
+              'user'  :$('.register_user').val(),
+              'pass'  :$('.register_pass').val(),
+              'repass':$('.register_repass').val(),
+          };
+          $.post("{:url('user/ajax_register')}",form_data,function (ret) {
+              console.log(ret)
+          })
+      })
+  });
+</script>
+</html>
