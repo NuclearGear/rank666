@@ -12,12 +12,13 @@ use think\Validate;
 class userCheck extends Validate
 {
     protected $rule = [
-        'username'   =>  'require|length:3,20',
+        'username'   =>  'require|length:3,20|unique:UserModel',
         'password'   =>  'require|length:6,30',
         'repassword' =>  'require|confirm:password'
     ];
 
     protected $message  =   [
+        'username.unique'    => '用户名已存在',
         'username.require'   => '请输入用户名',
         'username.between'   => '用户名必须在 3~20 个字符之间',
 
@@ -30,7 +31,7 @@ class userCheck extends Validate
     ];
 
     protected $scene = [
-        'login'     =>  ['username','password'],
+        'login'     =>  ['username' => 'require','password' => 'require'],
         'register'  =>  ['username','password', 'repassword'],
     ];
 

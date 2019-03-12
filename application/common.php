@@ -36,12 +36,12 @@ function xmlToArray($simpleXmlElement){
 //1.返回的数据
 //2.返回码(默认200成功)
 //3.返回的正确(错误)信息
-function returnJson($data = '', $retcode = 200, $msg = ''){
+function returnJson($data = '', $code = 200, $msg = ''){
     header('Content-Type: application/json');
-    $tmp_arr             = array();
-    $tmp_arr['data']    = $data;
-    $tmp_arr['retcode'] = $retcode;
-    $tmp_arr['msg']     = $msg;
+    $tmp_arr         = array();
+    $tmp_arr['data'] = $data;
+    $tmp_arr['code'] = $code;
+    $tmp_arr['msg']  = $msg;
     echo json_encode($tmp_arr);
     die;
 }

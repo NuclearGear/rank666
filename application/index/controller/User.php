@@ -10,7 +10,6 @@ class User extends Controller
 {
     public function login()
     {
-
         return view();
     }
 
@@ -25,14 +24,47 @@ class User extends Controller
         // 添加注册用户
         $ret_add = UserModel::create([
             'username' => input('post.username'),
-            'password' => input('post.password'),
+            'password' => md5(input('post.password')),
             'phone'    => input('post.phone'),
         ]);
         if (!$ret_add){
             return returnJson('', 201, '注册失败！');
         }
 
-        return returnJson('', 200, '注册成功！');
+        // 登录
+        session('user', $ret_add);
+
+        return returnJson($ret_add, 200, '注册成功！');
+    }
+
+    public function ajax_login(){
+        // 验证 注册 场景
+        $validate = validate('UserCheck');
+        if (!$validate->scene('login')->check(input('post.'))){
+            return returnJson('', 201, $validate->getError());
+        }
+
+        // 添加注册用户
+        $ret_add = UserModel::get([
+            'username' => input('post.username'),
+            'password' => md5(input('post.password')),
+        ]);
+        if (!$ret_add){
+            return returnJson('', 201, '用户名或密码错误！');
+        }
+
+        // 登录
+        session('user', $ret_add);
+
+        return returnJson($ret_add, 200, '登录成功！');
+    }
+
+    public function center(){
+        if (!session('?user')){
+            $this->redirect(url('user/login'));
+        }
+
+        return view();
     }
 
 

@@ -38,14 +38,14 @@
           <h2>登 陆</h2>
           <input type="text" class="login_user" placeholder="用户名" />
           <input type="password" class="login_pass" placeholder="密码" />
-          <button class="btn_login" onclick="cambiar_login()">登 陆</button>
+          <button class="btn_login sure_login" onclick="cambiar_login()">登 陆</button>
         </div>
         <div class="cont_form_sign_up"> <a href="#" onclick="ocultar_login_sign_up()"><i class="material-icons">&#xE5C4;</i></a>
           <h2>注 册</h2>
           <input type="text"     class="register_user" placeholder="用户名" />
           <input type="password" class="register_pass" placeholder="密码" />
           <input type="password" class="register_repass" placeholder="确认密码" />
-          <button class="btn_sign_up sure-register" onclick="cambiar_sign_up()">注 册</button>
+          <button class="btn_sign_up sure_register" onclick="cambiar_sign_up()">注 册</button>
         </div>
       </div>
     </div>
@@ -56,19 +56,41 @@
 </body>
 
 </body>
+{include file="public/script"}
 <script>
   $(function () {
       $('.btn_login').click();
 
+      // 登录
+      $('.sure_login').click(function () {
+          var form_data = {
+              'username'  :$('.login_user').val(),
+              'password'  :$('.login_pass').val(),
+          };
+          $.post("{:url('user/ajax_login')}",form_data,function (ret) {
+              layer.msg(ret.msg);
+              if (ret.code == 200){
+                  setTimeout(function () {
+                      location.href = "{:url('user/center')}";
+                  }, 1000);
+              }
+          })
+      });
+
       // 注册
-      $('.sure-register').click(function () {
+      $('.sure_register').click(function () {
           var form_data = {
               'username'  :$('.register_user').val(),
               'password'  :$('.register_pass').val(),
               'repassword':$('.register_repass').val(),
           };
           $.post("{:url('user/ajax_register')}",form_data,function (ret) {
-              console.log(ret)
+              layer.msg(ret.msg);
+              if (ret.code == 200){
+                  setTimeout(function () {
+                      location.href = "{:url('user/center')}";
+                  }, 1000);
+              }
           })
       })
   });
