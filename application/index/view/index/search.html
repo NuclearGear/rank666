@@ -145,7 +145,7 @@
         var articleNumber = $('.articleNumber').val();
 
         $.get("{:url('index/AjaxProductOne')}", {day: day, articleNumber: articleNumber}, function (ret) {
-            if (ret.retcode != 200) {
+            if (ret.code != 200) {
                 $('.ret-msg').html(ret.msg).show();
                 return false;
             }

@@ -2,7 +2,7 @@
 <html >
 <head>
 <meta charset="UTF-8">
-<title>Sign Up Login</title>
+<title>RANK 系统 - 登录</title>
 <link rel="stylesheet" href="__PUBLIC__/login/css/style.css">
 </head>
 
@@ -90,7 +90,7 @@
           $.post("{:url('user/ajax_register')}",form_data,function (ret) {
               if (ret.code == 200){
                   layer.msg(ret.msg);
-                  
+
                   setTimeout(function () {
                       location.href = "{:url('user/center')}";
                   }, 1000);

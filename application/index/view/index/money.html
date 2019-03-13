@@ -202,7 +202,7 @@
             'buyDate':$('.add-buyDate').val(),
         };
         $.post("{:url('index/ajaxAdd')}",form_data,function (ret) {
-            if (ret['retcode'] != 200){
+            if (ret['code'] != 200){
                 $('.add-alert').html(ret.msg).parent().show();
             }else{
                 $('.add-alert').removeClass('alert-danger').addClass('alert-success').html(ret.msg);
@@ -219,7 +219,7 @@
         };
 
         $.post("{:url('index/ajaxDel')}", form_data, function (ret) {
-            if (ret['retcode'] == 200){
+            if (ret['code'] == 200){
                 obj.parent().parent().remove();
             }
             console.log(ret);

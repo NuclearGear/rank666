@@ -123,7 +123,7 @@ animation-direction: alternate;
 }
 
 .cont_forms_active_login > .cont_img_back_ {
-top:130px;
+top:-100px;
   -webkit-transition: all 0.5s;
 -moz-transition: all 0.5s;
 -ms-transition: all 0.5s;
