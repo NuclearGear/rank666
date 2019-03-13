@@ -320,7 +320,13 @@ class Index
 
         return view('money', ['data' => $data]);
     }
-
+//    ---------------------------------------------------------------------------------
+    //购买统计 test  CTY
+    public function buy(){
+        $data = '1';
+        return view('buy', ['data' => $data]);
+    }
+//    ---------------------------------------------------------------------------------
     // 添加购买商品
     public function ajaxAdd(){
         if (!input('?post.articleNumber') || !input('post.size') || !input('post.cost') || !input('post.buyDate')){
