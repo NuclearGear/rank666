@@ -13,6 +13,11 @@ class Center extends Controller
         return view();
     }
 
+    // VIP 页面
+    public function vip(){
+        return view();
+    }
+
 
 
 }
