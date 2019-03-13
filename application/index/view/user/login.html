@@ -38,7 +38,7 @@
         <div class="cont_img_back_"> <img src="__PUBLIC__/login/img/po.jpg" alt="" /> </div>
         <div class="cont_form_login"> <a href="#" onclick="ocultar_login_sign_up()" ><i class="material-icons">&#xE5C4;</i></a>
           <h2>登 陆</h2>
-          <input type="text" class="login_user" placeholder="用户名" />
+          <input type="text" class="login_user"  placeholder="用户名" />
           <input type="password" class="login_pass" placeholder="密码" />
           <button class="btn_login sure_login" onclick="cambiar_login()">登 陆</button>
         </div>
@@ -63,8 +63,21 @@
   $(function () {
       $('.btn_login').click();
 
+
+
+      // enter 键
+      $("body").keydown(function () {
+          if (event.keyCode == "13") {
+              $('.sure_login').click();
+          }
+      });
+      var lock = 1;
       // 登录
       $('.sure_login').click(function () {
+          if (lock != 1){
+              return false;
+          }
+          lock = 2;
           var form_data = {
               'username'  :$('.login_user').val(),
               'password'  :$('.login_pass').val(),
@@ -74,12 +87,13 @@
                   layer.msg(ret.msg);
 
                   setTimeout(function () {
-                      location.href = "{:url('user/center')}";
+                      location.href = "{:url('center/index')}";
                   }, 1000);
               }else{
                   layer.msg(ret.msg,function () {});
               }
-          })
+          });
+          lock = 1
       });
 
       // 注册
@@ -94,7 +108,7 @@
                   layer.msg(ret.msg);
 
                   setTimeout(function () {
-                      location.href = "{:url('user/center')}";
+                      location.href = "{:url('center/index')}";
                   }, 1000);
               }else{
                   layer.msg(ret.msg,function () {});
