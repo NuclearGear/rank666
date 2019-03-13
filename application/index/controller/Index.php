@@ -53,6 +53,8 @@ class Index
         if ($data['where']['ceil']){
             $query->order('ceil',input('get.ceil'));
         }
+        
+
 
         $data['diff'] = $query->paginate(20,false,['query' => $data['where']]);
         return view('diff', ['data' => $data]);
