@@ -49,6 +49,7 @@ class User extends Controller
             'username' => input('post.username'),
             'password' => md5(input('post.password')),
         ]);
+
         if (!$ret_add){
             return returnJson('', 201, '用户名或密码错误！');
         }
