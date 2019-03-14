@@ -1,6 +1,7 @@
 <?php
 namespace app\index\controller;
-
+use app\index\model\BuyModel;
+use think\Controller;
 use think\Cache;
 
 class Index
@@ -324,8 +325,19 @@ class Index
     }
 //    ---------------------------------------------------------------------------------
     //购买统计 test  CTY
+    // 添加购买商品
     public function buy(){
         $data = '1';
+        return view('buy', ['data' => $data]);
+    }
+    public function buyadd(){
+        $data = '1';
+        $ret_add = BuyModel::create([
+            'name'        => input('post.name'),
+            'credit_id'   => input('post.credit_id'),
+            'buy_account' => input('post.buy_account'),
+            'buy_time'    => input('post.buy_time'),
+        ]);
         return view('buy', ['data' => $data]);
     }
 //    ---------------------------------------------------------------------------------
@@ -340,7 +352,6 @@ class Index
         if (!$product){
             return returnJson('', 202, '商品不存在！');
         }
-
         $add_data = [
             'title'         => $product['title'],
             'image'         => $product['logoUrl'],
