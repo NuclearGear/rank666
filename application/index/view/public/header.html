@@ -25,8 +25,13 @@
     <link href="__PUBLIC__/ecaps/css/ecaps.min.css" rel="stylesheet">
     <link href="__PUBLIC__/ecaps/css/custom.css" rel="stylesheet">
 
+    <!-- selectPicker -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/css/bootstrap-select.min.css">
+    <!-- selectPicker -->
+
+
     <!-- 时间插件 -->
-    <!--<link href="/static/__PUBLIC__/ecaps/plugins/bootstrap-datepicker/css/datepicker3.css" rel="stylesheet" type="text/css"/>-->
+    <link href="__PUBLIC__/ecaps/plugins/bootstrap-datepicker/css/datepicker3.css" rel="stylesheet" type="text/css"/>
 
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -37,4 +42,19 @@
     <![endif]-->
 </head>
 <body>
+<style>
+    a{
+        transition: all 0.5s linear;
+    }
+    .table tbody>tr:hover{
+        color:#0070E0;
+        transform: scale(1.01);
+        transition: all 0.1s linear;
+        cursor: pointer;
+    }
+    .table tbody>tr:hover a{
+        color:#0070E0;
+    }
+
+</style>
 
