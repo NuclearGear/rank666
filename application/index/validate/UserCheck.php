@@ -9,7 +9,7 @@ namespace app\common\validate;
 
 use think\Validate;
 
-class userCheck extends Validate
+class UserCheck extends Validate
 {
     protected $rule = [
         'username'   =>  'require|length:3,20|unique:UserModel',

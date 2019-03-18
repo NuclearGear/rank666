@@ -17,7 +17,4 @@ class Center extends Controller
     public function vip(){
         return view();
     }
-
-
-
 }

@@ -44,85 +44,44 @@
                                             <div class="row">
                                                 <div class="form-group" style="width: 450px">
                                                     <p class="help-block">名称</p>
-                                                    <select class="form-control select_name" data-live-search="true">
+                                                    <select class="form-control select_name" data-live-search="true" style="width: 100%;">
                                                         <option value="no">无</option>
-                                                        <option value="36">EG7487 Air Jordan 1 Mid Lakers 湖人 紫黄</option>
-                                                        <option value="37">BQ6682-006 Air Jordan 6 Black Infrared GS 黑红OG 2019全明星 女款</option>
-                                                        <option value="38">555088-311 Air Jordan 1 “Turbo Green” 蒂芙尼绿 2019全明星</option>
-                                                        <option value="39">852542-700 Air Jordan 4 “Hot Lava” 热熔岩</option>
-                                                        <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
-                                                        <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
-                                                        <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
-                                                        <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
-                                                        <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
-                                                        <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
-                                                        <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
-                                                        <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
-                                                        <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
-                                                        <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
-                                                        <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
-                                                        <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
-                                                        <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
-                                                        <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
-                                                        <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
-                                                        <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
-                                                        <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
-                                                        <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
-                                                        <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
-                                                        <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
-                                                        <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
-                                                        <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
-                                                        <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
-                                                        <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
-                                                        <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
-                                                        <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
-                                                        <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
-                                                        <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
-                                                        <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
-                                                        <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
-                                                        <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
-                                                        <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
-                                                        <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
                                                     </select>
                                                 </div>
                                                 <div class="form-group" style="width: 80px">
                                                     <p class="help-block">尺码</p>
                                                     <select class="form-control select_size" data-live-search="true">
                                                         <option value="no">无</option>
-                                                        <option value="36">36</option>
-                                                        <option value="37">37</option>
-                                                        <option value="38">38</option>
-                                                        <option value="39">39</option>
-                                                        <option value="40">40</option>
+                                                        {volist name="data.size" id="v"}
+                                                        <option value="{$v}">{$v}</option>
+                                                        {/volist}
                                                     </select>
                                                 </div>
                                                 <div class="form-group" style="width: 150px">
                                                     <p class="help-block">购买平台</p>
                                                     <select class="form-control select_buy" data-live-search="true">
                                                         <option value="no">无</option>
-                                                        <option value="36">stockx</option>
-                                                        <option value="37">nike us</option>
-                                                        <option value="38">footlocker</option>
-                                                        <option value="38">kidsfootlocker</option>
-                                                        <option value="38">43EINHALBGM</option>
+                                                        {volist name="data.buy_type" key="k" id="v"}
+                                                        <option value="{$v.id}">{$v.name}</option>
+                                                        {/volist}
                                                     </select>
                                                 </div>
                                                 <div class="form-group" style="width: 150px">
                                                     <p class="help-block">转运平台</p>
                                                     <select class="form-control select_send" data-live-search="true">
                                                         <option value="no">无</option>
-                                                        <option value="36">转运中国</option>
-                                                        <option value="37">转运四方</option>
-                                                        <option value="38">顺丰快递</option>
+                                                        {volist name="data.send_type" key="k" id="v"}
+                                                        <option value="{$v.id}">{$v.name}</option>
+                                                        {/volist}
                                                     </select>
                                                 </div>
                                                 <div class="form-group" style="width: 150px">
                                                     <p class="help-block">出售平台</p>
                                                     <select class="form-control select_sold" data-live-search="true">
                                                         <option value="no">无</option>
-                                                        <option value="36">毒</option>
-                                                        <option value="37">Nice</option>
-                                                        <option value="38">咸鱼</option>
+                                                        {volist name="data.sold_type" key="k" id="v"}
+                                                        <option value="{$v.id}">{$v.name}</option>
+                                                        {/volist}
                                                     </select>
                                                 </div>
                                             </div>
@@ -139,12 +98,12 @@
 
                                             <div class="row">
                                                 <div class="form-group">
-                                                    <p class="help-block">购买时间</p>
+                                                    <p class="help-block">购买日期</p>
                                                     <input type="text" class="form-control date-picker" readonly="readonly" placeholder="开始时间">-
                                                     <input type="text" class="form-control date-picker" readonly="readonly" placeholder="结束时间">
                                                 </div>
                                                 <div class="form-group">
-                                                    <p class="help-block">出售时间</p>
+                                                    <p class="help-block">出售日期</p>
                                                     <input type="text" class="form-control date-picker" readonly="readonly" placeholder="开始时间">-
                                                     <input type="text" class="form-control date-picker" readonly="readonly" placeholder="结束时间">
                                                 </div>
@@ -176,72 +135,31 @@
                                         <div class="row">
                                             <div class="form-group" style="width: 350px">
                                                 <p class="help-block">名称</p>
-                                                <select class="form-control select_name" data-live-search="true">
-                                                    <option value="no">无</option>
-                                                    <option value="36">EG7487 Air Jordan 1 Mid Lakers 湖人 紫黄</option>
-                                                    <option value="37">BQ6682-006 Air Jordan 6 Black Infrared GS 黑红OG 2019全明星 女款</option>
-                                                    <option value="38">555088-311 Air Jordan 1 “Turbo Green” 蒂芙尼绿 2019全明星</option>
-                                                    <option value="39">852542-700 Air Jordan 4 “Hot Lava” 热熔岩</option>
-                                                    <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
-                                                    <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
-                                                    <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
-                                                    <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
-                                                    <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
-                                                    <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
-                                                    <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
-                                                    <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
-                                                    <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
-                                                    <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
-                                                    <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
-                                                    <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
-                                                    <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
-                                                    <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
-                                                    <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
-                                                    <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
-                                                    <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
-                                                    <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
-                                                    <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
-                                                    <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
-                                                    <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
-                                                    <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
-                                                    <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
-                                                    <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
-                                                    <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
-                                                    <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
-                                                    <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
-                                                    <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
-                                                    <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
-                                                    <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
-                                                    <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
-                                                    <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
-                                                    <option value="40">384665-060 Adidas Yeezy Boost 700 “SALT” 海盐</option>
+                                                <select class="form-control select_name_add" data-live-search="true" style="width: 100%">
+                                                    <option value="">无</option>
                                                 </select>
                                             </div>
                                             <div class="form-group" style="width: 80px">
                                                 <p class="help-block">尺码</p>
-                                                <select class="form-control select_size" data-live-search="true">
-                                                    <option value="no">无</option>
-                                                    <option value="36">36</option>
-                                                    <option value="37">37</option>
-                                                    <option value="38">38</option>
-                                                    <option value="39">39</option>
-                                                    <option value="40">40</option>
+                                                <select class="form-control select_size_add" data-live-search="true">
+                                                    <option value="">无</option>
+                                                    {volist name="data.size" id="v"}
+                                                        <option value="{$v}">{$v}</option>
+                                                    {/volist}
                                                 </select>
                                             </div>
                                             <div class="form-group" style="width: 150px">
                                                 <p class="help-block">购买平台</p>
-                                                <select class="form-control select_buy" data-live-search="true">
-                                                    <option value="no">无</option>
-                                                    <option value="36">stockx</option>
-                                                    <option value="37">nike us</option>
-                                                    <option value="38">footlocker</option>
-                                                    <option value="38">kidsfootlocker</option>
-                                                    <option value="38">43EINHALBGM</option>
+                                                <select class="form-control select_buy_add" data-live-search="true">
+                                                    <option value="">无</option>
+                                                    {volist name="data.buy_type" id="v"}
+                                                        <option value="{$v.id}">{$v.name}</option>
+                                                    {/volist}
                                                 </select>
                                             </div>
                                             <div class="form-group">
                                                 <p class="help-block">成本</p>
-                                                <input class="form-control" type="number" min="0">
+                                                <input class="form-control cost_add"  type="number" min="0">
                                             </div>
                                         </div>
 
@@ -249,33 +167,33 @@
                                         <div class="row">
                                             <div class="form-group" style="width: 150px">
                                                 <p class="help-block">转运平台</p>
-                                                <select class="form-control select_send" data-live-search="true">
-                                                    <option value="no">无</option>
-                                                    <option value="36">转运中国</option>
-                                                    <option value="37">转运四方</option>
-                                                    <option value="38">顺丰快递</option>
+                                                <select class="form-control select_send_add" data-live-search="true">
+                                                    <option value="">无</option>
+                                                    {volist name="data.send_type" id="v"}
+                                                    <option value="{$v.id}">{$v.name}</option>
+                                                    {/volist}
                                                 </select>
                                             </div>
                                             <div class="form-group">
                                                 <p class="help-block">转运单号</p>
-                                                <input class="form-control">
+                                                <input class="form-control send_number_add">
                                             </div>
                                             <div class="form-group">
                                                 <p class="help-block">转运费用</p>
-                                                <input class="form-control" type="number" min="0">
+                                                <input class="form-control send_cost_add" type="number" min="0">
                                             </div>
                                             <div class="form-group" style="width: 150px">
                                                 <p class="help-block">出售平台</p>
-                                                <select class="form-control select_sold" data-live-search="true">
-                                                    <option value="no">无</option>
-                                                    <option value="36">毒</option>
-                                                    <option value="37">Nice</option>
-                                                    <option value="38">咸鱼</option>
+                                                <select class="form-control select_sold_add" data-live-search="true">
+                                                    <option value="">无</option>
+                                                    {volist name="data.sold_type" id="v"}
+                                                    <option value="{$v.id}">{$v.name}</option>
+                                                    {/volist}
                                                 </select>
                                             </div>
                                             <div class="form-group">
                                                 <p class="help-block">出售价格</p>
-                                                <input class="form-control" type="number" min="0">
+                                                <input class="form-control sold_price_add" type="number" min="0">
                                             </div>
                                         </div>
 
@@ -283,12 +201,12 @@
                                         <div class="row">
 
                                             <div class="form-group">
-                                                <p class="help-block">购买时间</p>
-                                                <input type="text" class="form-control date-picker" readonly="readonly" placeholder="购买时间">
+                                                <p class="help-block">购买日期</p>
+                                                <input type="text" class="form-control date-picker buy_time_add" readonly="readonly" placeholder="购买日期">
                                             </div>
                                             <div class="form-group">
-                                                <p class="help-block">出售时间</p>
-                                                <input type="text" class="form-control date-picker" readonly="readonly" placeholder="出售时间">
+                                                <p class="help-block">出售日期</p>
+                                                <input type="text" class="form-control date-picker sold_time_add" readonly="readonly" placeholder="出售日期">
                                             </div>
                                         </div>
 
@@ -320,173 +238,27 @@
                                 <div role="tabpanel">
                                     <!-- Nav tabs -->
                                     <ul class="nav nav-tabs nav-justified" role="tablist">
-                                        <li role="presentation" class="active"><a href="#tab_all" role="tab" data-toggle="tab">全部</a></li>
-                                        <li role="presentation"><a href="#tab_1" role="tab" data-toggle="tab">一月</a></li>
-                                        <li role="presentation"><a href="#tab_2" role="tab" data-toggle="tab">二月</a></li>
-                                        <li role="presentation"><a href="#tab_3" role="tab" data-toggle="tab">三月</a></li>
-                                        <li role="presentation"><a href="#tab_4" role="tab" data-toggle="tab">四月</a></li>
-                                        <li role="presentation"><a href="#tab_5" role="tab" data-toggle="tab">五月</a></li>
-                                        <li role="presentation"><a href="#tab_6" role="tab" data-toggle="tab">六月</a></li>
-                                        <li role="presentation"><a href="#tab_7" role="tab" data-toggle="tab">七月</a></li>
-                                        <li role="presentation"><a href="#tab_8" role="tab" data-toggle="tab">八月</a></li>
-                                        <li role="presentation"><a href="#tab_9" role="tab" data-toggle="tab">九月</a></li>
-                                        <li role="presentation"><a href="#tab_10" role="tab" data-toggle="tab">十月</a></li>
-                                        <li role="presentation"><a href="#tab_11" role="tab" data-toggle="tab">十一月</a></li>
-                                        <li role="presentation"><a href="#tab_12" role="tab" data-toggle="tab">十二月</a></li>
+                                        <li role="presentation" class="tab_select active"><a href="#tab_0" role="tab" data-toggle="tab">全部</a></li>
+                                        {volist name="data.month" id="v"}
+                                            <li role="presentation" class="tab_select" data-start="{$v.start}" data-end="{$v.end}">
+                                                <a href="#tab_{$v.num}" role="tab" data-toggle="tab">{$v.num} 月</a>
+                                            </li>
+                                        {/volist}
                                     </ul>
                                     <!-- Tab panes -->
                                     <div class="tab-content">
-                                        <div role="tabpanel" class="tab-pane active fade in" id="tab_all">
-                                            <div class="row">
-                                                <div class="col-lg-2">
-                                                    <p>盈利：<i class="fa fa-cny" aria-hidden="true"></i> 1522789.5</p>
-                                                </div>
-                                                <div class="col-lg-2">
-                                                    <p>成本：<i class="fa fa-cny" aria-hidden="true"></i> 82225789.5</p>
-                                                </div>
-                                                <div class="col-lg-2">
-                                                    <p>售出：<i class="fa fa-cny" aria-hidden="true"></i> 282225789.5</p>
-                                                </div>
-                                                <div class="col-lg-2">
-                                                    <p>待收货： 43 双</p>
-                                                </div>
-                                                <div class="col-lg-2">
-                                                    <p>待出售： 65 双</p>
-                                                </div>
-                                                <div class="col-lg-2">
-                                                    <p>已出售： 89 双</p>
-                                                </div>
+                                        <div role="tabpanel" class="tab-pane active fade in" id="tab_0">
+                                            <div class="ajax_page">
+
                                             </div>
+                                        </div>
+                                        {volist name="data.month" id="v"}
+                                        <div role="tabpanel" class="tab-pane fade in" id="tab_{$v.num}">
+                                            <div class="ajax_page">
 
-                                            <div class="panel-body">
-                                                <table class="table table-hover">
-                                                    <thead>
-                                                    <tr>
-                                                        <th>名称</th>
-                                                        <th>货号</th>
-                                                        <th>尺码</th>
-                                                        <th>状态</th>
-                                                        <th>购买平台</th>
-                                                        <th>成本</th>
-                                                        <th>转运平台</th>
-                                                        <th>转运费用</th>
-                                                        <th>出售平台</th>
-                                                        <th>手续费</th>
-                                                        <th>出售价格</th>
-                                                        <th>利润</th>
-                                                        <th>购买日期</th>
-                                                        <th>出售日期</th>
-                                                        <th>操作</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    <tr>
-                                                        <th scope="row">
-                                                            <a href="#">Air Jordan 1 Retro High Blue Chill 2019全明星 北卡蓝 女</a>
-                                                        </th>
-                                                        <td>
-                                                            <a href="#">CD0461-401</a>
-                                                        </td>
-                                                        <td>38</td>
-                                                        <td><span class="label label-danger">待收货</span></td>
-                                                        <td>stockx</td>
-                                                        <td>4388.6</td>
-                                                        <td>转运中国</td>
-                                                        <td>108.2</td>
-                                                        <td>毒</td>
-                                                        <td>299</td>
-                                                        <td>5862</td>
-                                                        <td>1240</td>
-                                                        <td>2019-3-4</td>
-                                                        <td>2019-4-2</td>
-                                                        <td>没想好</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">
-                                                            <a href="#">Air Jordan 1 Retro High Blue Chill 2019全明星 北卡蓝 女</a>
-                                                        </th>
-                                                        <td>
-                                                            <a href="#">CD0461-401</a>
-                                                        </td>
-                                                        <td>38</td>
-                                                        <td><span class="label label-warning">待出售</span></td>
-                                                        <td>stockx</td>
-                                                        <td>4388.6</td>
-                                                        <td>转运中国</td>
-                                                        <td>108.2</td>
-                                                        <td>毒</td>
-                                                        <td>299</td>
-                                                        <td>5862</td>
-                                                        <td>1240</td>
-                                                        <td>2019-3-4</td>
-                                                        <td>2019-4-2</td>
-                                                        <td>没想好</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">
-                                                            <a href="#">Air Jordan 1 Retro High Blue Chill 2019全明星 北卡蓝 女</a>
-                                                        </th>
-                                                        <td>
-                                                            <a href="#">CD0461-401</a>
-                                                        </td>
-                                                        <td>38</td>
-                                                        <td><span class="label label-success">已出售</span></td>
-                                                        <td>stockx</td>
-                                                        <td>4388.6</td>
-                                                        <td>转运中国</td>
-                                                        <td>108.2</td>
-                                                        <td>毒</td>
-                                                        <td>299</td>
-                                                        <td>5862</td>
-                                                        <td>1240</td>
-                                                        <td>2019-3-4</td>
-                                                        <td>2019-4-2</td>
-                                                        <td>没想好</td>
-                                                    </tr>
-
-
-
-                                                    </tbody>
-                                                </table>
                                             </div>
-
                                         </div>
-                                        <div role="tabpanel" class="tab-pane" id="tab_1">
-                                            <p>111111</p>
-                                        </div>
-                                        <div role="tabpanel" class="tab-pane" id="tab_2">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitat.</p>
-                                        </div>
-                                        <div role="tabpanel" class="tab-pane" id="tab_3">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitat.</p>
-                                        </div>
-                                        <div role="tabpanel" class="tab-pane" id="tab_4">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitat.</p>
-                                        </div>
-                                        <div role="tabpanel" class="tab-pane" id="tab_5">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitat.</p>
-                                        </div>
-                                        <div role="tabpanel" class="tab-pane" id="tab_6">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitat.</p>
-                                        </div>
-                                        <div role="tabpanel" class="tab-pane" id="tab_7">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitat.</p>
-                                        </div>
-                                        <div role="tabpanel" class="tab-pane" id="tab_8">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitat.</p>
-                                        </div>
-                                        <div role="tabpanel" class="tab-pane" id="tab_9">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitat.</p>
-                                        </div>
-                                        <div role="tabpanel" class="tab-pane" id="tab_10">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitat.</p>
-                                        </div>
-                                        <div role="tabpanel" class="tab-pane" id="tab_11">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitat.</p>
-                                        </div>
-                                        <div role="tabpanel" class="tab-pane" id="tab_12">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitat.</p>
-                                        </div>
+                                        {/volist}
                                     </div>
                                 </div>
                             </div>
@@ -511,11 +283,6 @@
 {include file="public/script"}
 {include file="public/footer"}
 <script>
-    $('.select_name').selectpicker({
-        size:15,
-        title:'请选择名称 或 货号',
-        placeholder:'请选择名称 或 货号',
-    });
     $('.select_size').selectpicker({
         size:15,
         title:'尺码',
@@ -536,6 +303,27 @@
         title:'出售平台',
         placeholder:'请选择平台'
     });
+    $('.select_size_add').selectpicker({
+        size:15,
+        title:'尺码',
+        placeholder:'请选择尺码'
+    });
+    $('.select_buy_add').selectpicker({
+        size:15,
+        title:'购买平台',
+        placeholder:'请选择平台'
+    });
+    $('.select_send_add').selectpicker({
+        size:15,
+        title:'转运平台',
+        placeholder:'请选择平台'
+    });
+    $('.select_sold_add').selectpicker({
+        size:15,
+        title:'出售平台',
+        placeholder:'请选择平台'
+    });
+
 
     // 搜索框与添加框的切换
     $('.change_shoes').click(function () {
@@ -557,20 +345,73 @@
     $('.btn_add').click(function () {
         layer.load();
         var form_data = {
-
+            'number' : $('.select_name_add').selectpicker('val'),
+            'size'          : $('.select_size_add').selectpicker('val'),
+            'buy_type_id'      : $('.select_buy_add').selectpicker('val'),
+            'buy_cost'      : $('.cost_add').val(),
+            'send_type_id'      : $('.select_send_add').selectpicker('val'),
+            'send_code'      : $('.send_number_add').val(),
+            'send_cost'      : $('.send_cost_add').val(),
+            'sold_type_id'      : $('.select_sold_add').selectpicker('val'),
+            'sold_price'      : $('.sold_price_add').val(),
+            'buy_time'      : $('.buy_time_add').val(),
+            'sold_time'      : $('.sold_time_add').val(),
         };
-        // 假装在添加
-        setTimeout(function(){
-           $.post("{:url('buy/ajax_add')}",form_data,function (ret) {
-                layer.closeAll('loading');
-                if(ret.code == 200){
-                    layer.msg(ret.msg);
-                }else{
-                    layer.msg(ret.msg,function () {});
-                }
-           });
-        }, 1000);
+        console.log(form_data);
+       $.post("{:url('buy/ajax_add')}",form_data,function (ret) {
+            layer.closeAll('loading');
+            if(ret.code == 200){
+                layer.msg(ret.msg);
+            }else{
+                layer.msg(ret.msg,function () {});
+            }
+       });
+    });
 
+    // 遍历插入商品
+    $(function () {
+       $.get("{:url('buy/ajax_get_goods')}",{},function (ret) {
+           if (ret.code == 200){
+               var dom = '';
+               $.each(ret.data,function (k, v) {
+                    dom += "<option value=\"" +  v['articleNumber'] + "\">"+ v['articleNumber'] + ' ' + v['title'] +"</option>";
+               });
+               $('.select_name').append(dom);
+               $('.select_name').selectpicker({
+                   size:15,
+                   title:'请输入名称 或 货号',
+                   placeholder:'请输入名称 或 货号',
+               });
+
+               $('.select_name_add').append(dom);
+               $('.select_name_add').selectpicker({
+                   size:15,
+                   title:'请输入名称 或 货号',
+                   placeholder:'请输入名称 或 货号',
+               });
+           }
+       });
+
+       // 获取 全部选项卡 第一页
+       AjaxPage(1,'0');
+    });
+
+    // 点击分页触发的ajax
+    function AjaxPage(page,tab, start, end){
+        layer.load(2);
+        $.get("{:url('buy/ajax_page')}",{'page':page, 'tab':tab, 'start':start, 'end':end},function (ret) {
+            layer.closeAll('loading');
+            $('.ajax_page').eq(tab).html(ret);
+            $('.ajax_page').eq(tab).find('table').fadeIn('normal');
+        });
+    }
+
+    // 绑定ajax分页事件
+    $('.tab_select').on('click',function () {
+        var index = $(this).index();
+        var start = $(this).data('start');
+        var end = $(this).data('end');
+        AjaxPage(1, index, start, end);
     });
 
 

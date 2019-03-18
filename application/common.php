@@ -45,3 +45,4 @@ function returnJson($data = '', $code = 200, $msg = ''){
     echo json_encode($tmp_arr);
     die;
 }
+
