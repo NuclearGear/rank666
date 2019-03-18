@@ -34,7 +34,7 @@ class User extends Controller
         // 登录
         session('user', $ret_add);
 
-        return returnJson($ret_add, 200, '注册成功！');
+        return returnJson($ret_add, 200, '注册成功, 正在登录..');
     }
 
     public function ajax_login(){
