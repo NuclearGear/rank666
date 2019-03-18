@@ -45,13 +45,14 @@ class User extends Controller
         }
 
         // 查看用户是否存在
-        $ret_add = UserModel::get([
-            'username' => input('post.username'),
-            'password' => md5(input('post.password')),
-        ]);
+        $ret_add = UserModel::get(['username' => input('post.username'),]);
 
         if (!$ret_add){
-            return returnJson('', 201, '用户名或密码错误！');
+            return returnJson('', 201, '用户名不存在！');
+        }
+
+        if ($ret_add['password'] != md5(input('post.password'))){
+            return returnJson('', 201, '密码错误，请重新输入！');
         }
 
         // 登录
