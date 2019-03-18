@@ -75,11 +75,6 @@ class Buy extends Base
 
         $data['list'] = BuyModel::where($where)->where($where_time)->paginate(10,false,['path'=>"javascript:AjaxPage([PAGE], {$tab});"]);
 
-//        // 盈利
-//        $data['profit'] = BuyModel::where(['user_id' => session('user.id')])
-//                            ->where('buy_time', 'between', [input('get.start'), input('get.end')])
-//                            ->sum('profit');
-
         return view('ajax_page', ['data' => $data]);
     }
 
