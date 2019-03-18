@@ -60,12 +60,9 @@ class User extends Controller
         return returnJson($ret_add, 200, '登录成功！');
     }
 
-    public function center(){
-        if (!session('?user')){
-            $this->redirect(url('user/login'));
-        }
-
-        return view();
+    public function login_out(){
+        session('user', null);
+        $this->redirect(url('User/login'));
     }
 
 

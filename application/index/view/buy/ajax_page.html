@@ -1,0 +1,74 @@
+<div class="row">
+    <div class="col-lg-2">
+        <p>盈利：<i class="fa fa-cny" aria-hidden="true"></i> {$data.profit}</p>
+    </div>
+    <div class="col-lg-2">
+        <p>成本：<i class="fa fa-cny" aria-hidden="true"></i> {$data.cost}</p>
+    </div>
+    <div class="col-lg-2">
+        <p>售出：<i class="fa fa-cny" aria-hidden="true"></i> {$data.sold_total}</p>
+    </div>
+    <div class="col-lg-2">
+        <p>待收货： {$data.buy} 双</p>
+    </div>
+    <div class="col-lg-2">
+        <p>待出售： {$data.send} 双</p>
+    </div>
+    <div class="col-lg-2">
+        <p>已出售： {$data.sold} 双</p>
+    </div>
+</div>
+
+<div class="panel-body">
+    <table class="table table-hover" style="display: none">
+        <thead>
+        <tr>
+            <th>名称</th>
+            <th>货号</th>
+            <th>尺码</th>
+            <th>购买平台</th>
+            <th>成本</th>
+            <th>转运平台</th>
+            <th>转运费用</th>
+            <th>出售平台</th>
+            <th>手续费</th>
+            <th>出售价格</th>
+            <th>利润</th>
+            <th>购买日期</th>
+            <th>出售日期</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {volist name="data.list" id="v"}
+        <tr>
+            <th scope="row">
+                <img src="{$v.image}" width="35"> <a href="#">{$v.name}</a>
+            </th>
+            <td>
+                <a href="#">{$v.number}</a>
+            </td>
+            <td>{$v.size}</td>
+            <td>{$v.buy_type_id}</td>
+            <td>{$v.buy_cost}</td>
+            <td>{$v.send_type_id}</td>
+            <td>{$v.send_cost}</td>
+            <td>{$v.sold_type_id}</td>
+            <td>{$v.sold_charge}</td>
+            <td>{$v.sold_price}</td>
+            <td>{$v.profit}</td>
+            <td>{$v.buy_time}</td>
+            <td>{$v.sold_time}</td>
+            <td>没想好</td>
+        </tr>
+        {/volist}
+
+
+
+        </tbody>
+    </table>
+    <center>
+        {$data.list->render()}
+    </center>
+</div>
+

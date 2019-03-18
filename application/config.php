@@ -241,4 +241,13 @@ return [
         'var_page'  => 'page',
         'list_rows' => 15,
     ],
+    'db_mongo' => [
+        'type'        =>   '\think\mongo\Connection',
+        'hostname'    =>   '144.48.9.105',
+        'database'    =>   'du',
+//        'username'    =>   '用户名',
+//        'password'    =>   '密码',
+        'hostport'    =>   27017,
+
+    ],
 ];
