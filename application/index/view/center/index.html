@@ -27,12 +27,16 @@
                         <div class="panel panel-white stats-widget">
                             <div class="panel-body">
                                 <div class="pull-left">
-                                    <span class="stats-number">¥ 781,876</span>
-                                    <p class="stats-info">本月盈利  (上个月： ¥ 551,876)</p>
+                                    <span class="stats-number">本月盈利：¥ {$data.profit}</span><br/><br/>
+                                    <p class="stats-info">(上月盈利： ¥ {$data.last_profit})</p>
                                 </div>
                                 <div class="pull-right">
-                                    <i class="icon-arrow_upward stats-icon"></i>
-                                    ¥ 6578
+                                    {gt name="$data.profit" value="$data.last_profit"}
+                                    <i class="icon-arrow_upward stats-icon" style="color: red"></i>
+                                    {else/}
+                                    <i class="icon-arrow_downward stats-icon" style="color: green"></i>
+                                    {/gt}
+                                    ¥ {$data.profit - $data.last_profit}
                                 </div>
                             </div>
                         </div>
@@ -41,12 +45,16 @@
                         <div class="panel panel-white stats-widget">
                             <div class="panel-body">
                                 <div class="pull-left">
-                                    <span class="stats-number">¥ 578,100</span>
-                                    <p class="stats-info">本月成本  (上个月： ¥ 321,876)</p>
+                                    <span class="stats-number">本月成本：¥ {$data.buy_cost}</span><br/><br/>
+                                    <p class="stats-info">  (上月成本： ¥ {$data.last_buy_cost})</p>
                                 </div>
                                 <div class="pull-right">
-                                    <i class="icon-arrow_downward stats-icon"></i>
-                                    ¥ 4688
+                                    {gt name="$data.buy_cost" value="$data.last_buy_cost"}
+                                    <i class="icon-arrow_upward stats-icon" style="color: red"></i>
+                                    {else/}
+                                    <i class="icon-arrow_downward stats-icon" style="color: green"></i>
+                                    {/gt}
+                                    ¥ {$data.buy_cost - $data.last_buy_cost}
                                 </div>
                             </div>
                         </div>
@@ -55,12 +63,16 @@
                         <div class="panel panel-white stats-widget">
                             <div class="panel-body">
                                 <div class="pull-left">
-                                    <span class="stats-number">¥ 23,356</span>
-                                    <p class="stats-info">本月销售额  (上个月： ¥ 81,876)</p>
+                                    <span class="stats-number">本月销售额：¥ {$data.sold_price_total}</span><br/><br/>
+                                    <p class="stats-info">(上月销售额： ¥ {$data.last_sold_price_total})</p>
                                 </div>
                                 <div class="pull-right">
-                                    <i class="icon-arrow_upward stats-icon"></i>
-                                    ¥ 3245.55
+                                    {gt name="$data.sold_price_total" value="$data.last_sold_price_total"}
+                                    <i class="icon-arrow_upward stats-icon" style="color: red"></i>
+                                    {else/}
+                                    <i class="icon-arrow_downward stats-icon" style="color: green"></i>
+                                    {/gt}
+                                    ¥ {$data.sold_price_total - $data.last_sold_price_total}
                                 </div>
                             </div>
                         </div>
@@ -69,8 +81,15 @@
                         <div class="panel panel-white stats-widget">
                             <div class="panel-body">
                                 <div class="pull-left">
-                                    <span class="stats-number">58%</span>
-                                    <p class="stats-info">本月利率比 计算方式：盈利 / 成本</p>
+                                    <span class="stats-number">本月利率比：{$data.interest_rate}</span>
+                                    <p class="stats-info">上月利率比：{$data.last_interest_rate}</p>
+                                    <!-- <p class="stats-info">计算方式：盈利 / 成本</p> -->
+                                    {gt name="$data.interest_rate" value="$data.last_interest_rate"}
+                                    <i class="icon-arrow_upward stats-icon" style="color: red"></i>
+                                    {else/}
+                                    <i class="icon-arrow_downward stats-icon" style="color: green"></i>
+                                    {/gt}
+                                    ¥ {$data.interest_rate - $data.last_interest_rate}
                                 </div>
                                 <div class="pull-right">
                                 </div>
@@ -87,7 +106,7 @@
                         <div class="panel panel-white stats-widget">
                             <div class="panel-body">
                                 <div class="pull-left">
-                                    <span class="stats-number">48</span>
+                                    <span class="stats-number">{$data.shoes_total}</span>
                                     <p class="stats-info">本月鞋子总数  </p>
                                 </div>
                             </div>
@@ -97,7 +116,7 @@
                         <div class="panel panel-white stats-widget">
                             <div class="panel-body">
                                 <div class="pull-left text-success">
-                                    <span class="stats-number">23</span>
+                                    <span class="stats-number">{$data.send}</span>
                                     <p class="stats-info">已收到</p>
                                 </div>
                             </div>
@@ -107,7 +126,7 @@
                         <div class="panel panel-white stats-widget">
                             <div class="panel-body">
                                 <div class="pull-left">
-                                    <span class="stats-number">20</span>
+                                    <span class="stats-number">{$data.buy}</span>
                                     <p class="stats-info">待收货</p>
                                 </div>
                             </div>
@@ -117,12 +136,12 @@
                         <div class="panel panel-white stats-widget">
                             <div class="panel-body">
                                 <div class="pull-left">
-                                    <span class="stats-number">5</span>
+                                    <span class="stats-number">{$data.sold}</span>
                                     <p class="stats-info">已售出</p>
                                 </div>
-                                <div class="pull-right">
+                          <!--       <div class="pull-right">
                                     <i class="icon-arrow_upward stats-icon"></i>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>
