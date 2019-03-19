@@ -81,15 +81,15 @@
                         <div class="panel panel-white stats-widget">
                             <div class="panel-body">
                                 <div class="pull-left">
-                                    <span class="stats-number">本月利率比：{$data.interest_rate}</span>
-                                    <p class="stats-info">上月利率比：{$data.last_interest_rate}</p>
+                                    <span class="stats-number">本月利率比：{$data.interest_rate * 100}%</span><br/><br/>
+                                    <p class="stats-info">上月利率比：{$data.last_interest_rate * 100}%</p>
                                     <!-- <p class="stats-info">计算方式：盈利 / 成本</p> -->
                                     {gt name="$data.interest_rate" value="$data.last_interest_rate"}
                                     <i class="icon-arrow_upward stats-icon" style="color: red"></i>
                                     {else/}
                                     <i class="icon-arrow_downward stats-icon" style="color: green"></i>
                                     {/gt}
-                                    ¥ {$data.interest_rate - $data.last_interest_rate}
+                                    ¥ {$data.interest_rate - $data.last_interest_rate}%
                                 </div>
                                 <div class="pull-right">
                                 </div>
