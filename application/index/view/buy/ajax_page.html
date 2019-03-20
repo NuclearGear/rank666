@@ -43,7 +43,7 @@
         {volist name="data.list" id="v"}
         <tr>
             <th scope="row">
-                <img src="{$v.image}" width="35"> <a href="#">{$v.name}</a>
+                <a href="#"><img src="{$v.image}" width="35"> {$v.name}</a>
             </th>
             <td>
                 <a href="#">{$v.number}</a>
@@ -59,7 +59,9 @@
             <td>{$v.profit}</td>
             <td>{$v.buy_time}</td>
             <td>{$v.sold_time}</td>
-            <td>没想好</td>
+            <td>
+                <button type="button" class="btn btn-danger" onclick="del_shoes($(this))" data-id="{$v.id}">删 除</button>
+            </td>
         </tr>
         {/volist}
 

@@ -53,27 +53,84 @@ class Buy extends Base
     }
 
     public function ajax_page($tab = '0'){
-        $where = ['user_id' => session('user.id')];
-
-        $where_time = [];
-        if (input('get.start') && input('get.end')){
-            $where_time = ['buy_time' => ['between', input('get.start').','.input('get.end')]];
+        // 缓存设置
+        $get_params = input('get.');
+        $get_where = implode('_',array_values($get_params['where']));
+        $cache_key = implode('_', [session('user.id'), $get_params['page'], $get_params['tab'], $get_where]);
+        $data = Cache::get($cache_key);
+        if ($data){
+            return view('ajax_page', ['data' => $data]);
         }
+
+        $where['user_id'] = ['=', session('user.id')];
+
+        // 货号
+        if (input('?get.where.number') && input('get.where.number')){
+            $where['number'] = ['=', input('get.where.number')];
+        }
+        // 尺码
+        if (input('?get.where.size') && input('get.where.size')){
+            $where['size'] = ['=', input('get.where.size')];
+        }
+        // 购买平台
+        if (input('?get.where.buy_type_id') && input('get.where.buy_type_id')){
+            $where['buy_type_id'] = ['=', input('get.where.buy_type_id')];
+        }
+        // 转运平台
+        if (input('?get.where.send_type_id') && input('get.where.send_type_id')){
+            $where['send_type_id'] = ['=', input('get.where.send_type_id')];
+        }
+        // 出售平台
+        if (input('?get.where.sold_type_id') && input('get.where.sold_type_id')){
+            $where['sold_type_id'] = ['=', input('get.where.sold_type_id')];
+        }
+        // 价格 >=
+        if (input('get.where.price_start') && !input('get.where.price_end')){
+            $where['buy_cost'] = ['>=', input('get.where.price_start')];
+        }
+        // 价格 <=
+        if (!input('get.where.price_start') && input('get.where.price_end')){
+            $where['buy_cost'] = ['<=', input('get.where.price_end')];
+        }
+        // 价格 between
+        if (input('get.where.price_start') && input('get.where.price_end')){
+            $where['buy_cost'] = ['between', [input('get.where.price_start'), input('get.where.price_end')]];
+        }
+        // 出售时间 >=
+        if (input('get.where.sold_time_start') && !input('get.where.sold_time_end')){
+            $where['sold_time'] = ['>=', input('get.where.sold_time_start')];
+        }
+        // 出售时间 <=
+        if (!input('get.where.sold_time_start') && input('get.where.sold_time_end')){
+            $where['sold_time'] = ['<=', input('get.where.sold_time_end')];
+        }
+        // 出售时间 between
+        if (input('get.where.sold_time_start') && input('get.where.sold_time_end')){
+            $where['sold_time'] = ['between', [input('get.where.sold_time_start'), input('get.where.sold_time_end')]];
+        }
+        // 购买时间
+        if (input('get.start') && input('get.end') && !input('get.where.sold_time_start') && !input('get.where.sold_time_end')){
+            $where['buy_time'] = ['between', [input('get.start'), input('get.end')]];
+        }
+
         // 盈利
-        $data['profit'] = BuyModel::where($where)->where($where_time)->sum('profit');
+        $data['profit'] = BuyModel::where($where)->sum('profit');
+        $data['profit'] = round($data['profit'], 2);
         // 成本
-        $data['cost'] = BuyModel::where($where)->where($where_time)->sum('buy_cost');
+        $data['cost'] = BuyModel::where($where)->sum('buy_cost');
         // 售出
-        $data['sold_total'] = BuyModel::where($where)->where($where_time)->sum('sold_price');
+        $data['sold_total'] = BuyModel::where($where)->sum('sold_price');
         // 待收货
-        $data['buy'] = BuyModel::where($where)->where($where_time)->where(['send_type_id' => ''])->where(['sold_price' => ''])->count();
+        $data['buy'] = BuyModel::where($where)->where(['send_type_id' => ''])->where(['sold_price' => ''])->count();
         // 待出售
-        $data['send'] = BuyModel::where($where)->where($where_time)->where('send_type_id', 'NEQ', '')->where(['sold_price' => ''])->count();
+        $data['send'] = BuyModel::where($where)->where('send_type_id', 'NEQ', '')->where(['sold_price' => ''])->count();
         // 已经出售
-        $data['sold'] = BuyModel::where($where)->where($where_time)->where('sold_price', 'NEQ', '')->count();
+        $data['sold'] = BuyModel::where($where)->where('sold_price', 'NEQ', '')->count();
+        // 列表
+        $data['list'] = BuyModel::where($where)->order('buy_time', 'desc')->paginate(30,false,['path'=>"javascript:AjaxPage([PAGE], {$tab});"]);
 
 
-        $data['list'] = BuyModel::where($where)->where($where_time)->paginate(10,false,['path'=>"javascript:AjaxPage([PAGE], {$tab});"]);
+        Cache::tag('buy_ajax_page' . session('user.id'))->set($cache_key, $data, 3600 * 4);
 
         return view('ajax_page', ['data' => $data]);
     }
@@ -135,7 +192,7 @@ class Buy extends Base
         }
         // 出售平台 毒 9.5%的手续费
         if ($add_data['sold_type_id'] == 1 && $add_data['sold_price']){
-            if($add_data['sold_price'] * 0.095 > 299){
+            if(($add_data['sold_price'] * 0.095) > 299){
                 $add_data['sold_charge'] = 299;
             }else{
                 $add_data['sold_charge'] = round($add_data['sold_price'] * 0.095, 2);
@@ -143,7 +200,10 @@ class Buy extends Base
         }
         // 计算利润
         if ($add_data['buy_cost'] && $add_data['sold_price']){
-            $add_data['profit'] = $add_data['sold_price'] - $add_data['buy_cost'] - $add_data['sold_charge'];
+            $add_data['profit'] = $add_data['sold_price'] - $add_data['buy_cost'];
+        }
+        if ($add_data['sold_type_id'] == 1 && $add_data['sold_price']){
+            $add_data['profit'] = $add_data['profit'] - $add_data['sold_charge'];
         }
 
         $ret_add = BuyModel::create($add_data);
@@ -151,7 +211,24 @@ class Buy extends Base
         if (!$ret_add){
             return returnJson('', 201, '添加失败！');
         }
+
+        // 清除查询缓存
+        Cache::clear('buy_ajax_page' . session('user.id'));
+
         return returnJson('', 200, '添加成功，请刷新页面后查看');
+    }
+
+    // 删除鞋子
+    public function ajax_del(){
+        $ret_del = BuyModel::destroy(input('post.id'));
+        if (!$ret_del){
+            return returnJson($ret_del, 201, '删除失败，请刷新页面后重试！');
+        }
+
+        // 清除查询缓存
+        Cache::clear('buy_ajax_page' . session('user.id'));
+
+        return returnJson('', 200, '删除成功，统计信息刷新后重置！');
     }
 
 
