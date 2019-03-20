@@ -13,8 +13,10 @@ class Center extends Controller
     	$where = ['user_id' => session('user.id')];
         // 本月盈利
         $data['profit'] = BuyModel::where($where)->whereTime('buy_time', 'month')->sum('profit');
+        $data['profit'] = round($data['profit'],3);
         // 上月盈利
         $data['last_profit'] = BuyModel::where($where)->whereTime('buy_time', 'last month')->sum('profit');
+        $data['last_profit'] = round($data['last_profit'],3);
         // 本月成本
         $data['buy_cost'] = BuyModel::where($where)->whereTime('buy_time', 'month')->sum('buy_cost');
         // 上月成本
@@ -32,15 +34,19 @@ class Center extends Controller
         // 已经出售
         $data['sold'] = BuyModel::where($where)->where('sold_price', 'NEQ', '')->count();
         // 本月利率
-        // $data['interest_rate'] = $data['profit'] / $data['buy_cost'];
-        $data['interest_rate'] = round($data['profit'] / $data['buy_cost'],3);
+         if ($data['buy_cost'] == '0') {
+        	$data['sold'] = '1';
+        }else{
+        	$data['cost'] = $data['buy_cost'];
+        }
+        $data['interest_rate'] = round($data['profit'] / $data['cost'],3);
         // 上月利率
         if ($data['last_buy_cost'] == '0') {
         	$data['last_sold'] = '1';
         }else{
-        	$data['last_sold'] = $data['last_buy_cost'];
+        	$data['last_cost'] = $data['last_buy_cost'];
         }
-         $data['last_interest_rate'] = round( $data['last_profit'] / $data['last_sold'],2);
+         $data['last_interest_rate'] = round( $data['last_profit'] / $data['last_cost'],2);
         return view('index', ['data' => $data]);
     }
 
