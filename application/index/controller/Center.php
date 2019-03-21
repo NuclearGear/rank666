@@ -5,7 +5,7 @@ use app\index\model\UserModel;
 use app\index\model\BuyModel;
 use think\Controller;
 
-class Center extends Controller
+class Center extends Base
 {
     public function index()
     {
