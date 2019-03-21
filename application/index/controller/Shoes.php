@@ -13,8 +13,61 @@ class Shoes extends Base
     // 单品查询
     public function index()
     {
-        return view();
+        $data['articleNumber'] = input('articleNumber', 'CD0461-401');
+        $data['size_start'] = input('size_start');
+        $data['size_end'] = input('size_end');
+        if (input('?size') && input('size')){
+            $data['size_start'] = input('size');
+            $data['size_end'] = input('size');
+        }
+
+        return view('index', ['data' => $data]);
     }
+
+    // 差价查询
+    public function diff(){
+        $data['where']['title']         = input('get.title');
+        $data['where']['articleNumber'] = input('get.articleNumber');
+        $data['where']['sizeStart']     = input('get.sizeStart');
+        $data['where']['sizeEnd']       = input('get.sizeEnd');
+        $data['where']['diffPrice']     = input('get.diffPrice');
+        $data['where']['soldNum']       = input('get.soldNum');
+        $data['where']['ceil']          = input('get.ceil');
+        $data['where']['sellDate']      = input('get.sellDate');
+
+
+        $query = Db::connect("db_mongo")->name('diff');
+        if ($data['where']['title']){
+            $query->whereOr('duTitle', 'like', input('get.title'));
+            $query->whereOr('stockxTitle', 'like', input('get.title'));
+        }
+        if ($data['where']['articleNumber']){
+            $query->where('articleNumber', 'like', input('get.articleNumber'));
+        }
+        if ($data['where']['sizeStart'] || $data['where']['sizeEnd']){
+            $query->whereBetween('size', [input('sizeStart'), input('sizeEnd')]);
+        }
+        if ($data['where']['sellDate']){
+            $query->order('sellDate',input('get.sellDate'));
+        }
+        if ($data['where']['diffPrice']){
+            $query->order('diffPrice',input('get.diffPrice'));
+        }
+
+        if ($data['where']['soldNum']){
+            $query->order('duSoldNum',input('get.soldNum'));
+        }
+        if ($data['where']['ceil']){
+            $query->order('ceil',input('get.ceil'));
+        }
+
+
+
+        $data['diff'] = $query->paginate(10,false,['query' => $data['where']]);
+        return view('diff', ['data' => $data]);
+    }
+
+
 
 
     // 单品统计
@@ -23,12 +76,17 @@ class Shoes extends Base
             return returnJson('', 201, '请填写 货号 或 名称！');
         }
 
-        $cacheKey = input('get.articleNumber');
+        // 默认尺码设置
+        $size_start = input('get.size_start', 40);
+        $size_end = input('get.size_end', 44);
+
+
+        $cacheKey = 'shoes_ajaxproductone_' . input('get.articleNumber') . $size_start . $size_end;
         $data = cache::get($cacheKey);
         if ($data){
             return returnJson($data, 200, '成功');
         }
-//        $_GET['articleNumber'] = 'CD0461-401';
+
         $data = [];
         // 获取商品信息
         $product = Db::connect("db_mongo")->name('du_product')->whereOr('title', 'like', input('get.articleNumber'))->whereOr('articleNumber', input('get.articleNumber'))->find();
@@ -97,7 +155,7 @@ class Shoes extends Base
             }
             foreach ($data['soldSize'] as $k => $v){
                 // 默认选中
-                if (floatval($k) >= 40 && floatval($k) <= 43){
+                if (floatval($k) >= $size_start && floatval($k) <= $size_end){
                     $data['soldSelected'][$k] = True;
                 }else{
                     $data['soldSelected'][$k] = False;
@@ -139,7 +197,7 @@ class Shoes extends Base
             }
             foreach ($data['size'] as $k => $v){
                 // 默认选中
-                if (floatval($k) >= 40 && floatval($k) <= 43){
+                if (floatval($k) >= $size_start && floatval($k) <= $size_end){
                     $data['sizeSelected'][$k] = True;
                 }else{
                     $data['sizeSelected'][$k] = False;

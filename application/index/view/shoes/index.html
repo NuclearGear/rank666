@@ -173,7 +173,7 @@
                     placeholder:'请输入名称 或 货号',
                 });
 
-                $('.select_name').selectpicker('val', 'CD0461-401');
+                $('.select_name').selectpicker('val', '{$data.articleNumber}');
                 $('.sure-btn').click();
             }
             layer.closeAll('loading');
@@ -187,15 +187,6 @@
         }
     });
 
-    // 获取url 特定参数
-    function getParam(paramName) {
-        paramValue = "", isFound = !1;
-        if (this.location.search.indexOf("?") == 0 && this.location.search.indexOf("=") > 1) {
-            arrSource = unescape(this.location.search).substring(1, this.location.search.length).split("&"), i = 0;
-            while (i < arrSource.length && !isFound) arrSource[i].indexOf("=") > 0 && arrSource[i].split("=")[0].toLowerCase() == paramName.toLowerCase() && (paramValue = arrSource[i].split("=")[1], isFound = !0), i++
-        }
-        return paramValue == "" && (paramValue = null), paramValue
-    }
 
     // 确认搜索 获取折线图
     $('.sure-btn').click(function () {
@@ -205,11 +196,17 @@
         var myChart2 = echarts.init(document.getElementById('echart_2'));
 
         var day = $('.day').val();
-        var articleNumber =$('.select_name').selectpicker('val');
-        console.log(articleNumber);
+        var articleNumber = $('.select_name').selectpicker('val');
 
 
-        $.get("{:url('shoes/AjaxProductOne')}", {day: day, articleNumber: articleNumber}, function (ret) {
+        var form_data = {
+            'day'  : day,
+            'size_start' : '{$data.size_start}',
+            'size_end' : '{$data.size_end}',
+            'articleNumber' : articleNumber,
+        };
+        console.log(form_data);
+        $.get("{:url('shoes/AjaxProductOne')}", form_data, function (ret) {
             if (ret.code != 200) {
                 layer.closeAll('loading');
                 $('.ret-msg').html(ret.msg).show();
@@ -229,9 +226,9 @@
             $('.sold-list').empty();
             ret['data']['soldList'].forEach(function (v, k) {
                 sizeDom = '<div class="fa-hover col-sm-2">\n' +
-                    '                                            <div class="btn-group">\n' +
-                    '                                                <button type="button" class="btn btn-primary" style="width: 60px">' + v['size'] + '</button>\n' +
-                    '                                                <button type="button" class="btn btn-default" style="width: 70px">' + v['soldNum'] + '</button>\n' +
+                    '                                            <div class="btn-group" style="width: 100%">\n' +
+                    '                                                <button type="button" class="btn btn-primary" style="width: 40%">' + v['size'] + '</button>\n' +
+                    '                                                <button type="button" class="btn btn-default" style="width: 60%">' + v['soldNum'] + '</button>\n' +
                     '                                            </div>\n' +
                     '                                        </div>';
                 $('.sold-list').append(sizeDom)
