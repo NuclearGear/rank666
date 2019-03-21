@@ -200,12 +200,12 @@
 
 
         var form_data = {
-            'day'  : day,
-            'size_start' : '{$data.size_start}',
-            'size_end' : '{$data.size_end}',
+            'day'           : day,
+            'size_start'    : '{$data.size_start}',
+            'size_end'      : '{$data.size_end}',
             'articleNumber' : articleNumber,
         };
-        console.log(form_data);
+
         $.get("{:url('shoes/AjaxProductOne')}", form_data, function (ret) {
             if (ret.code != 200) {
                 layer.closeAll('loading');
