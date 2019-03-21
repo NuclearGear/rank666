@@ -165,24 +165,32 @@
                                                 CD0461-401<br/>
                                                 Air Jordan 1 Retro High Blue Chill 2019全明星 北卡蓝 女
                                             </a>
+                                            <div class="panel-body" id="echart_1" style="height: 400px;">
+
                                         </li>
                                         <li role="presentation">
                                             <a href="#tab22" role="tab" data-toggle="tab">
                                                 CD0461-401<br/>
                                                 Air Jordan 1 Retro High Blue Chill 2019全明星 北卡蓝 女
                                             </a>
+                                            <div class="panel-body" id="echart_2" style="height: 400px;">
+
                                         </li>
                                         <li role="presentation">
                                             <a href="#tab23" role="tab" data-toggle="tab">
                                                 CD0461-401<br/>
                                                 Air Jordan 1 Retro High Blue Chill 2019全明星 北卡蓝 女
                                             </a>
+                                            <div class="panel-body" id="echart_3" style="height: 400px;">
+
                                         </li>
                                         <li role="presentation">
                                             <a href="#tab24" role="tab" data-toggle="tab">
                                                 CD0461-401<br/>
                                                 Air Jordan 1 Retro High Blue Chill 2019全明星 北卡蓝 女
                                             </a>
+                                            <div class="panel-body" id="echart_4" style="height: 400px;">
+
                                         </li>
 
                                     </ul>
@@ -209,7 +217,6 @@
                     </div>
                 </div>
                 <!-- 相关鞋子状态 -->
-
 
                 <!-- 转运信息 -->
                 <div class="row">
@@ -310,9 +317,38 @@
 
     </div><!-- /Page Content -->
 </div><!-- /Page Container -->
-
-
-
 {include file="public/script"}
 {include file="public/footer"}
+<script type="text/javascript">
+    // $('.sure-btn').click(function () {
+    // 基于准备好的dom，初始化echarts实例
+    var myChart1 = echarts.init(document.getElementById('echart_1'));
+    var myChart2 = echarts.init(document.getElementById('echart_2'));
+    var myChart3 = echarts.init(document.getElementById('echart_3'));
+    var myChart4 = echarts.init(document.getElementById('echart_4'));
+    // 指定图表的配置项和数据
+    var option = {
+    xAxis: {
+        type: 'category',
+        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+    },
+    yAxis: {
+        type: 'value'
+    },
+    series: [{
+        data: [820, 932, 901, 934, 1290, 1330, 1320],
+        type: 'line'
+    }]
+    };
+    // 使用刚指定的配置项和数据显示图表。
+    myChart1.setOption(option);
+    myChart2.setOption(option);
+    myChart3.setOption(option);
+    myChart4.setOption(option);
+    // });
+
+</script>
+
+
+
 

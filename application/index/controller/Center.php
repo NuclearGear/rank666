@@ -35,18 +35,18 @@ class Center extends Controller
         $data['sold'] = BuyModel::where($where)->where('sold_price', 'NEQ', '')->count();
         // 本月利率
          if ($data['buy_cost'] == '0') {
-        	$data['sold'] = '1';
+        	$data['cost'] = '1';
         }else{
         	$data['cost'] = $data['buy_cost'];
         }
         $data['interest_rate'] = round($data['profit'] / $data['cost'],3);
         // 上月利率
         if ($data['last_buy_cost'] == '0') {
-        	$data['last_sold'] = '1';
+        	$data['last_cost'] = '1';
         }else{
         	$data['last_cost'] = $data['last_buy_cost'];
         }
-         $data['last_interest_rate'] = round( $data['last_profit'] / $data['last_cost'],2);
+         $data['last_interest_rate'] = round( $data['last_profit'] / $data['last_cost'],3);
         return view('index', ['data' => $data]);
     }
 
