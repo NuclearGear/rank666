@@ -8,7 +8,7 @@ use think\Cache;
 use think\Controller;
 use think\Db;
 
-class Shoes extends Controller
+class Shoes extends Base
 {
     // 单品查询
     public function index()
