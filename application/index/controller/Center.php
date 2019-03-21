@@ -47,6 +47,9 @@ class Center extends Controller
         	$data['last_cost'] = $data['last_buy_cost'];
         }
          $data['last_interest_rate'] = round( $data['last_profit'] / $data['last_cost'],3);
+         // 相关商品 价格折线图
+         $data['shoes_total'] = BuyModel::where($where)->count();
+
         return view('index', ['data' => $data]);
     }
 
