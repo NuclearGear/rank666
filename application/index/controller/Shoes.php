@@ -14,8 +14,8 @@ class Shoes extends Base
     public function index()
     {
         $data['articleNumber'] = input('articleNumber', 'CD0461-401');
-        $data['size_start'] = input('size_start');
-        $data['size_end'] = input('size_end');
+        $data['size_start'] = input('size_start', 40);
+        $data['size_end'] = input('size_end', 44);
         if (input('?size') && input('size')){
             $data['size_start'] = input('size');
             $data['size_end'] = input('size');
@@ -77,8 +77,8 @@ class Shoes extends Base
         }
 
         // 默认尺码设置
-        $size_start = input('get.size_start', 40);
-        $size_end = input('get.size_end', 44);
+        $size_start = input('get.size_start');
+        $size_end = input('get.size_end');
 
 
         $cacheKey = 'shoes_ajaxproductone_' . input('get.articleNumber') . $size_start . $size_end;
