@@ -140,12 +140,13 @@ class Buy extends Base
 
         $cache_key = 'index_buy_getGoods';
         $data = cache($cache_key);
-        if($data){
+        if(false){
             return returnJson($data, 200, '获取商品成功');
         }
 
         $data = Db::connect("db_mongo")->name("du_product")
-                                              ->where('sellDate', 'like', '2018')
+                                              ->whereOr('sellDate', 'like', '2018')
+                                              ->whereOr('sellDate', 'like', '2019')
                                               ->field('articleNumber,title,logoUrl')
                                               ->select();
 

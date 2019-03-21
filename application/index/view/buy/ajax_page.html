@@ -53,9 +53,21 @@
             <td>{$v.buy_cost}</td>
             <td>{$v.send_type_id}</td>
             <td>{$v.send_cost}</td>
+            {if condition="$v.sold_type_id == '无'"}
+            <td>
+                <p class="alert-default" onclick="set_sold_type($(this))" data-id="{$v.id}">选择</p>
+            </td>
+            {else/}
             <td>{$v.sold_type_id}</td>
+            {/if}
             <td>{$v.sold_charge}</td>
+            {empty name="$v.sold_price"}
+            <td>
+                <p class="alert-default" onclick="set_sold($(this))" data-id="{$v.id}">出售</p>
+            </td>
+            {else/}
             <td>{$v.sold_price}</td>
+            {/empty}
             <td>{$v.profit}</td>
             <td>{$v.buy_time}</td>
             <td>{$v.sold_time}</td>
