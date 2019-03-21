@@ -14,8 +14,8 @@ class Shoes extends Base
     public function index()
     {
         $data['articleNumber'] = input('articleNumber', 'EG6860');
-        $data['size_start'] = input('size_start', 40);
-        $data['size_end'] = input('size_end', 44);
+        $data['size_start'] = input('size_start', 42);
+        $data['size_end'] = input('size_end', 42);
         if (input('?size') && input('size')){
             $data['size_start'] = input('size');
             $data['size_end'] = input('size');
