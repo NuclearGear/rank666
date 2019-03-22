@@ -1,0 +1,171 @@
+{include file="public/header"}
+<link rel="stylesheet" href="__PUBLIC__/vip/css/style.css" type="text/css" media="all">
+
+
+<!-- Page Container -->
+<div class="page-inner">
+    <div class="row">
+        <div class="col-md-12">
+            <div role="tabpanel">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs nav-justified" role="tablist">
+                    <li role="presentation" class="active"><a href="#tab21" role="tab" data-toggle="tab">价格走势图</a></li>
+                    <li role="presentation"><a href="#tab22" role="tab" data-toggle="tab">销量走势图</a></li>
+                </ul>
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active fade in" id="tab21">
+                        <div id="echart_1" style="height: 550px;">
+
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane active fade" id="tab22">
+                        <div id="echart_2" style="height: 550px;">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+{include file="public/script"}
+{include file="public/footer"}
+<script>
+    // 遍历插入商品
+    $(function () {
+        layer.load();
+
+        var myChart = echarts.init(document.getElementById('echart_1'));
+        var myChart2 = echarts.init(document.getElementById('echart_2'));
+
+        var form_data = {
+            'size_start'    : '{$data.size_start}',
+            'size_end'      : '{$data.size_end}',
+            'articleNumber' : '{$data.articleNumber}',
+        };
+
+        $.get("{:url('shoes/AjaxProductOne')}", form_data, function (ret) {
+            if (ret.code != 200) {
+                layer.closeAll('loading');
+                return false;
+            }
+
+
+            option = {
+                title: {
+                    text: ret.data['product']['title'],
+                    top: 40,
+                },
+                tooltip: {
+                    trigger: 'axis'
+                },
+                legend: {
+                    type: 'scroll',
+                    data: ret.data['sizeName'],
+                    selected:ret.data['sizeSelected']
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    top:'13%',
+                    containLabel: true
+                },
+                toolbox: {
+                    top:'5%',
+                    show: true,
+                    feature: {
+                        dataZoom: {
+                            yAxisIndex: 'none'
+                        },
+                        dataView: {readOnly: false},
+                        magicType: {type: ['line', 'bar']},
+                        restore: {},
+                        saveAsImage: {}
+                    }
+                },
+                xAxis: {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: ret.data['time']
+                },
+                yAxis: {
+                    type: 'value',
+                    axisLabel: {
+                        formatter: '{value} 元'
+                    },
+                    min: function (value) {
+                        return value.min - 500;
+                    },
+                    max: function (value) {
+                        return value.max + 500;
+                    }
+                },
+                series: ret.data['sizeList']
+            };
+            myChart.setOption(option)
+
+
+            option2 = {
+                title: {
+                    text: ret.data['product']['title'],
+                    top: 40,
+                },
+                tooltip: {
+                    trigger: 'axis'
+                },
+                legend: {
+                    type: 'scroll',
+                    data: ret.data['soldSizeName'],
+                    selected:ret.data['soldSelected']
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    top:'13%',
+                    containLabel: true
+                },
+                toolbox: {
+                    top:'5%',
+                    show: true,
+                    feature: {
+                        dataZoom: {
+                            yAxisIndex: 'none'
+                        },
+                        dataView: {readOnly: false},
+                        magicType: {type: ['line', 'bar']},
+                        restore: {},
+                        saveAsImage: {}
+                    }
+                },
+                xAxis: {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: ret.data['soldTime']
+                },
+                yAxis: {
+                    type: 'value',
+                    axisLabel: {
+                        formatter: '{value} 双'
+                    },
+                    min: function (value) {
+                        return value.min - 50;
+                    },
+                    max: function (value) {
+                        return value.max + 50;
+                    }
+                },
+                series: ret.data['soldSizeList']
+            };
+            myChart2.setOption(option2);
+            $('.tab-pane').eq(1).removeClass('active');
+            layer.closeAll('loading');
+        });
+    });
+</script>
