@@ -161,18 +161,18 @@
                                 <div role="tabpanel">
                                     <!-- Nav tabs -->
                                     <ul class="nav nav-tabs nav-justified" role="tablist">
-                                        <li role="presentation" class="active"><a href="#tab21" role="tab" data-toggle="tab">价格走势图</a></li>
-                                        <li role="presentation"><a href="#tab22" role="tab" data-toggle="tab">销量走势图</a></li>
+                                        <li role="presentation" class="active"><a href="#tab21" role="tab" data-toggle="tab">{$res.name}</a></li>
+                                        <li role="presentation"><a href="#tab22" role="tab" data-toggle="tab">{$bbb.name}</a></li>
                                     </ul>
                                     <!-- Tab panes -->
                                     <div class="tab-content">
-                                        <div role="tabpanel" class="tab-pane active fade in" id="tab21">
-                                            <div id="echart_1" style="height: 800px;">
+                                        <div role="tabpanel" class="tab-pane active fade in" id="tab21" class="{$res.number}">
+                                            <div id="echart_1" style="height: 600px;">
 
                                             </div>
                                         </div>
-                                        <div role="tabpanel" class="tab-pane active fade" id="tab22">
-                                            <div id="echart_2" style="height: 800px;">
+                                        <div role="tabpanel" class="tab-pane active fade" id="tab22" class="{$bbb.number}">
+                                            <div id="echart_2" style="height: 600px;">
 
                                             </div>
                                         </div>
@@ -184,7 +184,7 @@
                 </div>
                 <!-- 走势图 -->
                                     <!-- Tab panes -->
-                                    <div class="tab-content">
+<!--                                     <div class="tab-content">
                                         <div role="tabpanel" class="tab-pane active fade in" id="tab21">
                                             <div id="chart1"><svg></svg></div>
                                         </div>
@@ -204,7 +204,7 @@
                         </div>
 
                     </div>
-                </div>
+                </div> -->
                 <!-- 相关鞋子状态 -->
 
                 <!-- 转运信息 -->
@@ -299,9 +299,6 @@
                 </div><!-- Row -->
 
             </div><!-- Main Wrapper -->
-            <div class="page-footer">
-                <p>Made with <i class="fa fa-heart"></i> by skcats</p>
-            </div>
         </div><!-- /Page Inner -->
 
     </div><!-- /Page Content -->
@@ -312,28 +309,131 @@
     // $('.sure-btn').click(function () {
     // 基于准备好的dom，初始化echarts实例
     var myChart1 = echarts.init(document.getElementById('echart_1'));
-    // var myChart2 = echarts.init(document.getElementById('echart_2'));
-    // var myChart3 = echarts.init(document.getElementById('echart_3'));
-    // var myChart4 = echarts.init(document.getElementById('echart_4'));
+    var myChart2 = echarts.init(document.getElementById('echart_2'));
     // 指定图表的配置项和数据
-    var option = {
-    xAxis: {
-        type: 'category',
-        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-    },
-    yAxis: {
-        type: 'value'
-    },
-    series: [{
-        data: [820, 932, 901, 934, 1290, 1330, 1320],
-        type: 'line'
-    }]
+    var form_data = {
+        // 'day'           : day,
+        'size_start'    : '{$data.size_start}',
+        'size_end'      : '{$data.size_end}',
+        'articleNumber' : '{$res.number}',
+    };
+    $.get("{:url('shoes/AjaxProductOne')}", form_data, function (ret) {
+        if (ret.code != 200) {
+            layer.closeAll('loading');
+            $('.ret-msg').html(ret.msg).show();
+            return false;
+        }
+   var option = {
+        title: {
+            text: ret.data['product']['title'],
+            top: 40,
+        },
+        tooltip: {
+            trigger: 'axis'
+        },
+        legend: {
+            type: 'scroll',
+            data: ret.data['sizeName'],
+            selected:ret.data['sizeSelected']
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            top:'13%',
+            containLabel: true
+        },
+        toolbox: {
+            top:'5%',
+            show: true,
+            feature: {
+                dataZoom: {
+                    yAxisIndex: 'none'
+                },
+                dataView: {readOnly: false},
+                magicType: {type: ['line', 'bar']},
+                restore: {},
+                saveAsImage: {}
+            }
+        },
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: ret.data['time']
+        },
+        yAxis: {
+            type: 'value',
+            axisLabel: {
+                formatter: '{value} 元'
+            },
+            min: function (value) {
+                return value.min - 500;
+            },
+            max: function (value) {
+                return value.max + 500;
+            }
+        },
+        series: ret.data['sizeList']
     };
     // 使用刚指定的配置项和数据显示图表。
-    myChart1.setOption(option);
-    myChart2.setOption(option);
-    myChart3.setOption(option);
-    myChart4.setOption(option);
+    myChart1.setOption(option)
+        option2 = {
+        title: {
+            text: ret.data['product']['title'],
+            top: 40,
+        },
+        tooltip: {
+            trigger: 'axis'
+        },
+        legend: {
+            type: 'scroll',
+            data: ret.data['sizeName'],
+            selected:ret.data['sizeSelected']
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            top:'13%',
+            containLabel: true
+        },
+        toolbox: {
+            top:'5%',
+            show: true,
+            feature: {
+                dataZoom: {
+                    yAxisIndex: 'none'
+                },
+                dataView: {readOnly: false},
+                magicType: {type: ['line', 'bar']},
+                restore: {},
+                saveAsImage: {}
+            }
+        },
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: ret.data['time']
+        },
+        yAxis: {
+            type: 'value',
+            axisLabel: {
+                formatter: '{value} 元'
+            },
+            min: function (value) {
+                return value.min - 500;
+            },
+            max: function (value) {
+                return value.max + 500;
+            }
+        },
+        series: ret.data['sizeList']
+    };
+        myChart2.setOption(option2);
+
+    });
+
+    
     // });
 
 </script>

@@ -48,9 +48,12 @@ class Center extends Base
         }
          $data['last_interest_rate'] = round( $data['last_profit'] / $data['last_cost'],3);
          // 相关商品 价格折线图
-         $data['shoes_total'] = BuyModel::where($where)->count();
 
-        return view('index', ['data' => $data]);
+         $data['size_start'] = '42';
+         $data['size_end'] = '42';
+         $res = BuyModel::where($where)->where(['id' => '81'])->find();
+         $BBB = BuyModel::where($where)->where(['id' => '87'])->find();
+        return view('index', ['data' => $data , 'res' => $res , 'bbb' =>$BBB]);
     }
 
     // VIP 页面
