@@ -86,6 +86,11 @@
                                                     <span class="input-group-addon">销量</span>
                                                     <input type="text" class="form-control product-soldNum" readonly="readonly" aria-label="Amount (to the nearest dollar)">
                                                 </div>
+                                                <div style="margin-top:15px;" class="input-group">
+                                                    <span class="input-group-addon">售价</span>
+                                                    <input type="text" class="form-control product-authPrice" readonly="readonly" aria-label="Amount (to the nearest dollar)">
+                                                </div>
+
                                             </div>
                                         </form>
                                     </div>
@@ -217,6 +222,7 @@
             $('.product-sellDate').val(ret['data']['product']['sellDate']);           // 发售日期
             $('.product-articleNumber').val(ret['data']['product']['articleNumber']); // 货号
             $('.product-soldNum').val(ret['data']['product']['soldNum']);             // 总销量
+            $('.product-authPrice').val(ret['data']['product']['authPrice']);             // 价格
             $('.product-title').html(ret['data']['product']['title']);                           // 名称
             $('.product-image').attr('src', ret['data']['product']['image']);                    // 图片
 

@@ -315,5 +315,18 @@ class Buy extends Base
         return returnJson($ret_update, 200, '修改成功，统计信息刷新后重置！！');
     }
 
+    // 显示折线图
+    public function chart(){
+        $data['articleNumber'] = input('articleNumber', 'EG6860');
+        $data['size_start'] = input('size_start', 42);
+        $data['size_end'] = input('size_end', 42);
+        if (input('?size') && input('size')){
+            $data['size_start'] = input('size');
+            $data['size_end'] = input('size');
+        }
+
+        return view('chart', ['data' => $data]);
+    }
+
 
 }

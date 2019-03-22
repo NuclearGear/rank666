@@ -101,6 +101,7 @@ class Shoes extends Base
             'articleNumber' => $product['articleNumber'],
             'soldNum'       => $product['soldNum'],
             'sellDate'      => $product['sellDate'],
+            'authPrice'     => $product['authPrice'] / 100,
         ];
 
 
