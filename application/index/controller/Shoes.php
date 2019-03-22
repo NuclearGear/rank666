@@ -63,7 +63,7 @@ class Shoes extends Base
 
 
 
-        $data['diff'] = $query->paginate(10,false,['query' => $data['where']]);
+        $data['diff'] = $query->paginate(20,false,['query' => $data['where']]);
         return view('diff', ['data' => $data]);
     }
 
