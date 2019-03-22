@@ -161,18 +161,18 @@
                                 <div role="tabpanel">
                                     <!-- Nav tabs -->
                                     <ul class="nav nav-tabs nav-justified" role="tablist">
-                                        <li role="presentation" class="active"><a href="#tab21" role="tab" data-toggle="tab">{$res.name}</a></li>
-                                        <li role="presentation"><a href="#tab22" role="tab" data-toggle="tab">{$bbb.name}</a></li>
+                                        <li role="presentation" class="active"><a href="#tab21" role="tab" data-toggle="tab" id="popular1">{$key.1}</a></li>
+                                        <li role="presentation"><a href="#tab22" role="tab" data-toggle="tab" id="popular2">{$key.2}</a></li>
                                     </ul>
                                     <!-- Tab panes -->
                                     <div class="tab-content">
-                                        <div role="tabpanel" class="tab-pane active fade in" id="tab21" class="{$res.number}">
+                                        <div role="tabpanel" class="tab-pane active fade in" id="tab21">
                                             <div id="echart_1" style="height: 600px;">
 
                                             </div>
                                         </div>
-                                        <div role="tabpanel" class="tab-pane active fade" id="tab22" class="{$bbb.number}">
-                                            <div id="echart_2" style="height: 600px;">
+                                        <div role="tabpanel" class="tab-pane active fade" id="tab22">
+                                            <div id="echart_2" style="height: 600px;" style="display: none">
 
                                             </div>
                                         </div>
@@ -182,29 +182,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- 走势图 -->
-                                    <!-- Tab panes -->
-<!--                                     <div class="tab-content">
-                                        <div role="tabpanel" class="tab-pane active fade in" id="tab21">
-                                            <div id="chart1"><svg></svg></div>
-                                        </div>
-                                        <div role="tabpanel" class="tab-pane fade" id="tab22">
-                                            <p>111</p>
-                                        </div>
-                                        <div role="tabpanel" class="tab-pane fade" id="tab23">
-                                            <p>111</p>
-                                        </div>
-                                        <div role="tabpanel" class="tab-pane fade" id="tab24">
-                                            <p>111</p>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div> -->
                 <!-- 相关鞋子状态 -->
 
                 <!-- 转运信息 -->
@@ -237,58 +214,7 @@
                                             <button type="button" class="btn btn-default">更新</button>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td width="30%">Air Jordan 1 Retro High Blue Chill 2019全明星 北卡蓝 女</td>
-                                        <td width="10%">CD0461-401</td>
-                                        <td width="10%">转运中国</td>
-                                        <td width="30%">清关中</td>
-                                        <td width="10%">2019-03-09 16:00:07</td>
-                                        <td width="10%">
-                                            <button type="button" class="btn btn-default">更新</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td width="30%">Air Jordan 1 Retro High Blue Chill 2019全明星 北卡蓝 女</td>
-                                        <td width="10%">CD0461-401</td>
-                                        <td width="10%">四方转运</td>
-                                        <td width="30%">飞往中国</td>
-                                        <td width="10%">2019-03-07 08:40:09</td>
-                                        <td width="10%">
-                                            <button type="button" class="btn btn-default">更新</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td width="30%">Air Jordan 1 Retro High Blue Chill 2019全明星 北卡蓝 女</td>
-                                        <td width="10%">CD0461-401</td>
-                                        <td width="10%">转运中国</td>
-                                        <td width="30%">飞往中国</td>
-                                        <td width="10%">2019-03-07 08:40:09</td>
-                                        <td width="10%">
-                                            <button type="button" class="btn btn-default">更新</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td width="30%">Air Jordan 1 Retro High Blue Chill 2019全明星 北卡蓝 女</td>
-                                        <td width="10%">CD0461-401</td>
-                                        <td width="10%">转运中国</td>
-                                        <td width="30%">飞往中国</td>
-                                        <td width="10%">2019-03-07 08:40:09</td>
-                                        <td width="10%">
-                                            <button type="button" class="btn btn-default">更新</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td width="30%">Air Jordan 1 Retro High Blue Chill 2019全明星 北卡蓝 女</td>
-                                        <td width="10%">CD0461-401</td>
-                                        <td width="10%">转运中国</td>
-                                        <td width="30%">飞往中国</td>
-                                        <td width="10%">2019-03-07 08:40:09</td>
-                                        <td width="10%">
-                                            <button type="button" class="btn btn-default">更新</button>
-                                        </td>
-                                    </tr>
-
-
+                                    
 
                                     </tbody>
                                 </table>
@@ -315,7 +241,7 @@
         // 'day'           : day,
         'size_start'    : '{$data.size_start}',
         'size_end'      : '{$data.size_end}',
-        'articleNumber' : '{$res.number}',
+        'articleNumber' : '{$key.1}',
     };
     $.get("{:url('shoes/AjaxProductOne')}", form_data, function (ret) {
         if (ret.code != 200) {
@@ -323,6 +249,7 @@
             $('.ret-msg').html(ret.msg).show();
             return false;
         }
+    $('#popular1').text(ret.data['product']['title']);
    var option = {
         title: {
             text: ret.data['product']['title'],
@@ -377,7 +304,21 @@
     };
     // 使用刚指定的配置项和数据显示图表。
     myChart1.setOption(option)
-        option2 = {
+    });
+        var form_data = {
+        // 'day'           : day,
+        'size_start'    : '{$data.size_start}',
+        'size_end'      : '{$data.size_end}',
+        'articleNumber' : '{$key.2}',
+    };
+    $.get("{:url('shoes/AjaxProductOne')}", form_data, function (ret) {
+        if (ret.code != 200) {
+            layer.closeAll('loading');
+            $('.ret-msg').html(ret.msg).show();
+            return false;
+        }
+    $('#popular2').text(ret.data['product']['title']);
+   var option2 = {
         title: {
             text: ret.data['product']['title'],
             top: 40,
@@ -429,12 +370,9 @@
         },
         series: ret.data['sizeList']
     };
+    // 使用刚指定的配置项和数据显示图表。
         myChart2.setOption(option2);
-
-    });
-
-    
-    // });
+    });    
 
 </script>
 

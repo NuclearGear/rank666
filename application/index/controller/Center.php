@@ -34,7 +34,7 @@ class Center extends Base
         // 已经出售
         $data['sold'] = BuyModel::where($where)->where('sold_price', 'NEQ', '')->count();
         // 本月利率
-         if ($data['buy_cost'] == '0') {
+        if ($data['buy_cost'] == '0') {
         	$data['cost'] = '1';
         }else{
         	$data['cost'] = $data['buy_cost'];
@@ -46,14 +46,19 @@ class Center extends Base
         }else{
         	$data['last_cost'] = $data['last_buy_cost'];
         }
-         $data['last_interest_rate'] = round( $data['last_profit'] / $data['last_cost'],3);
-         // 相关商品 价格折线图
-
-         $data['size_start'] = '42';
-         $data['size_end'] = '42';
-         $res = BuyModel::where($where)->where(['id' => '81'])->find();
-         $BBB = BuyModel::where($where)->where(['id' => '87'])->find();
-        return view('index', ['data' => $data , 'res' => $res , 'bbb' =>$BBB]);
+        $data['last_interest_rate'] = round( $data['last_profit'] / $data['last_cost'],3);
+        // 相关商品 价格折线图
+        $data['size_start'] = '42';
+        $data['size_end'] = '42';
+        $result = BuyModel::where($where)->select();
+        foreach ($result as $k => $v) {
+            $number[] = $result[$k]['number'];
+        }
+        $num = array_count_values($number);
+        arsort($num);
+        $key = array_keys($num);
+        //转运信息
+        return view('index', ['data' => $data , 'key' => $key , 'result' => $result]);
     }
 
     // VIP 页面
