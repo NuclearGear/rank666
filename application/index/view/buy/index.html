@@ -125,7 +125,7 @@
                                 <div class="add_box">
                                     <form class="form-inline">
                                         <div class="row">
-                                            <div class="form-group" style="width: 350px">
+                                            <div class="form-group" style="width: 450px">
                                                 <p class="help-block">名称</p>
                                                 <select class="form-control select_name_add" data-live-search="true" style="width: 100%">
                                                     <option value="">无</option>
@@ -366,18 +366,14 @@
     $(function () {
        $.get("{:url('buy/ajax_get_goods')}",{},function (ret) {
            if (ret.code == 200){
-               var dom = '';
-               $.each(ret.data,function (k, v) {
-                    dom += "<option value=\"" +  v['articleNumber'] + "\">"+ v['articleNumber'] + ' ' + v['title'] +"</option>";
-               });
-               $('.select_name').append(dom);
+               $('.select_name').append(ret.data);
                $('.select_name').selectpicker({
                    size:15,
                    title:'请输入名称 或 货号',
                    placeholder:'请输入名称 或 货号',
                });
 
-               $('.select_name_add').append(dom);
+               $('.select_name_add').append(ret.data);
                $('.select_name_add').selectpicker({
                    size:15,
                    title:'请输入名称 或 货号',
@@ -436,17 +432,22 @@
     });
 
     function del_shoes(obj){
-        layer.load();
-        $.post("{:url('buy/ajax_del')}", {'id': obj.data('id')}, function (ret) {
-            layer.closeAll('loading');
-            if (ret.code == 200) {
-                obj.parent().parent().remove();
-                layer.msg(ret.msg);
-            } else {
-                layer.msg(ret.msg, function () {
-                });
-            }
-        })
+        layer.confirm('确认删除吗?', {skin:'layui-layer-lan'},function(index){
+            layer.load();
+            $.post("{:url('buy/ajax_del')}", {'id': obj.data('id')}, function (ret) {
+                layer.closeAll('loading');
+                if (ret.code == 200) {
+                    obj.parent().parent().remove();
+                    layer.msg(ret.msg);
+                } else {
+                    layer.msg(ret.msg, function () {
+                    });
+                }
+            });
+
+            layer.close(index);
+        });
+
     };
 
     function set_sold(obj){
@@ -470,7 +471,64 @@
         });
     }
 
+    function edit(obj){
+        var id = obj.attr('data-id');
+        layer.open({
+            type: 2,
+            title: '编辑',
+            shadeClose: true,
+            offset: ['100px', '20%'],
+            shade: 0.5,
+            scrollbar:false,
+            maxmin: true, //开启最大化最小化按钮
+            area: ['1200px', '700px'],
+            content: "{:url('buy/edit')}" + '?id='+id,
+            btn:['确认修改', '取消'],
+            yes:function (index) {
+                layer.load();
+                var body = layer.getChildFrame('body', index);//通过该对象可以获取iframe中的dom元素
+                // 提交表单
+                body.find('#my_form').ajaxSubmit(function(ret) {
+                    if (ret.code == 200) {
+                        // 修改Dom 图片
+                        obj.parent().parent().find('th').find('img').attr('src', ret.data.image);
+                        // 修改Dom 名称
+                        obj.parent().parent().find('th').find('span').html(ret.data.name);
+                        // 修改Dom 货号
+                        obj.parent().parent().find('td').eq(0).html(ret.data.number);
+                        // 修改Dom 尺码
+                        obj.parent().parent().find('td').eq(1).html(ret.data.size);
+                        // 修改Dom 购买平台
+                        obj.parent().parent().find('td').eq(2).html(ret.data.buy_type_id);
+                        // 修改Dom 成本
+                        obj.parent().parent().find('td').eq(3).html(ret.data.buy_cost);
+                        // 修改Dom 转运平台
+                        obj.parent().parent().find('td').eq(4).html(ret.data.send_type_id);
+                        // 修改Dom 转运费用
+                        obj.parent().parent().find('td').eq(5).html(ret.data.send_cost);
+                        // 修改Dom 出售平台
+                        obj.parent().parent().find('td').eq(6).html(ret.data.sold_type_id);
+                        // 修改Dom 出售手续费
+                        obj.parent().parent().find('td').eq(7).html(ret.data.sold_charge);
+                        // 修改Dom 出售价格
+                        obj.parent().parent().find('td').eq(8).html(ret.data.sold_price);
+                        // 修改Dom 利润
+                        obj.parent().parent().find('td').eq(9).html(ret.data.profit);
+                        // 修改Dom 购买日期
+                        obj.parent().parent().find('td').eq(10).html(ret.data.buy_time);
+                        // 修改Dom 出售日期
+                        obj.parent().parent().find('td').eq(11).html(ret.data.sold_time);
 
+                        layer.closeAll('loading');
+                        layer.msg(ret.msg);
+                        layer.close(index);
+                    } else {
+                        layer.msg(ret.msg, function () { });
+                    }
+                });
+            }
+        });
+    }
 
 </script>
 

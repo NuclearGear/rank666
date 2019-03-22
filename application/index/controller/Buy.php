@@ -11,6 +11,10 @@ use think\Db;
 
 class Buy extends Base
 {
+
+    public $cache_tag = 'buy_ajax_page';
+
+
     public function index()
     {
         // 判断用户最新的鞋子截止到几月
@@ -57,7 +61,7 @@ class Buy extends Base
         $get_params = input('get.');
         $get_where = implode('_',array_values($get_params['where']));
         $cache_key = implode('_', [session('user.id'), $get_params['page'], $get_params['tab'], $get_where]);
-        $data = Cache::get($cache_key);
+        $data = Cache::tag($this->cache_tag . session('user.id'))->get($cache_key);
         if ($data){
             return view('ajax_page', ['data' => $data]);
         }
@@ -130,7 +134,7 @@ class Buy extends Base
         $data['list'] = BuyModel::where($where)->order('buy_time', 'desc')->paginate(30,false,['path'=>"javascript:AjaxPage([PAGE], {$tab});"]);
 
 
-        Cache::tag('buy_ajax_page' . session('user.id'))->set($cache_key, $data, 3600 * 4);
+        Cache::tag($this->cache_tag . session('user.id'))->set($cache_key, $data, 3600 * 4);
 
         return view('ajax_page', ['data' => $data]);
     }
@@ -138,17 +142,25 @@ class Buy extends Base
     // 获取商品
     public function ajax_get_goods(){
 
-        $cache_key = 'index_buy_getGoods';
+        $cache_key = 'index_buy_ajax_get_goods';
         $data = cache($cache_key);
-        if(false){
+        if($data){
             return returnJson($data, 200, '获取商品成功');
         }
 
         $data = Db::connect("db_mongo")->name("du_product")
-                                              ->whereOr('sellDate', 'like', '2018')
-                                              ->whereOr('sellDate', 'like', '2019')
-                                              ->field('articleNumber,title,logoUrl')
+                                              ->whereBetween('sellDate', ['2018.01.01', '2019.12.31'])
+                                              ->order('sellDate', 'desc')
+                                              ->field('articleNumber,title,sellDate')
+//                                              ->limit(4000)
                                               ->select();
+
+        // 拼接字符串
+        $str = '';
+        foreach ($data as $k => $v){
+            $str .= "<option value=\"{$v['articleNumber']}\">". $v['sellDate'] . ' [' . $v['articleNumber'] . '] ' .$v['title'] ."</option>";
+        }
+        $data = $str;
 
         cache($cache_key, $data, 3600 * 4);
 
@@ -214,7 +226,7 @@ class Buy extends Base
         }
 
         // 清除查询缓存
-        Cache::clear('buy_ajax_page' . session('user.id'));
+        Cache::clear($this->cache_tag . session('user.id'));
 
         return returnJson('', 200, '添加成功，请刷新页面后查看');
     }
@@ -227,9 +239,80 @@ class Buy extends Base
         }
 
         // 清除查询缓存
-        Cache::clear('buy_ajax_page' . session('user.id'));
+        Cache::clear($this->cache_tag . session('user.id'));
 
         return returnJson('', 200, '删除成功，统计信息刷新后重置！');
+    }
+
+    public function edit(){
+        $data['info'] = BuyModel::get(input('get.id'));
+        $data['info'] = $data['info']->getData();
+        // 获取尺码
+        $data['size'] = config('size');
+        // 获取平台
+        $data['buy_type'] = config('buy_type');
+        // 获取转运平台
+        $data['send_type'] = config('send_type');
+        // 获取出售平台
+        $data['sold_type'] = config('sold_type');
+
+        return view('edit', ['data' => $data]);
+    }
+
+    public function ajax_edit(){
+        $goods = Db::connect("db_mongo")->name("du_product")->where('articleNumber',input('post.number'))
+                                                                        ->field('articleNumber,title,logoUrl')
+                                                                        ->find();
+
+        $params = [
+            'name'          => $goods['title'],
+            'number'        => input('post.number'),
+            'size'          => input('post.size'),
+            'image'         => $goods['logoUrl'],
+
+            'buy_type_id'   => input('post.buy_type_id'),
+            'buy_cost'      => input('post.buy_cost'),
+            'buy_time'      => strtotime(input('post.buy_time')),
+
+            'send_type_id'  => input('post.send_type_id'),
+            'send_code'     => input('post.send_code'),
+            'send_cost'     => input('post.send_cost'),
+
+            'sold_type_id'  => input('post.sold_type_id'),
+            'sold_price'    => input('post.sold_price'),
+            'sold_time'     => strtotime(input('post.sold_time')),
+        ];
+
+        // 购买平台 stockx 13.95刀 运费
+        if ($params['buy_type_id'] == 1){
+            $params['buy_charge'] = 13.95;
+        }
+        // 出售平台 毒 9.5%的手续费
+        if ($params['sold_type_id'] == 1 && $params['sold_price']){
+            if(($params['sold_price'] * 0.095) > 299){
+                $params['sold_charge'] = 299;
+            }else{
+                $params['sold_charge'] = round($params['sold_price'] * 0.095, 2);
+            }
+        }
+        // 计算利润
+        if ($params['buy_cost'] && $params['sold_price']){
+            $params['profit'] = $params['sold_price'] - $params['buy_cost'];
+        }
+        if ($params['sold_type_id'] == 1 && $params['sold_price']){
+            $params['profit'] = $params['profit'] - $params['sold_charge'];
+        }
+
+
+        $ret_update = BuyModel::update($params, ['id' => input('post.id')]);
+        if (!$ret_update){
+            return returnJson('', 201, '修改失败！');
+        }
+
+        // 清除查询缓存
+        Cache::clear($this->cache_tag . session('user.id'));
+
+        return returnJson($ret_update, 200, '修改成功，统计信息刷新后重置！！');
     }
 
 

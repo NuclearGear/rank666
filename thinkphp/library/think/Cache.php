@@ -198,7 +198,6 @@ class Cache
     public static function clear($tag = null)
     {
         self::$writeTimes++;
-
         return self::init()->clear($tag);
     }
 

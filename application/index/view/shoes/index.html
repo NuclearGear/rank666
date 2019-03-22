@@ -165,11 +165,7 @@
             layer.load();
 
             if (ret.code == 200){
-                var dom = '';
-                $.each(ret.data,function (k, v) {
-                    dom += "<option value=\"" +  v['articleNumber'] + "\">"+ v['articleNumber'] + ' ' + v['title'] +"</option>";
-                });
-                $('.select_name').append(dom);
+                $('.select_name').append(ret.data);
                 $('.select_name').selectpicker({
                     size:15,
                     title:'请输入名称 或 货号',
@@ -189,7 +185,6 @@
             $('.sure-btn').click();
         }
     });
-
 
     // 确认搜索 获取折线图
     $('.sure-btn').click(function () {
@@ -232,7 +227,7 @@
             sizeDom = '';
             $('.sold-list').empty();
             ret['data']['soldList'].forEach(function (v, k) {
-                sizeDom = '<div class="fa-hover col-xs-2">\n' +
+                sizeDom = '<div class="fa-hover col-xs-2 ">\n' +
                     '                                            <div class="btn-group" style="width: 100%">\n' +
                     '                                                <button type="button" class="btn btn-primary" style="width: 40%">' + v['size'] + '</button>\n' +
                     '                                                <button type="button" class="btn btn-default" style="width: 60%">' + v['soldNum'] + '</button>\n' +

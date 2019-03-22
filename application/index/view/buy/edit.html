@@ -1,0 +1,199 @@
+{include file="public/header"}
+<link rel="stylesheet" href="__PUBLIC__/vip/css/style.css" type="text/css" media="all">
+
+
+<!-- Page Container -->
+<div class="page-inner">
+    <div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-white">
+            <div class="panel-heading clearfix">
+                <h4 class="panel-title">
+                    <img src="{$data.info.image}" width="35">
+                    {$data.info.name}
+                </h4>
+            </div>
+            <div class="panel-body">
+                <form class="form-horizontal" id="my_form" method="post" action="{:url('buy/ajax_edit')}">
+                    <!-- ID -->
+                    <input type="hidden" class="form-control" value="{$data.info.id}" name="id">
+                    <!-- ID -->
+
+                    <!-- 基本信息 -->
+                    <div class="panel panel-white">
+                        <h4 class="panel-title">基本信息</h4>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">名称</label>
+                            <div class="col-sm-10">
+                                <select class="form-control select_name" name="number">
+                                    <option value="">无</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                        <label class="col-sm-2 control-label">尺码</label>
+                        <div class="col-sm-10">
+                            <select class="form-control select_size" name="size" data-live-search="true">
+                                <option value="">无</option>
+                                {volist name="data.size" id="v"}
+                                    <option value="{$v}">{$v}</option>
+                                {/volist}
+                            </select>
+                        </div>
+                    </div>
+                    </div>
+                    <!-- 基本信息 -->
+
+
+                    <!-- 购买信息 -->
+                    <div class="panel panel-white">
+                        <h4 class="panel-title">购买信息</h4>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">[购买] 平台</label>
+                            <div class="col-sm-10">
+                                <select class="form-control select_buy" name="buy_type_id" data-live-search="true">
+                                    {volist name="data.buy_type" key="k" id="v"}
+                                    <option value="{$v.id}">{$v.name}</option>
+                                    {/volist}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">[购买] 成本</label>
+                            <div class="col-sm-10">
+                                <input type="number" class="form-control" value="{$data.info.buy_cost}" name="buy_cost" placeholder="成本" >
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">[购买] 日期</label>
+                            <div class="col-sm-10">
+                                {empty name="$data.info.buy_time"}
+                                <input type="text" class="form-control date-picker" name="buy_time" value="" readonly="readonly" placeholder="购买日期">
+                                {else/}
+                                <input type="text" class="form-control date-picker" name="buy_time" value="{$data.info.buy_time|date='Y-m-d',###}" readonly="readonly" placeholder="购买日期">
+                                {/empty}
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 购买信息 -->
+
+
+                    <!-- 转运信息 -->
+                    <div class="panel panel-white">
+                        <h4 class="panel-title">转运信息</h4>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">[转运] 平台</label>
+                            <div class="col-sm-10">
+                                <select class="form-control select_send" name="send_type_id" data-live-search="true">
+                                    {volist name="data.send_type" key="k" id="v"}
+                                    <option value="{$v.id}">{$v.name}</option>
+                                    {/volist}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">[转运] 单号</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" value="{$data.info.send_code}" name="send_code" placeholder="转运单号" >
+                            </div>
+                        </div>
+                        <div class="form-group">
+                        <label class="col-sm-2 control-label">[转运] 费用</label>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control" value="{$data.info.send_cost}" name="send_cost" placeholder="转运费用" >
+                        </div>
+                    </div>
+                    </div>
+                    <!-- 转运信息 -->
+
+
+                    <!-- 出售信息 -->
+                    <div class="panel panel-white">
+                        <h4 class="panel-title">出售信息</h4>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">[出售] 平台</label>
+                            <div class="col-sm-10">
+                                <select class="form-control select_sold" name="sold_type_id" data-live-search="true">
+                                    {volist name="data.sold_type" key="k" id="v"}
+                                    <option value="{$v.id}">{$v.name}</option>
+                                    {/volist}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">[出售] 价格</label>
+                            <div class="col-sm-10">
+                                <input type="number" class="form-control" value="{$data.info.sold_price}" name="sold_price" placeholder="出售价格" >
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">[出售] 日期</label>
+                            <div class="col-sm-10">
+                                {empty name="$data.info.sold_time"}
+                                <input type="text" class="form-control date-picker" name="sold_time" value="" readonly="readonly" placeholder="出售日期">
+                                {else/}
+                                <input type="text" class="form-control date-picker" name="sold_time" value="{$data.info.sold_time|date='Y-m-d',###}" readonly="readonly" placeholder="出售日期">
+                                {/empty}
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 出售信息 -->
+                </form>
+            </div>
+        </div>
+    </div>
+</div><!-- Row -->
+</div>
+
+
+
+{include file="public/script"}
+{include file="public/footer"}
+<script>
+    // 遍历插入商品
+    $(function () {
+        $('.select_size').selectpicker({
+            size:15,
+            title:'尺码',
+            liveSearch:true,
+            liveSearchPlaceholder:'请选择尺码',
+        });
+        $('.select_buy').selectpicker({
+            size:15,
+            title:'购买平台',
+            liveSearch:true,
+            liveSearchPlaceholder:'请选择平台',
+        });
+        $('.select_send').selectpicker({
+            size:15,
+            title:'转运平台',
+            liveSearch:true,
+            liveSearchPlaceholder:'请选择平台',
+        });
+        $('.select_sold').selectpicker({
+            size:15,
+            title:'出售平台',
+            liveSearch:true,
+            liveSearchPlaceholder:'请选择平台',
+        });
+
+        $('.select_size').selectpicker('val', '{$data.info.size}');
+        $('.select_buy').selectpicker('val', '{$data.info.buy_type_id}');
+        $('.select_send').selectpicker('val', '{$data.info.send_type_id}');
+        $('.select_sold').selectpicker('val', '{$data.info.send_type_id}');
+
+        $.get("{:url('buy/ajax_get_goods')}",{},function (ret) {
+            if (ret.code == 200){
+                $('.select_name').append(ret.data);
+                $('.select_name').selectpicker({
+                    size:5,
+                    liveSearch:true,
+                    liveSearchPlaceholder:'请输入名称 或 货号',
+                    title:'请输入名称 或 货号'
+                });
+                $('.select_name').selectpicker('val', "{$data.info.number}");
+            }
+        });
+    });
+
+</script>
