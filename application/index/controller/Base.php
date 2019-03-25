@@ -18,7 +18,7 @@ class Base extends Controller
         $auth = UserFunctionModel::get(session('user.id'));
         if (!$auth){
             echo "<script language=\"JavaScript\">alert(\"请先去购买功能！\");</script>";
-            $this->redirect(url('center/vip'));
+//            $this->redirect(url('center/vip'));
         }
         dump($auth);
     }
