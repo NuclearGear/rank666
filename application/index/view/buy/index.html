@@ -450,27 +450,6 @@
 
     };
 
-    function set_sold(obj){
-        // 出售价格弹出层
-        layer.prompt({title: '输入 出售价格， 并确认'}, function(price, index){
-            layer.close(index);
-            layer.msg('修改成功！出售价格：'+ price + ' 元');
-        });
-    }
-
-    function set_sold_type(obj){
-        layer.msg('请选择出售平台', {
-            btn: ['取消', 'nice', '毒'] //可以无限个按钮
-            ,btn3: function(index, layero){
-                //按钮【按钮三】的回调
-            }
-        }, function(index, layero){
-            //按钮【按钮一】的回调
-        }, function(index){
-            //按钮【按钮二】的回调
-        });
-    }
-
     function edit(obj){
         var id = obj.attr('data-id');
         layer.open({

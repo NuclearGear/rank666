@@ -4,11 +4,11 @@ use app\index\model\BuyModel;
 use think\Controller;
 use think\Cache;
 
-class Index
+class Index extends Controller
 {
     public function index(){
 
-        return view('search');
+        $this->redirect(url('center/index'));
     }
 
     // 获取销量排名前50
