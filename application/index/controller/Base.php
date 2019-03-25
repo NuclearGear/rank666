@@ -20,7 +20,7 @@ class Base extends Controller
             echo "<script language=\"JavaScript\">alert(\"请先去购买功能！\");</script>";
 //            $this->redirect(url('center/vip'));
         }
-        dump($auth);
+//        dump($auth);
     }
 
 
