@@ -147,8 +147,6 @@
                     </div>
                 </div>
                 <!-- 鞋子统计 -->
-
-
                 <!-- 鞋子价格折线图 -->
 
                 <!-- 走势图 -->
@@ -156,13 +154,14 @@
                     <div class="col-md-12">
                         <div class="panel panel-white">
                             <div class="panel-heading clearfix">
+                                <h4 class="panel-title">本月已购数量最多的鞋款</h4>
                             </div>
                             <div class="panel-body">
                                 <div role="tabpanel">
                                     <!-- Nav tabs -->
                                     <ul class="nav nav-tabs nav-justified" role="tablist">
-                                        <li role="presentation" class="active"><a href="#tab21" role="tab" data-toggle="tab" id="popular1">{$data.goods_max.1}</a></li>
-                                        <li role="presentation"><a href="#tab22" role="tab" data-toggle="tab" id="popular2">{$data.goods_max.2}</a></li>
+                                        <li role="presentation" class="active"><a href="#tab21" role="tab" data-toggle="tab" id="popular1">{$data.goods_max.0}</a></li>
+                                        <li role="presentation"><a href="#tab22" role="tab" data-toggle="tab" id="popular2">{$data.goods_max.1}</a></li>
                                     </ul>
                                     <!-- Tab panes -->
                                     <div class="tab-content">
@@ -212,7 +211,7 @@
                                         <td width="30%">等待库房发货</td>
                                         <td width="10%">2019-03-11 19:20:26</td>
                                         <td width="10%">
-                                            <button type="button" class="btn btn-default">更新</button>
+                                            <button type="button" class="btn btn-default" id="upload">更新</button>
                                         </td>
                                     </tr>
                                         {/volist}
@@ -232,7 +231,9 @@
 {include file="public/script"}
 {include file="public/footer"}
 <script type="text/javascript">
-    // $('.sure-btn').click(function () {
+    $('#upload').click(function(){
+        layer.msg('功能更新中');
+    });
     // 基于准备好的dom，初始化echarts实例
     var myChart1 = echarts.init(document.getElementById('echart_1'));
     var myChart2 = echarts.init(document.getElementById('echart_2'));
@@ -241,7 +242,7 @@
         // 'day'           : day,
         'size_start'    : '{$data.size_start}',
         'size_end'      : '{$data.size_end}',
-        'articleNumber' : '{$data.goods_max.1}',
+        'articleNumber' : '{$data.goods_max.0}',
     };
     $.get("{:url('shoes/AjaxProductOne')}", form_data, function (ret) {
         if (ret.code != 200) {
@@ -309,7 +310,7 @@
         // 'day'           : day,
         'size_start'    : '{$data.size_start}',
         'size_end'      : '{$data.size_end}',
-        'articleNumber' : '{$data.goods_max.2}',
+        'articleNumber' : '{$data.goods_max.1}',
     };
     $.get("{:url('shoes/AjaxProductOne')}", form_data, function (ret) {
         if (ret.code != 200) {
@@ -374,7 +375,6 @@
         myChart2.setOption(option2);
         $('.tab-pane').eq(1).removeClass('active');
     });    
-
 </script>
 
 
