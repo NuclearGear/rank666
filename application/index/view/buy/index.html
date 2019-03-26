@@ -258,9 +258,7 @@
                 <!-- 盈利情况 -->
 
             </div><!-- Main Wrapper -->
-            <div class="page-footer">
-                <p>Made with <i class="fa fa-heart"></i> by skcats</p>
-            </div>
+
         </div><!-- /Page Inner -->
 
     </div><!-- /Page Content -->
@@ -364,7 +362,9 @@
 
     // 遍历插入商品
     $(function () {
-       $.get("{:url('buy/ajax_get_goods')}",{},function (ret) {
+        layer.load(2);
+
+        $.get("{:url('buy/ajax_get_goods')}",{},function (ret) {
            if (ret.code == 200){
                $('.select_name').append(ret.data);
                $('.select_name').selectpicker({
@@ -379,6 +379,8 @@
                    title:'请输入名称 或 货号',
                    placeholder:'请输入名称 或 货号',
                });
+               layer.closeAll('loading');
+
                // 获取 全部选项卡 第一页
                AjaxPage(1,'0');
            }
