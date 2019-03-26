@@ -88,7 +88,7 @@ class Shoes extends Base
 
         $data = [];
         // 获取商品信息
-        $product = Db::connect("db_mongo")->name('du_product')->whereOr('title', 'like', input('get.articleNumber'))->whereOr('articleNumber', input('get.articleNumber'))->find();
+        $product = Db::connect("db_mongo")->name('du_product')->where('articleNumber', input('get.articleNumber'))->find();
         if (!$product){
             return returnJson('', 202, '商品不存在！');
         }
