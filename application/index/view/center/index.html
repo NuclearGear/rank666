@@ -240,6 +240,7 @@
         layer.msg('转运功能正在更新中...');
     });
     $(function () {
+        layer.load(2);
         {volist name="$data.goods_max" key="k" id="v"}
         // 基于准备好的dom，初始化echarts实例
         var myChart{$k} = echarts.init(document.getElementById('echart_{$k}'));
@@ -310,12 +311,14 @@
                 series: ret.data['sizeList']
             };
             // 使用刚指定的配置项和数据显示图表。
-            myChart{$k}.setOption(option)
+            myChart{$k}.setOption(option, true)
         });
         {/volist}
 
         $('.tab-pane').removeClass('active');
         $('.tab-pane').eq(0).addClass('active');
+        layer.closeAll('loading');
+
     });
 
 </script>

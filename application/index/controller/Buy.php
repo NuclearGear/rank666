@@ -169,7 +169,7 @@ class Buy extends Base
             // 计算预计盈利
             foreach ($buy_arr as $k => $v){
                 // 预计盈利
-                $data['profit_future'] += ($du_arr[$v['number'] . $v['size']] - $v['buy_cost']) - ($du_arr[$v['number'] . $v['size']] * 0.095);
+                $data['profit_future'] += ($du_arr[$v['number'] . $v['size']] - $v['buy_cost']) - ($du_arr[$v['number'] . $v['size']] * 0.095) - 100;
             }
             $data['profit_future'] = round($data['profit_future'], 2);
             $data['ceil_future'] = round($data['profit_future'] / $data['cost'], 2) * 100;
@@ -178,8 +178,15 @@ class Buy extends Base
         // 列表
         $data['list'] = BuyModel::where($where)->order('buy_time', 'desc')->order('id', 'desc')->paginate(30,false,['path'=>"javascript:AjaxPage([PAGE], {$tab});"]);
         foreach ($data['list'] as $k => &$v){
-            // 增加预计利润
-            $data['list'][$k]['profit_future'] = round(($du_arr[$v['number'] . $v['size']] - $v['buy_cost']) - ($du_arr[$v['number'] . $v['size']] * 0.095), 2);
+            if (!$v['sold_price']){
+                // 增加预计利润
+                $data['list'][$k]['profit_future'] = round(($du_arr[$v['number'] . $v['size']] - $v['buy_cost']) - ($du_arr[$v['number'] . $v['size']] * 0.095), 2);
+                // 利率比
+                $data['list'][$k]['ceil_future'] = round($data['list'][$k]['profit_future'] / $v['buy_cost'] * 100, 2);
+            }else{
+                $data['list'][$k]['profit_future'] = '-';
+                $data['list'][$k]['ceil_future'] = '-';
+            }
         }
 
         Cache::tag($this->cache_tag . session('user.id'))->set($cache_key, $data, 3600 * 4);
@@ -253,10 +260,10 @@ class Buy extends Base
         }
         // 出售平台 毒 9.5%的手续费
         if ($add_data['sold_type_id'] == 1 && $add_data['sold_price']){
-            if(($add_data['sold_price'] * 0.095) > 299){
+            if(($add_data['sold_price'] * input('post.sold_charge')) > 299){
                 $add_data['sold_charge'] = 299;
             }else{
-                $add_data['sold_charge'] = round($add_data['sold_price'] * 0.095, 2);
+                $add_data['sold_charge'] = round($add_data['sold_price'] * input('post.sold_charge'), 2);
             }
         }
         // 计算利润
@@ -342,7 +349,11 @@ class Buy extends Base
             }else{
                 $params['sold_charge'] = round($params['sold_price'] * 0.095, 2);
             }
+        }else{
+            $params['sold_charge'] = 0;
+            $params['profit'] = 0;
         }
+
         // 计算利润
         if ($params['buy_cost'] && $params['sold_price']){
             $params['profit'] = $params['sold_price'] - $params['buy_cost'];

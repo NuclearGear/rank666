@@ -10,7 +10,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-lg-3 tips" data-tip="未填写 [出售价格] 的鞋子<br>公式： 价格(毒) - 成本 - 9.5%(手续费)">
+    <div class="col-lg-3 tips" data-tip="未填写 [出售价格] 的鞋子<br>公式： 价格(毒) - 成本 - 9.5%(手续费) - 100(转运费)">
         <p>预计盈利(含手续费)：<i class="fa fa-cny" aria-hidden="true"></i> {$data.profit_future}</p>
     </div>
     <div class="col-lg-3 tips" data-tip="[成本] 合计">
@@ -66,7 +66,7 @@
             <td onclick="chart($(this))" class="layer_tip" data-tip="费用：{$v.send_cost} 元">{$v.send_type_id}</td>
             <td onclick="chart($(this))" class="layer_tip" data-tip="手续费：{$v.sold_charge} 元">{$v.sold_type_id}</td>
             <td onclick="chart($(this))">{$v.sold_price}</td>
-            <td onclick="chart($(this))" class="layer_tip" data-tip="已减去 9.5% 手续费">{$v.profit_future}</td>
+            <td onclick="chart($(this))" class="layer_tip" data-tip="利率比：{$v.ceil_future} %<br/>已减去 9.5% 手续费">{$v.profit_future}</td>
             <td onclick="chart($(this))">{$v.profit}</td>
             <td onclick="chart($(this))">{$v.buy_time}</td>
             <td onclick="chart($(this))">{$v.sold_time}</td>
