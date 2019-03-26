@@ -35,7 +35,6 @@ class Shoes extends Base
         $data['where']['ceil']          = input('get.ceil');
         $data['where']['sellDate']      = input('get.sellDate');
 
-
         $query = Db::connect("db_mongo")->name('diff');
         if ($data['where']['title']){
             $query->whereOr('duTitle', 'like', input('get.title'));
@@ -89,7 +88,8 @@ class Shoes extends Base
 
         $data = [];
         // 获取商品信息
-        $product = Db::connect("db_mongo")->name('du_product')->whereOr('title', 'like', input('get.articleNumber'))->whereOr('articleNumber', input('get.articleNumber'))->find();
+        $where = ['articleNumber' => input('get.articleNumber')];
+        $product = Db::connect("db_mongo")->name('du_product')->where($where)->find();
         if (!$product){
             return returnJson('', 202, '商品不存在！');
         }
@@ -106,7 +106,7 @@ class Shoes extends Base
 
 
         /** 获取 尺码销量 */
-        $sold_arr = Db::connect("db_mongo")->name('du_sold')->where('articleNumber', 'like', $product['articleNumber'])->order('size', 'asc')->select();
+        $sold_arr = Db::connect("db_mongo")->name('du_sold')->where($where)->order('size', 'asc')->select();
         $data['soldList'] = [];
         foreach ($sold_arr as $k => $v){
             $data['soldList'][] = [
@@ -117,7 +117,7 @@ class Shoes extends Base
 
 
         /** 获取 尺码销量折线图 */
-        $data_sold = Db::connect("db_mongo")->name('du_sold_record')->where(['articleNumber' => $product['articleNumber']])->order('spiderTime', 'asc')->select();
+        $data_sold = Db::connect("db_mongo")->name('du_sold_record')->where($where)->order('spiderTime', 'asc')->select();
         // 处理尺码销量数组
         $temp_sold = [];
         foreach ($data_sold as $k => $v){
@@ -182,7 +182,7 @@ class Shoes extends Base
         }
 
         /** 获取 尺码价格折线图 */
-        $size = Db::connect("db_mongo")->name('du_size')->where(['articleNumber' => $product['articleNumber']])->order('size desc')->select();
+        $size = Db::connect("db_mongo")->name('du_size')->where($where)->order('size desc')->select();
         $data['sizeName'] = [];
         $data['time'] = [];
         // 构造时间数组

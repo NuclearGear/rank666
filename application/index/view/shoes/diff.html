@@ -44,7 +44,7 @@
                                 <h4 class="panel-title">差价统计</h4>
                             </div>
                             <div class="row">
-                                <FORM method="get" class="form" action="{:url('index/diff')}">
+                                <FORM method="get" class="form" action="{:url('shoes/diff')}">
                                     <div class="form-group col-md-2">
                                         <label>名称</label>
                                         <input type="text" class="form-control" name="title" value="{$data.where.title}" placeholder="名称">
@@ -118,9 +118,9 @@
                                         </thead>
                                         <tbody>
                                         {volist name="data.diff" id="v"}
-                                        <tr>
-                                            <th scope="row">
-                                                <a href="{:url('shoes/index', ['articleNumber' => $v.articleNumber, 'size' => $v.size])}" target="_blank">
+                                        <tr data-url="{:url('buy/chart', ['articleNumber' => $v.articleNumber, 'size' => $v.size])}">
+                                            <th scope="row" onclick="chart($(this))">
+                                                <a target="_blank">
                                                 <img src="https://stockx-assets.imgix.net/logo/favicon.ico?auto=compress">
                                                 {$v.stockxTitle}<br/>
                                                 <img src="https://du.hupucdn.com/news_byte1022byte_9774f29b986b8773640120bf4c07cc2e_w100h100.png" width="16" height="16">
@@ -128,7 +128,7 @@
                                                 </a>
                                             </th>
                                             <td style="line-height: 40px">
-                                                <a href="{:url('shoes/index', ['articleNumber' => $v.articleNumber, 'size' => $v.size])}" target="_blank">
+                                                <a target="_blank">
                                                     {$v.articleNumber}
                                                 </a>
                                             </td>
@@ -200,4 +200,19 @@
     $(document).ready(function(){
         $('.info-tool').tooltip();
     });
+    function chart(obj){
+        var url = obj.parent().attr('data-url');
+        layer.open({
+            type: 2,
+            title: false,
+            closeBtn: 0, //不显示关闭按钮
+            shade: 0.5,
+            shadeClose:true,
+            area: ['100%', '600px'],
+            offset: 't',
+            // time: 5000, //2秒后自动关闭
+            anim: 5,
+            content: [url, 'no'], //iframe的url，no代表不显示滚动条
+        });
+    }
 </script>
