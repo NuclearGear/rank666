@@ -62,7 +62,7 @@ class Buy extends Base
         $get_where = implode('_',array_values($get_params['where']));
         $cache_key = implode('_', [session('user.id'), $get_params['page'], $get_params['tab'], $get_where]);
         $data = Cache::tag($this->cache_tag . session('user.id'))->get($cache_key);
-        if ($data){
+        if (false){
             return view('ajax_page', ['data' => $data]);
         }
 
@@ -169,14 +169,18 @@ class Buy extends Base
             // 计算预计盈利
             foreach ($buy_arr as $k => $v){
                 // 预计盈利
-                $data['profit_future'] += ($du_arr[$v['number'] . $v['size']] - $v['buy_cost']);
+                $data['profit_future'] += ($du_arr[$v['number'] . $v['size']] - $v['buy_cost']) - ($du_arr[$v['number'] . $v['size']] * 0.095);
             }
+            $data['profit_future'] = round($data['profit_future'], 2);
             $data['ceil_future'] = round($data['profit_future'] / $data['cost'], 2) * 100;
         }
 
         // 列表
         $data['list'] = BuyModel::where($where)->order('buy_time', 'desc')->order('id', 'desc')->paginate(30,false,['path'=>"javascript:AjaxPage([PAGE], {$tab});"]);
-
+        foreach ($data['list'] as $k => &$v){
+            // 增加预计利润
+            $data['list'][$k]['profit_future'] = round(($du_arr[$v['number'] . $v['size']] - $v['buy_cost']) - ($du_arr[$v['number'] . $v['size']] * 0.095), 2);
+        }
 
         Cache::tag($this->cache_tag . session('user.id'))->set($cache_key, $data, 3600 * 4);
 
