@@ -154,27 +154,32 @@
                     <div class="col-md-12">
                         <div class="panel panel-white">
                             <div class="panel-heading clearfix">
-                                <h4 class="panel-title">本月已购数量最多的鞋款</h4>
+                                <h4 class="panel-title">利益相关</h4>
                             </div>
                             <div class="panel-body">
                                 <div role="tabpanel">
                                     <!-- Nav tabs -->
                                     <ul class="nav nav-tabs nav-justified" role="tablist">
-                                        <li role="presentation" class="active"><a href="#tab21" role="tab" data-toggle="tab" id="popular1">{$data.goods_max.0}</a></li>
-                                        <li role="presentation"><a href="#tab22" role="tab" data-toggle="tab" id="popular2">{$data.goods_max.1}</a></li>
+                                        {volist name="$data.goods_max" key="k" id="v"}
+                                            {if condition="$k==1"}
+                                            <li role="presentation" class="active">
+                                            {else/}
+                                            <li role="presentation">
+                                            {/if}
+                                                <a href="#tab{$k}" class="tab_title{$k}" role="tab" data-toggle="tab">{$v}</a>
+                                            </li>
+                                        {/volist}
                                     </ul>
                                     <!-- Tab panes -->
                                     <div class="tab-content">
-                                        <div role="tabpanel" class="tab-pane active fade in" id="tab21">
-                                            <div id="echart_1" style="height: 600px;">
+                                        {volist name="$data.goods_max" key="k" id="v"}
+                                            <div role="tabpanel" class="tab-pane active fade in" id="tab{$k}">
+                                                <div id="echart_{$k}" style="height: 600px;">
 
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div role="tabpanel" class="tab-pane active fade" id="tab22">
-                                            <div id="echart_2" style="height: 600px;" style="display: none">
+                                        {/volist}
 
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -234,147 +239,85 @@
     $('#upload').click(function(){
         layer.msg('转运功能更新中。。。');
     });
-    // 基于准备好的dom，初始化echarts实例
-    var myChart1 = echarts.init(document.getElementById('echart_1'));
-    var myChart2 = echarts.init(document.getElementById('echart_2'));
-    // 指定图表的配置项和数据
-    var form_data = {
-        // 'day'           : day,
-        'size_start'    : '{$data.size_start}',
-        'size_end'      : '{$data.size_end}',
-        'articleNumber' : '{$data.goods_max.0}',
-    };
-    $.get("{:url('shoes/AjaxProductOne')}", form_data, function (ret) {
-        if (ret.code != 200) {
-            layer.closeAll('loading');
-            $('.ret-msg').html(ret.msg).show();
-            return false;
-        }
-    $('#popular1').text(ret.data['product']['title']);
-   var option = {
-        title: {
-            text: ret.data['product']['title'],
-            top: 40,
-        },
-        tooltip: {
-            trigger: 'axis'
-        },
-        legend: {
-            type: 'scroll',
-            data: ret.data['sizeName'],
-            selected:ret.data['sizeSelected']
-        },
-        grid: {
-            left: '3%',
-            right: '4%',
-            bottom: '3%',
-            top:'13%',
-            containLabel: true
-        },
-        toolbox: {
-            top:'5%',
-            show: true,
-            feature: {
-                dataZoom: {
-                    yAxisIndex: 'none'
-                },
-                dataView: {readOnly: false},
-                magicType: {type: ['line', 'bar']},
-                restore: {},
-                saveAsImage: {}
-            }
-        },
-        xAxis: {
-            type: 'category',
-            boundaryGap: false,
-            data: ret.data['time']
-        },
-        yAxis: {
-            type: 'value',
-            axisLabel: {
-                formatter: '{value} 元'
-            },
-            min: function (value) {
-                return value.min - 500;
-            },
-            max: function (value) {
-                return value.max + 500;
-            }
-        },
-        series: ret.data['sizeList']
-    };
-    // 使用刚指定的配置项和数据显示图表。
-    myChart1.setOption(option)
-    });
+    $(function () {
+        {volist name="$data.goods_max" key="k" id="v"}
+        // 基于准备好的dom，初始化echarts实例
+        var myChart{$k} = echarts.init(document.getElementById('echart_{$k}'));
+        // 指定图表的配置项和数据
         var form_data = {
-        // 'day'           : day,
-        'size_start'    : '{$data.size_start}',
-        'size_end'      : '{$data.size_end}',
-        'articleNumber' : '{$data.goods_max.1}',
-    };
-    $.get("{:url('shoes/AjaxProductOne')}", form_data, function (ret) {
-        if (ret.code != 200) {
-            layer.closeAll('loading');
-            $('.ret-msg').html(ret.msg).show();
-            return false;
-        }
-    $('#popular2').text(ret.data['product']['title']);
-   var option2 = {
-        title: {
-            text: ret.data['product']['title'],
-            top: 40,
-        },
-        tooltip: {
-            trigger: 'axis'
-        },
-        legend: {
-            type: 'scroll',
-            data: ret.data['sizeName'],
-            selected:ret.data['sizeSelected']
-        },
-        grid: {
-            left: '3%',
-            right: '4%',
-            bottom: '3%',
-            top:'13%',
-            containLabel: true
-        },
-        toolbox: {
-            top:'5%',
-            show: true,
-            feature: {
-                dataZoom: {
-                    yAxisIndex: 'none'
+            // 'day'           : day,
+            'size_start'    : '{$data.size_start}',
+            'size_end'      : '{$data.size_end}',
+            'articleNumber' : '{$v}',
+        };
+        $.get("{:url('shoes/AjaxProductOne')}", form_data, function (ret) {
+            if (ret.code != 200) {
+                layer.closeAll('loading');
+                $('.ret-msg').html(ret.msg).show();
+                return false;
+            }
+            $('.tab_title{$k}').html(ret.data['product']['title']);
+            var option = {
+                title: {
+                    text: ret.data['product']['title'],
+                    top: 40,
                 },
-                dataView: {readOnly: false},
-                magicType: {type: ['line', 'bar']},
-                restore: {},
-                saveAsImage: {}
-            }
-        },
-        xAxis: {
-            type: 'category',
-            boundaryGap: false,
-            data: ret.data['time']
-        },
-        yAxis: {
-            type: 'value',
-            axisLabel: {
-                formatter: '{value} 元'
-            },
-            min: function (value) {
-                return value.min - 500;
-            },
-            max: function (value) {
-                return value.max + 500;
-            }
-        },
-        series: ret.data['sizeList']
-    };
-    // 使用刚指定的配置项和数据显示图表。
-        myChart2.setOption(option2);
-        $('.tab-pane').eq(1).removeClass('active');
-    });    
+                tooltip: {
+                    trigger: 'axis'
+                },
+                legend: {
+                    type: 'scroll',
+                    data: ret.data['sizeName'],
+                    selected:ret.data['sizeSelected']
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    top:'13%',
+                    containLabel: true
+                },
+                toolbox: {
+                    top:'5%',
+                    show: true,
+                    feature: {
+                        dataZoom: {
+                            yAxisIndex: 'none'
+                        },
+                        dataView: {readOnly: false},
+                        magicType: {type: ['line', 'bar']},
+                        restore: {},
+                        saveAsImage: {}
+                    }
+                },
+                xAxis: {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: ret.data['time']
+                },
+                yAxis: {
+                    type: 'value',
+                    axisLabel: {
+                        formatter: '{value} 元'
+                    },
+                    min: function (value) {
+                        return value.min - 500;
+                    },
+                    max: function (value) {
+                        return value.max + 500;
+                    }
+                },
+                series: ret.data['sizeList']
+            };
+            // 使用刚指定的配置项和数据显示图表。
+            myChart{$k}.setOption(option)
+        });
+        {/volist}
+
+        $('.tab-pane').removeClass('active');
+        $('.tab-pane').eq(0).addClass('active');
+    });
+
 </script>
 
 

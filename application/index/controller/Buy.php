@@ -62,7 +62,7 @@ class Buy extends Base
         $get_where = implode('_',array_values($get_params['where']));
         $cache_key = implode('_', [session('user.id'), $get_params['page'], $get_params['tab'], $get_where]);
         $data = Cache::tag($this->cache_tag . session('user.id'))->get($cache_key);
-        if ($data){
+        if (false){
             return view('ajax_page', ['data' => $data]);
         }
 
@@ -117,19 +117,62 @@ class Buy extends Base
             $where['buy_time'] = ['between', [input('get.start'), input('get.end')]];
         }
 
-        // 盈利
-        $data['profit'] = BuyModel::where($where)->sum('profit');
-        $data['profit'] = round($data['profit'], 2);
-        // 成本
-        $data['cost'] = BuyModel::where($where)->sum('buy_cost');
-        // 售出
-        $data['sold_total'] = BuyModel::where($where)->sum('sold_price');
+
         // 待收货
         $data['buy'] = BuyModel::where($where)->where(['send_type_id' => ''])->where(['sold_price' => ''])->count();
         // 待出售
         $data['send'] = BuyModel::where($where)->where('send_type_id', 'NEQ', '')->where(['sold_price' => ''])->count();
         // 已经出售
         $data['sold'] = BuyModel::where($where)->where('sold_price', 'NEQ', '')->count();
+
+        // 盈利
+        $data['profit'] = BuyModel::where($where)->sum('profit');
+        $data['profit'] = round($data['profit'], 2);
+        // 成本
+        $data['cost'] = BuyModel::where($where)->sum('buy_cost');
+
+        // 利率比
+        if ($data['profit'] && $data['cost']){
+            $data['ceil'] = round($data['profit'] / $data['cost'], 2) * 100;
+        }else{
+            $data['ceil'] = 0;
+        }
+
+
+        // 预计盈利
+        $data['profit_future'] = 0;
+        $data['profit_future_du'] = 0;
+        $data['ceil_future'] = 0;
+
+        $buy_arr = BuyModel::where($where)->where(['sold_price' => 0])->field('number, buy_cost,size')->select();
+        if ($buy_arr){
+            // 获取款式并且去重
+            $need_shoes = [];
+            foreach ($buy_arr as $k => $v){
+                $need_shoes[$v['number'] . $v['size']] = [
+                    'number' => $v['number'],
+                    'size'   => $v['size'],
+                ];
+            }
+            // 获取毒的价格
+            $du_arr = [];
+            foreach ($need_shoes as $k => $v){
+                // 组装条件
+                $where_profit = [
+                    'articleNumber' => $v['number'],
+                    'size' => $v['size'],
+                ];
+                $ret_du = Db::connect("db_mongo")->name("du_size")->where($where_profit)->field('articleNumber, price,size')->find();
+                $du_arr[$ret_du['articleNumber'] . $ret_du['size']] = $ret_du['price'] / 100;
+            }
+            // 计算预计盈利
+            foreach ($buy_arr as $k => $v){
+                // 预计盈利
+                $data['profit_future'] += $du_arr[$v['number'] . $v['size']] - $v['buy_cost'];
+            }
+            $data['ceil_future'] = round($data['profit_future'] / $data['cost'], 2) * 100;
+        }
+
         // 列表
         $data['list'] = BuyModel::where($where)->order('buy_time', 'desc')->paginate(30,false,['path'=>"javascript:AjaxPage([PAGE], {$tab});"]);
 

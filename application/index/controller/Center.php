@@ -50,19 +50,17 @@ class Center extends Base
         // 相关商品 价格折线图
         $data['size_start'] = '40';
         $data['size_end'] = '40';
-        $data['send_list'] = BuyModel::where($where)->select();
-        foreach ($data['send_list'] as $k => $v) {
-            $number[] = $data['send_list'][$k]['number'];
-        }
+        $data['goods_max'] = [];
+        $data['send_list'] = BuyModel::where($where)->where(['sold_price' => 0])->select();
+        if ($data['send_list']){
+            foreach ($data['send_list'] as $k => $v) {
+                $number[] = $data['send_list'][$k]['number'];
+            }
             $num = array_count_values($number);
             arsort($num);
-            $data['goods_max'] = array_keys($num);
+            $data['goods_max'] = array_slice(array_keys($num), 0, 4);
+        }
         //转运信息
         return view('index', ['data' => $data]);
-    }
-
-    // VIP 页面
-    public function vip(){
-        return view();
     }
 }

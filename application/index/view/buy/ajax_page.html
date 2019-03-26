@@ -1,23 +1,33 @@
 <div class="row">
-    <div class="col-lg-2">
-        <p>盈利：<i class="fa fa-cny" aria-hidden="true"></i> {$data.profit}</p>
-    </div>
-    <div class="col-lg-2">
-        <p>成本：<i class="fa fa-cny" aria-hidden="true"></i> {$data.cost}</p>
-    </div>
-    <div class="col-lg-2">
-        <p>售出：<i class="fa fa-cny" aria-hidden="true"></i> {$data.sold_total}</p>
-    </div>
-    <div class="col-lg-2">
+    <div class="col-lg-2 tips" data-tip="未填写 [转运平台]<br>未填写 [出售价格]<br>鞋子数量合计">
         <p>待收货： {$data.buy} 双</p>
     </div>
-    <div class="col-lg-2">
+    <div class="col-lg-2 tips" data-tip="已填写 [转运平台]<br>未填写 [出售价格]<br>鞋子数量合计">
         <p>待出售： {$data.send} 双</p>
     </div>
-    <div class="col-lg-2">
+    <div class="col-lg-2 tips" data-tip="已填写 [出售价格]<br>鞋子数量合计">
         <p>已出售： {$data.sold} 双</p>
     </div>
 </div>
+<div class="row">
+    <div class="col-lg-2 tips" data-tip="未填写 [出售价格] 的鞋子<br>公式： 价格(毒) - 成本">
+        <p>预计盈利(不含手续费)：<i class="fa fa-cny" aria-hidden="true"></i> {$data.profit_future}</p>
+    </div>
+    <div class="col-lg-2 tips" data-tip="公式： [预计盈利] / [成本]">
+        <p>利率比：{$data.ceil_future}%</p>
+    </div>
+    <div class="col-lg-2 tips" data-tip="[出售价格] 合计">
+        <p>实际盈利：<i class="fa fa-cny" aria-hidden="true"></i> {$data.profit}</p>
+    </div>
+    <div class="col-lg-2 tips" data-tip="[成本] 合计">
+        <p>成本：<i class="fa fa-cny" aria-hidden="true"></i> {$data.cost}</p>
+    </div>
+    <div class="col-lg-2 tips" data-tip="公式： [实际盈利] / [成本]">
+        <p>利率比：{$data.ceil}%</p>
+    </div>
+</div>
+
+
 
 <div class="panel-body">
     <table class="table table-hover" style="display: none">
@@ -72,4 +82,15 @@
         {$data.list->render()}
     </center>
 </div>
+
+<script>
+    $('.tips').hover(function () {
+        layer.tips($(this).attr('data-tip'), $(this),{
+            tips: 1,
+            time:10000,
+        });
+    },function () {
+        layer.closeAll('tips');
+    })
+</script>
 

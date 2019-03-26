@@ -3,6 +3,8 @@
 namespace app\index\controller;
 
 
+use app\index\model\FunctionModel;
+use app\index\model\UserFunctionModel;
 use app\index\model\UserModel;
 use think\Controller;
 
@@ -64,6 +66,43 @@ class User extends Controller
     public function login_out(){
         session('user', null);
         $this->redirect(url('User/login'));
+    }
+
+    // VIP 页面
+    public function vip(){
+        $user = UserModel::get(session('user.id'));
+        $data['is_test'] = $user['is_test'];
+        return view('vip', ['data' => $data]);
+    }
+
+    // 立即试用
+    public function ajax_test(){
+        $user = UserModel::get(session('user.id'));
+        if ($user['is_test'] == 1){
+            return returnJson('', 203, '你已试用， 每个账号限试用一次！');
+        }
+
+        $function = FunctionModel::all();
+        $expire_time = time() + 3600 * 24 * 30;
+        foreach ($function as $k => $v){
+            $ret_user = UserFunctionModel::create([
+               'user_id'     => session('user.id'),
+               'function_id' => $v['id'],
+               'expire_time' => $expire_time,
+            ]);
+            if (!$ret_user){
+                return returnJson($ret_user, 201, '试用失败，请重试！');
+            }
+        }
+
+        $ret = UserModel::update([
+            'is_test' => 1
+        ], ['id' => session('user.id')]);
+        if (!$ret){
+            return returnJson('', 202, '试用失败， 请重试');
+        }
+
+        return returnJson('', 200, '试用成功，时间将在 ' . date('Y-m-d H:i:s', $expire_time) . ' 到期！');
     }
 
 
