@@ -35,7 +35,6 @@ class Shoes extends Base
         $data['where']['ceil']          = input('get.ceil');
         $data['where']['sellDate']      = input('get.sellDate');
 
-
         $query = Db::connect("db_mongo")->name('diff');
         if ($data['where']['title']){
             $query->whereOr('duTitle', 'like', input('get.title'));
