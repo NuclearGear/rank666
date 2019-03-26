@@ -63,9 +63,4 @@ class Center extends Base
         //转运信息
         return view('index', ['data' => $data]);
     }
-
-    // VIP 页面
-    public function vip(){
-        return view();
-    }
 }

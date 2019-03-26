@@ -1,0 +1,278 @@
+{include file="public/header"}
+<link rel="stylesheet" href="__PUBLIC__/vip/css/style.css" type="text/css" media="all">
+
+
+<!-- Page Container -->
+<div class="page-container">
+    <!-- Page Sidebar -->
+    <!-- /Page Sidebar -->
+    {include file="public/sidebar"}
+
+    <!-- Page Content -->
+    <div class="page-content">
+        <!-- Page Header -->
+        {include file="public/page_header"}
+        <!-- /Page Header -->
+
+
+        <!-- Page Inner -->
+        <div class="page-inner">
+            <div class="page-title">
+                <h3 class="breadcrumb-header">功能购买</h3>
+            </div>
+            <div id="main-wrapper">
+                <!-- 鞋子价格折线图 -->
+                <div class="row">
+                    <div class="col-sm-12 col-lg-12">
+                        <div class="panel panel-white">
+                            <div class="panel-body" style="height: 1000px;">
+                                <ul id="cardArea" class="card-area clearfix">
+                                    <li class="card-item active">
+                                        <div class="card">
+                                            <div class="card-title title-even">
+                                                <div class="content">
+                                                    <div class="zq-product-img">
+                                                        <i class="zq-icon icon40x40 crad-area-icon1"></i>
+                                                    </div>
+                                                    <h1>试用一个月</h1>
+                                                    <p class="short-info">试的好才是真的好</p>
+                                                </div>
+                                            </div>
+                                            <div class="card-content content-first bg-e8e8e8">
+                                                <ul class="content-first-list">
+                                                    <li>购买统计</li>
+                                                    <li>转运查询</li>
+                                                    <li>价格比对</li>
+                                                    <li>单品查询</li>
+                                                    <li>差价查询</li>
+                                                    <li>鞋码阵列</li>
+                                                    <li>每日鞋款</li>
+                                                </ul>
+                                            </div>
+                                            <div class="card-content content-second">
+                                                <div class="main-info">
+                                                    <a href="javascript:;" target="_blank" class="no-effect">
+                                                        <p class="main-head">功能介绍</p>
+                                                    </a>
+                                                    <p class="main-desc">1.本月盈利  本月盈利与上月对比  显示差额</p>
+                                                    <p class="main-desc">2.本月成本  本月成本与上月对比  显示差额</p>
+                                                    <p class="main-desc">3.本月销售额  总的卖出价格总计  与上月对比显示差额</p>
+                                                    <p class="main-desc">4.本月利率比     盈利/ 成本</p>
+                                                    <p class="main-desc">5.根据购买时间，统计本月鞋子总数   统计分为  转运中  已到达  已售出</p>
+                                                    <p class="main-desc">6.价格折线图，  会根据你买的相关鞋款 尺码，显示毒最近30天这款鞋子的价格折线图  例如 北卡蓝 36码，就会显示这款码30天内的价格折线图</p>
+                                                    <p class="main-desc">7.转运信息   通过你添加的鞋子的转运信息，自动显示目前转运最新情况，可以添加多个转运平台</p>
+                                                    <p class="main-desc">8.鞋子出售统计。   会根据鞋子出售的平台，分别统计平台出售了多少双，多少销售额</p>
+                                                    <p class="main-desc">9.多平台比价。会根据你的鞋款，显示nice、毒、目前两家平台30天的价格折线图，方便选一家价高的出售，后续支持很多平台</p>
+                                                    <p class="main-desc">10.实时统计。会对比指定鞋款   stockx与nice、毒的实时比价每小时更新。自动带连接，直达stockx鞋款页面</p>
+                                                    <p class="main-desc">11.鞋款利润统计。  可以通过你添加鞋款的购买时间或出售时间
+                                                        分别以  12月为单位区分统计   也可以自定义时间统计
+                                                        支持自定义时间 、鞋款状态（转运中、到货、已出售）、货号、名称、出售平台、转运平台、价格区间</p>
+                                                    <p class="main-desc">12.鞋款阵列表  通过几张表的数据阵列，非常直观的看到每个尺码的每日销售情况，择优选择</p>
+                                                    <p class="main-desc alert-danger">注：试用时间一个月。每个账号只限一次试用。</p>
+                                                    <a class="btn_test" target="_blank">
+                                                        <!--<button class="main-btn">立即试用 <i class="menu-icon fa fa-cny"></i> 0.01</button>-->
+                                                        {if condition="$data.is_test == 1"}
+                                                        <button class="main-btn" style="background: #ccc">已试用</button>
+                                                        {else/}
+                                                        <button class="main-btn">立即试用</button>
+                                                        {/if}
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="card-item">
+                                        <div class="card">
+                                            <div class="card-title title-even">
+                                                <div class="content">
+                                                    <div class="zq-product-img">
+                                                        <i class="zq-icon icon40x40 crad-area-icon2"></i>
+                                                    </div>
+                                                    <h1>月卡 / ¥ 59</h1>
+                                                    <p class="short-info">限时优惠 送一个月</p>
+                                                </div>
+                                            </div>
+                                            <div class="card-content content-first bg-e8e8e8">
+                                                <ul class="content-first-list">
+                                                    <li>购买统计</li>
+                                                    <li>转运查询</li>
+                                                    <li>价格比对</li>
+                                                    <li>单品查询</li>
+                                                    <li>差价查询</li>
+                                                    <li>鞋码阵列</li>
+                                                    <li>每日鞋款</li>
+                                                </ul>
+                                            </div>
+                                            <div class="card-content content-second">
+                                                <div class="main-info">
+                                                    <a href="javascript:;" target="_blank" class="no-effect">
+                                                        <p class="main-head">功能介绍</p>
+                                                    </a>
+                                                    <p class="main-desc">1.本月盈利  本月盈利与上月对比  显示差额</p>
+                                                    <p class="main-desc">2.本月成本  本月成本与上月对比  显示差额</p>
+                                                    <p class="main-desc">3.本月销售额  总的卖出价格总计  与上月对比显示差额</p>
+                                                    <p class="main-desc">4.本月利率比     盈利/ 成本</p>
+                                                    <p class="main-desc">5.根据购买时间，统计本月鞋子总数   统计分为  转运中  已到达  已售出</p>
+                                                    <p class="main-desc">6.价格折线图，  会根据你买的相关鞋款 尺码，显示毒最近30天这款鞋子的价格折线图  例如 北卡蓝 36码，就会显示这款码30天内的价格折线图</p>
+                                                    <p class="main-desc">7.转运信息   通过你添加的鞋子的转运信息，自动显示目前转运最新情况，可以添加多个转运平台</p>
+                                                    <p class="main-desc">8.鞋子出售统计。   会根据鞋子出售的平台，分别统计平台出售了多少双，多少销售额</p>
+                                                    <p class="main-desc">9.多平台比价。会根据你的鞋款，显示nice、毒、目前两家平台30天的价格折线图，方便选一家价高的出售，后续支持很多平台</p>
+                                                    <p class="main-desc">10.实时统计。会对比指定鞋款   stockx与nice、毒的实时比价每小时更新。自动带连接，直达stockx鞋款页面</p>
+                                                    <p class="main-desc">11.鞋款利润统计。  可以通过你添加鞋款的购买时间或出售时间
+                                                        分别以  12月为单位区分统计   也可以自定义时间统计
+                                                        支持自定义时间 、鞋款状态（转运中、到货、已出售）、货号、名称、出售平台、转运平台、价格区间</p>
+                                                    <p class="main-desc">12.鞋款阵列表  通过几张表的数据阵列，非常直观的看到每个尺码的每日销售情况，择优选择</p>
+                                                    <a class="btn_test" target="_blank">
+                                                        <!--<button class="main-btn">立即试用 <i class="menu-icon fa fa-cny"></i> 0.01</button>-->
+                                                        <button class="main-btn">立即购买</button>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="card-item">
+                                        <div class="card">
+                                            <div class="card-title title-even">
+                                                <div class="content">
+                                                    <div class="zq-product-img">
+                                                        <i class="zq-icon icon40x40 crad-area-icon3"></i>
+                                                    </div>
+                                                    <h1>季卡 / ¥ 177</h1>
+                                                    <p class="short-info">限时优惠 送三个月</p>
+                                                </div>
+                                            </div>
+                                            <div class="card-content content-first bg-e8e8e8">
+                                                <ul class="content-first-list">
+                                                    <li>购买统计</li>
+                                                    <li>转运查询</li>
+                                                    <li>价格比对</li>
+                                                    <li>单品查询</li>
+                                                    <li>差价查询</li>
+                                                    <li>鞋码阵列</li>
+                                                    <li>每日鞋款</li>
+                                                </ul>
+                                            </div>
+                                            <div class="card-content content-second">
+                                                <div class="main-info">
+                                                    <a href="javascript:;" target="_blank" class="no-effect">
+                                                        <p class="main-head">功能介绍</p>
+                                                    </a>
+                                                    <p class="main-desc">1.本月盈利  本月盈利与上月对比  显示差额</p>
+                                                    <p class="main-desc">2.本月成本  本月成本与上月对比  显示差额</p>
+                                                    <p class="main-desc">3.本月销售额  总的卖出价格总计  与上月对比显示差额</p>
+                                                    <p class="main-desc">4.本月利率比     盈利/ 成本</p>
+                                                    <p class="main-desc">5.根据购买时间，统计本月鞋子总数   统计分为  转运中  已到达  已售出</p>
+                                                    <p class="main-desc">6.价格折线图，  会根据你买的相关鞋款 尺码，显示毒最近30天这款鞋子的价格折线图  例如 北卡蓝 36码，就会显示这款码30天内的价格折线图</p>
+                                                    <p class="main-desc">7.转运信息   通过你添加的鞋子的转运信息，自动显示目前转运最新情况，可以添加多个转运平台</p>
+                                                    <p class="main-desc">8.鞋子出售统计。   会根据鞋子出售的平台，分别统计平台出售了多少双，多少销售额</p>
+                                                    <p class="main-desc">9.多平台比价。会根据你的鞋款，显示nice、毒、目前两家平台30天的价格折线图，方便选一家价高的出售，后续支持很多平台</p>
+                                                    <p class="main-desc">10.实时统计。会对比指定鞋款   stockx与nice、毒的实时比价每小时更新。自动带连接，直达stockx鞋款页面</p>
+                                                    <p class="main-desc">11.鞋款利润统计。  可以通过你添加鞋款的购买时间或出售时间
+                                                        分别以  12月为单位区分统计   也可以自定义时间统计
+                                                        支持自定义时间 、鞋款状态（转运中、到货、已出售）、货号、名称、出售平台、转运平台、价格区间</p>
+                                                    <p class="main-desc">12.鞋款阵列表  通过几张表的数据阵列，非常直观的看到每个尺码的每日销售情况，择优选择</p>
+                                                    <a class="btn_test" target="_blank">
+                                                        <!--<button class="main-btn">立即试用 <i class="menu-icon fa fa-cny"></i> 0.01</button>-->
+                                                        <button class="main-btn">立即购买</button>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="card-item">
+                                        <div class="card">
+                                            <div class="card-title title-even">
+                                                <div class="content">
+                                                    <div class="zq-product-img">
+                                                        <i class="zq-icon icon40x40 crad-area-icon4"></i>
+                                                    </div>
+                                                    <h1>半年卡 / ¥ 354</h1>
+                                                    <p class="short-info">限时优惠 送六个月</p>
+                                                </div>
+                                            </div>
+                                            <div class="card-content content-first bg-e8e8e8">
+                                                <ul class="content-first-list">
+                                                    <li>购买统计</li>
+                                                    <li>转运查询</li>
+                                                    <li>价格比对</li>
+                                                    <li>单品查询</li>
+                                                    <li>差价查询</li>
+                                                    <li>鞋码阵列</li>
+                                                    <li>每日鞋款</li>
+                                                </ul>
+                                            </div>
+                                            <div class="card-content content-second">
+                                                <div class="main-info">
+                                                    <a href="javascript:;" target="_blank" class="no-effect">
+                                                        <p class="main-head">功能介绍</p>
+                                                    </a>
+                                                    <p class="main-desc">1.本月盈利  本月盈利与上月对比  显示差额</p>
+                                                    <p class="main-desc">2.本月成本  本月成本与上月对比  显示差额</p>
+                                                    <p class="main-desc">3.本月销售额  总的卖出价格总计  与上月对比显示差额</p>
+                                                    <p class="main-desc">4.本月利率比     盈利/ 成本</p>
+                                                    <p class="main-desc">5.根据购买时间，统计本月鞋子总数   统计分为  转运中  已到达  已售出</p>
+                                                    <p class="main-desc">6.价格折线图，  会根据你买的相关鞋款 尺码，显示毒最近30天这款鞋子的价格折线图  例如 北卡蓝 36码，就会显示这款码30天内的价格折线图</p>
+                                                    <p class="main-desc">7.转运信息   通过你添加的鞋子的转运信息，自动显示目前转运最新情况，可以添加多个转运平台</p>
+                                                    <p class="main-desc">8.鞋子出售统计。   会根据鞋子出售的平台，分别统计平台出售了多少双，多少销售额</p>
+                                                    <p class="main-desc">9.多平台比价。会根据你的鞋款，显示nice、毒、目前两家平台30天的价格折线图，方便选一家价高的出售，后续支持很多平台</p>
+                                                    <p class="main-desc">10.实时统计。会对比指定鞋款   stockx与nice、毒的实时比价每小时更新。自动带连接，直达stockx鞋款页面</p>
+                                                    <p class="main-desc">11.鞋款利润统计。  可以通过你添加鞋款的购买时间或出售时间
+                                                        分别以  12月为单位区分统计   也可以自定义时间统计
+                                                        支持自定义时间 、鞋款状态（转运中、到货、已出售）、货号、名称、出售平台、转运平台、价格区间</p>
+                                                    <p class="main-desc">12.鞋款阵列表  通过几张表的数据阵列，非常直观的看到每个尺码的每日销售情况，择优选择</p>
+                                                    <a class="btn_test" target="_blank">
+                                                        <button class="main-btn">立即购买</button>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- 相关鞋子状态 -->
+
+
+            </div><!-- Main Wrapper -->
+            <div class="page-footer">
+                <p>Made with <i class="fa fa-heart"></i> by skcats</p>
+            </div>
+        </div><!-- /Page Inner -->
+
+    </div><!-- /Page Content -->
+</div><!-- /Page Container -->
+
+
+
+<script type="text/javascript" src="__PUBLIC__/vip/js/jquery.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/vip/js/function.js"></script>
+<!-- layer.js -->
+<script src="__PUBLIC__/layer/layer.js"></script>
+<!-- layer.js -->
+
+<script type="text/javascript">
+    $(function() {
+        $("#cardArea").cardArea()
+    });
+    $('.btn_test').click(function () {
+        var obj = $(this);
+        layer.load();
+
+        $.post("{:url('user/ajax_test')}",{},function (ret) {
+            layer.closeAll('loading');
+            if (ret.code == 200) {
+                obj.find('button').html('已试用').css('background', '#ccc');
+                layer.msg(ret.msg);
+            } else {
+                layer.msg(ret.msg, function () { });
+            }
+        });
+        return false;
+    })
+</script>
+{include file="public/footer"}
+
