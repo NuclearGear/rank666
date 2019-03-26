@@ -152,7 +152,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="panel panel-white">
-                            <div class="panel-heading clearfix">
+                            <div class="panel-heading clearfix layer_tip" data-tip="购买数量最多的前四款鞋子近期价格、销量折线图">
                                 <h4 class="panel-title">利益相关</h4>
                             </div>
                             <div class="panel-body">
@@ -239,6 +239,7 @@
         layer.msg('转运功能正在更新中...');
     });
     $(function () {
+        layer.load(2);
         {volist name="$data.goods_max" key="k" id="v"}
         // 基于准备好的dom，初始化echarts实例
         var myChart{$k} = echarts.init(document.getElementById('echart_{$k}'));
@@ -309,12 +310,14 @@
                 series: ret.data['sizeList']
             };
             // 使用刚指定的配置项和数据显示图表。
-            myChart{$k}.setOption(option)
+            myChart{$k}.setOption(option, true)
         });
         {/volist}
 
         $('.tab-pane').removeClass('active');
         $('.tab-pane').eq(0).addClass('active');
+        layer.closeAll('loading');
+
     });
 
 </script>

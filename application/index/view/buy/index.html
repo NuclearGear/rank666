@@ -258,9 +258,7 @@
                 <!-- 盈利情况 -->
 
             </div><!-- Main Wrapper -->
-            <div class="page-footer">
-                <p>Made with <i class="fa fa-heart"></i> by skcats</p>
-            </div>
+
         </div><!-- /Page Inner -->
 
     </div><!-- /Page Content -->
@@ -364,7 +362,9 @@
 
     // 遍历插入商品
     $(function () {
-       $.get("{:url('buy/ajax_get_goods')}",{},function (ret) {
+        layer.load(2);
+
+        $.get("{:url('buy/ajax_get_goods')}",{},function (ret) {
            if (ret.code == 200){
                $('.select_name').append(ret.data);
                $('.select_name').selectpicker({
@@ -379,6 +379,8 @@
                    title:'请输入名称 或 货号',
                    placeholder:'请输入名称 或 货号',
                });
+               layer.closeAll('loading');
+
                // 获取 全部选项卡 第一页
                AjaxPage(1,'0');
            }
@@ -484,19 +486,21 @@
                         // 修改Dom 转运平台
                         obj.parent().parent().find('td').eq(4).html(ret.data.send_type_id);
                         // 修改Dom 转运费用
-                        obj.parent().parent().find('td').eq(5).html(ret.data.send_cost);
+                        obj.parent().parent().find('td').eq(4).attr('data-tip', '费用：'+ ret.data.send_cost +' 元');
                         // 修改Dom 出售平台
-                        obj.parent().parent().find('td').eq(6).html(ret.data.sold_type_id);
+                        obj.parent().parent().find('td').eq(5).html(ret.data.sold_type_id);
                         // 修改Dom 出售手续费
-                        obj.parent().parent().find('td').eq(7).html(ret.data.sold_charge);
+                        obj.parent().parent().find('td').eq(5).attr('data-tip', '手续费：'+ ret.data.sold_charge +' 元');
                         // 修改Dom 出售价格
-                        obj.parent().parent().find('td').eq(8).html(ret.data.sold_price);
+                        obj.parent().parent().find('td').eq(6).html(ret.data.sold_price);
+                        // 修改Dom 预计利润
+                        obj.parent().parent().find('td').eq(7).html('-');
                         // 修改Dom 利润
-                        obj.parent().parent().find('td').eq(9).html(ret.data.profit);
+                        obj.parent().parent().find('td').eq(8).html(ret.data.profit);
                         // 修改Dom 购买日期
-                        obj.parent().parent().find('td').eq(10).html(ret.data.buy_time);
+                        obj.parent().parent().find('td').eq(9).html(ret.data.buy_time);
                         // 修改Dom 出售日期
-                        obj.parent().parent().find('td').eq(11).html(ret.data.sold_time);
+                        obj.parent().parent().find('td').eq(10).html(ret.data.sold_time);
 
                         layer.closeAll('loading');
                         layer.msg(ret.msg);

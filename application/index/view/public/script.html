@@ -57,6 +57,14 @@
         todayBtn:  'linked',
         weekStart: 1,
         minView:0,
+    });
 
+    $('.layer_tip').hover(function () {
+        layer.tips($(this).attr('data-tip'), $(this),{
+            tips: 1,
+            time:10000,
+        });
+    },function () {
+        layer.closeAll('tips');
     });
 </script>

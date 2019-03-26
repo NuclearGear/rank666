@@ -161,6 +161,7 @@
 
 
 <script>
+    var init = 1;
     // 遍历插入商品
     $(function () {
         $('.goods_style').hide();
@@ -294,7 +295,7 @@
                 },
                 series: ret.data['sizeList']
             };
-            myChart.setOption(option)
+            myChart.setOption(option, true)
 
 
             option2 = {
@@ -349,8 +350,14 @@
                 },
                 series: ret.data['soldSizeList']
             };
-            myChart2.setOption(option2);
-            $('.tab-pane').eq(1).removeClass('active');
+            myChart2.setOption(option2, true);
+
+            if (init == 1){
+                $('.tab-pane').eq(1).removeClass('active');
+            }
+            init = init + 1;
+
+
             layer.closeAll('loading');
         });
     });
