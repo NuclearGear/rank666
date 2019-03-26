@@ -174,7 +174,7 @@ class Buy extends Base
         }
 
         // 列表
-        $data['list'] = BuyModel::where($where)->order('buy_time', 'desc')->paginate(30,false,['path'=>"javascript:AjaxPage([PAGE], {$tab});"]);
+        $data['list'] = BuyModel::where($where)->order('buy_time', 'desc')->order('id', 'desc')->paginate(30,false,['path'=>"javascript:AjaxPage([PAGE], {$tab});"]);
 
 
         Cache::tag($this->cache_tag . session('user.id'))->set($cache_key, $data, 3600 * 4);
