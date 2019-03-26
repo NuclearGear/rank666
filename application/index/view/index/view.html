@@ -1,0 +1,67 @@
+{include file="public/header"}
+<link rel="stylesheet" href="__PUBLIC__/vip/css/style.css" type="text/css" media="all">
+
+
+<!-- Page Container -->
+<div class="page-container">
+    <!-- Page Sidebar -->
+    <!-- /Page Sidebar -->
+    {include file="public/sidebar"}
+
+    <!-- Page Content -->
+    <div class="page-content">
+        <!-- Page Header -->
+        {include file="public/page_header"}
+        <!-- /Page Header -->
+
+
+        <!-- Page Inner -->
+        <div class="page-inner">
+            <div class="page-title">
+                <h3 class="breadcrumb-header">功能介绍</h3>
+            </div>
+            <div id="main-wrapper">
+                <div class="row">
+                    <div class="col-sm-12 col-lg-12">
+                        <div class="panel panel-white">
+                            <h4>差价统计，可以输入货号或者名称来选择鞋款，系统会自动计算出 stockX 和 毒APP 平台的鞋款差价，会自动过滤差价小于100元的数据。</br>用户可以根据自己的需求按照 销量 差价 利润 利率去排序</h4>
+                           <img src="__PUBLIC__/view/diff.png" alt="" />
+                        </div>
+                        <div class="panel panel-white">
+                           <img src="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+<script type="text/javascript" src="__PUBLIC__/vip/js/jquery.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/vip/js/function.js"></script>
+<!-- layer.js -->
+<script src="__PUBLIC__/layer/layer.js"></script>
+<!-- layer.js -->
+
+<script type="text/javascript">
+    $(function() {
+        $("#cardArea").cardArea()
+    });
+    $('.btn_test').click(function () {
+        var obj = $(this);
+        layer.load();
+
+        $.post("{:url('user/ajax_test')}",{},function (ret) {
+            layer.closeAll('loading');
+            if (ret.code == 200) {
+                obj.find('button').html('已试用').css('background', '#ccc');
+                layer.msg(ret.msg);
+            } else {
+                layer.msg(ret.msg, function () { });
+            }
+        });
+        return false;
+    })
+</script>
+{include file="public/footer"}
+

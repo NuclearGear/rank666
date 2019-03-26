@@ -11,6 +11,10 @@ class Index extends Controller
         $this->redirect(url('center/index'));
     }
 
+    // 功能介绍
+    public function view(){
+        return view('view');
+    }
     // 获取销量排名前50
     public function ajaxBySoldNum(){
         $data = db('du_product')->field('articleNumber,soldNum')->limit(50)->order('soldNum desc')->select();
