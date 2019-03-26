@@ -62,7 +62,7 @@ class Buy extends Base
         $get_where = implode('_',array_values($get_params['where']));
         $cache_key = implode('_', [session('user.id'), $get_params['page'], $get_params['tab'], $get_where]);
         $data = Cache::tag($this->cache_tag . session('user.id'))->get($cache_key);
-        if (false){
+        if ($data){
             return view('ajax_page', ['data' => $data]);
         }
 
