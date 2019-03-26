@@ -24,7 +24,7 @@
                 <!-- 盈利情况 -->
                 <div class="row">
                     <div class="col-lg-3 col-md-6">
-                        <div class="panel panel-white stats-widget">
+                        <div class="panel panel-white stats-widget" style="height: 180px">
                             <div class="panel-body">
                                 <div class="pull-left">
                                     <span class="stats-number">本月盈利：¥ {$data.profit}</span><br/><br/>
@@ -42,7 +42,7 @@
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6">
-                        <div class="panel panel-white stats-widget">
+                        <div class="panel panel-white stats-widget" style="height: 180px">
                             <div class="panel-body">
                                 <div class="pull-left">
                                     <span class="stats-number">本月成本：¥ {$data.buy_cost}</span><br/><br/>
@@ -60,7 +60,7 @@
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6">
-                        <div class="panel panel-white stats-widget">
+                        <div class="panel panel-white stats-widget" style="height: 180px">
                             <div class="panel-body">
                                 <div class="pull-left">
                                     <span class="stats-number">本月销售额：¥ {$data.sold_price_total}</span><br/><br/>
@@ -78,7 +78,7 @@
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6">
-                        <div class="panel panel-white stats-widget">
+                        <div class="panel panel-white stats-widget" style="height: 180px">
                             <div class="panel-body">
                                 <div class="pull-left">
                                     <span class="stats-number">本月利率比：{$data.interest_rate * 100}%</span><br/><br/>
@@ -213,10 +213,10 @@
                                         <td width="30%">{$v.name}</td>
                                         <td width="10%">{$v.number}</td>
                                         <td width="10%">{$v.send_type_id}</td>
-                                        <td width="30%">等待库房发货</td>
-                                        <td width="10%">2019-03-11 19:20:26</td>
+                                        <td width="20%">转运功能正在更新中...</td>
+                                        <td width="20%">转运功能正在更新中...</td>
                                         <td width="10%">
-                                            <button type="button" class="btn btn-default" id="upload">更新</button>
+                                            <button type="button" class="btn btn-default upload">更新</button>
                                         </td>
                                     </tr>
                                         {/volist}
@@ -236,8 +236,8 @@
 {include file="public/script"}
 {include file="public/footer"}
 <script type="text/javascript">
-    $('#upload').click(function(){
-        layer.msg('转运功能更新中。。。');
+    $('.upload').click(function(){
+        layer.msg('转运功能正在更新中...');
     });
     $(function () {
         {volist name="$data.goods_max" key="k" id="v"}
