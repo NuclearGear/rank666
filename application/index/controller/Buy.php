@@ -162,13 +162,14 @@ class Buy extends Base
                     'articleNumber' => $v['number'],
                     'size' => $v['size'],
                 ];
-                $ret_du = Db::connect("db_mongo")->name("du_size")->where($where_profit)->field('articleNumber, price,size')->find();
+                $ret_du = Db::connect("db_mongo")->name("du_size")->where($where_profit)->field('articleNumber, price,size')
+                                                                              ->order('spiderTime', 'desc')->find();
                 $du_arr[$ret_du['articleNumber'] . $ret_du['size']] = $ret_du['price'] / 100;
             }
             // 计算预计盈利
             foreach ($buy_arr as $k => $v){
                 // 预计盈利
-                $data['profit_future'] += $du_arr[$v['number'] . $v['size']] - $v['buy_cost'];
+                $data['profit_future'] += ($du_arr[$v['number'] . $v['size']] - $v['buy_cost']);
             }
             $data['ceil_future'] = round($data['profit_future'] / $data['cost'], 2) * 100;
         }
