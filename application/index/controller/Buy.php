@@ -144,7 +144,7 @@ class Buy extends Base
         $data['profit_future_du'] = 0;
         $data['ceil_future'] = 0;
 
-        $buy_arr = BuyModel::where($where)->where(['sold_price' => 0])->field('number, buy_cost,size')->select();
+        $buy_arr = BuyModel::where($where)->field('number, buy_cost,size,sold_price')->select();
         if ($buy_arr){
             // 获取款式并且去重
             $need_shoes = [];
@@ -160,7 +160,7 @@ class Buy extends Base
                 // 组装条件
                 $where_profit = [
                     'articleNumber' => $v['number'],
-                    'size' => $v['size'],
+                    'size'          => $v['size'],
                 ];
                 $ret_du = Db::connect("db_mongo")->name("du_size")->where($where_profit)->field('articleNumber, price,size')
                                                                               ->order('spiderTime', 'desc')->find();
@@ -168,8 +168,12 @@ class Buy extends Base
             }
             // 计算预计盈利
             foreach ($buy_arr as $k => $v){
-                // 预计盈利
-                $data['profit_future'] += ($du_arr[$v['number'] . $v['size']] - $v['buy_cost']) - ($du_arr[$v['number'] . $v['size']] * 0.095) - 100;
+                if ($v['sold_price'] != 0){
+                    // 预计盈利
+                    if (isset($du_arr[$v['number'] . $v['size']]) && $du_arr[$v['number'] . $v['size']]){
+                        $data['profit_future'] += ($du_arr[$v['number'] . $v['size']] - $v['buy_cost']) - ($du_arr[$v['number'] . $v['size']] * 0.095) - 100;
+                    }
+                }
             }
             $data['profit_future'] = round($data['profit_future'], 2);
             $data['ceil_future'] = round($data['profit_future'] / $data['cost'], 2) * 100;
@@ -178,7 +182,7 @@ class Buy extends Base
         // 列表
         $data['list'] = BuyModel::where($where)->order('buy_time', 'desc')->order('id', 'desc')->paginate(30,false,['path'=>"javascript:AjaxPage([PAGE], {$tab});"]);
         foreach ($data['list'] as $k => &$v){
-            if (!$v['sold_price']){
+            if (!$v['sold_price'] && isset($du_arr[$v['number'] . $v['size']]) && $du_arr[$v['number'] . $v['size']]){
                 // 增加预计利润
                 $data['list'][$k]['profit_future'] = round(($du_arr[$v['number'] . $v['size']] - $v['buy_cost']) - ($du_arr[$v['number'] . $v['size']] * 0.095), 2);
                 // 利率比
