@@ -1,0 +1,112 @@
+{include file="public/header"}
+<link rel="stylesheet" href="__PUBLIC__/vip/css/style.css" type="text/css" media="all">
+
+
+<!-- Page Container -->
+<div class="page-container">
+    <!-- Page Sidebar -->
+    <!-- /Page Sidebar -->
+    {include file="public/sidebar"}
+
+    <!-- Page Content -->
+    <div class="page-content">
+        <!-- Page Header -->
+        {include file="public/page_header"}
+        <!-- /Page Header -->
+
+
+        <!-- Page Inner -->
+        <div class="page-inner">
+            <div class="page-title">
+                <h3 class="breadcrumb-header">功能介绍</h3>
+            </div>
+            <div id="main-wrapper">
+                <div class="row text-center">
+
+
+                    <div class="col-sm-12 col-lg-12">
+                        <div class="panel panel-white">
+                            <div class="panel-heading clearfix">
+                                <p class="lead">差价统计——自动计算出 stockx 和 毒App鞋 差价大于100的鞋子</p>
+                                <ol>
+                                    <li><b>近期波动：</b>点击名称可查看近期 毒App 价格、销量折线图。</li>
+                                    <li><b>便捷搜索：</b>可根据 名称、货号搜索。尺码、发售、差价、销量、利率排序。</li>
+                                    <li><b>一键直达：</b>有stockx网站鞋款直达链接，一键直达。立即购买。</li>
+                                </ol>
+                            </div>
+                            <div class="panel-body">
+                                <img src="__PUBLIC__/view/diff.png" alt="" />
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-sm-12 col-lg-12">
+                        <div class="panel panel-white">
+                            <div class="panel-heading clearfix">
+                                <p class="lead">购买统计——添加已经购买的商品，搜索已经购买的商品。</p>
+                                <ol>
+                                    <li><b>利润统计：</b>有实际利润(成本价与实际卖出的价格相比所得的利润)和预计利润(成本价与毒APP的价格相比得出的利润)。</li>
+                                    <li><b>利率比例：</b>可以非常直观的反应出每月的盈亏情况。</li>
+                                    <li><b>鞋子状态：</b>待收货、待出售、已出售，全部直接展示在下方，简洁直观。</li>
+                                    <li><b>市场波动：</b>点击名称可查看近期 毒App 价格、销量折线图。</li>
+                                </ol>
+                            </div>
+                            <div class="panel-body">
+                                <img src="__PUBLIC__/view/buy.png" alt="" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-lg-12">
+                        <div class="panel panel-white">
+                            <div class="panel-heading clearfix">
+                                <p class="lead">主页中心——根据用户本月已购买的鞋款进行统计。</p>
+                                <ol>
+                                    <li><b>销售情况：</b>本月盈利、成本、销售额、利率比与上月进行比较涨跌幅直观展示，非常直观的展示本月与上月的销售情况对比。</li>
+                                    <li><b>相关鞋款：</b>本月购买相同鞋款数量最多的前四款鞋子的近期价格走势折线图。</li>
+                                    <li><b>转运信息：</b>根据用户选择的转运平台，转运信息会直接显示在下方，不需要在去转运官网查询，方便快捷。(注：此功能正在开发中)</li>
+                                </ol>
+                            </div>
+                            <div class="panel-body">
+                                <img src="__PUBLIC__/view/homepage.png" alt="" />
+                                <img src="__PUBLIC__/view/homepage1.png" alt="" />
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+
+
+<script type="text/javascript" src="__PUBLIC__/vip/js/jquery.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/vip/js/function.js"></script>
+<!-- layer.js -->
+<script src="__PUBLIC__/layer/layer.js"></script>
+<!-- layer.js -->
+
+<script type="text/javascript">
+    $(function() {
+        $("#cardArea").cardArea()
+    });
+    $('.btn_test').click(function () {
+        var obj = $(this);
+        layer.load();
+
+        $.post("{:url('user/ajax_test')}",{},function (ret) {
+            layer.closeAll('loading');
+            if (ret.code == 200) {
+                obj.find('button').html('已试用').css('background', '#ccc');
+                layer.msg(ret.msg);
+            } else {
+                layer.msg(ret.msg, function () { });
+            }
+        });
+        return false;
+    })
+</script>
+{include file="public/footer"}
+

@@ -12,8 +12,8 @@ class Index extends Controller
     }
 
     // 功能介绍
-    public function view(){
-        return view('view');
+    public function intro(){
+        return view('intro');
     }
     // 获取销量排名前50
     public function ajaxBySoldNum(){

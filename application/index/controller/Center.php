@@ -3,12 +3,23 @@
 namespace app\index\controller;
 use app\index\model\UserModel;
 use app\index\model\BuyModel;
+use think\Cache;
 use think\Controller;
 
 class Center extends Base
 {
+
+    public $cache_tag = 'buy_ajax_page';
+
     public function index()
     {
+
+        $cache_key = 'index_center_index';
+        $data = Cache::tag($this->cache_tag . session('user.id'))->get($cache_key);
+        if ($data){
+            return view('index', ['data' => $data]);
+        }
+
     	// 帐号验证
     	$where = ['user_id' => session('user.id')];
         // 本月盈利
@@ -51,7 +62,7 @@ class Center extends Base
         $data['size_start'] = '40';
         $data['size_end'] = '40';
         $data['goods_max'] = [];
-        $data['send_list'] = BuyModel::where($where)->where(['sold_price' => 0])->select();
+        $data['send_list'] = BuyModel::where($where)->where(['sold_price' => 0])->order('buy_time', 'desc')->select();
         if ($data['send_list']){
             foreach ($data['send_list'] as $k => $v) {
                 $number[] = $data['send_list'][$k]['number'];
@@ -60,6 +71,9 @@ class Center extends Base
             arsort($num);
             $data['goods_max'] = array_slice(array_keys($num), 0, 4);
         }
+
+        Cache::tag('buy_ajax_page' . session('user.id'))->set($cache_key, $data, 3600 * 4);
+
         //转运信息
         return view('index', ['data' => $data]);
     }
