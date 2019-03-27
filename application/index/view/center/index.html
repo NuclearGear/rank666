@@ -326,6 +326,8 @@
             $.get("{:url('express/get')}", form_data, function (ret) {
                 if (ret.code == 200){
                     obj.html(ret.data.new).attr('data-tip', ret.data.list);
+                }else{
+                    obj.html(ret.data.msg);
                 }
             })
         })
