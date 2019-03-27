@@ -51,7 +51,7 @@ class Center extends Base
         $data['size_start'] = '40';
         $data['size_end'] = '40';
         $data['goods_max'] = [];
-        $data['send_list'] = BuyModel::where($where)->where(['sold_price' => 0])->select();
+        $data['send_list'] = BuyModel::where($where)->where(['sold_price' => 0])->order('buy_time', 'desc')->select();
         if ($data['send_list']){
             foreach ($data['send_list'] as $k => $v) {
                 $number[] = $data['send_list'][$k]['number'];

@@ -67,4 +67,14 @@
     },function () {
         layer.closeAll('tips');
     });
+    $('.layer_tip_width').hover(function () {
+        layer.tips($(this).attr('data-tip'), $(this),{
+            maxWidth:'500',
+            offset: 't',
+            tips: 1,
+            time:10000,
+        });
+    },function () {
+        layer.closeAll('tips');
+    });
 </script>
