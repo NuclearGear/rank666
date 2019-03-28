@@ -254,7 +254,7 @@
                 $('.ret-msg').html(ret.msg).show();
                 return false;
             }
-            $('.tab_title{$k}').html(ret.data['product']['title']);
+            $('.tab_title{$k}').html(ret.data['product']['articleNumber']+ '<br>' + ret.data['product']['title']);
             var option = {
                 title: {
                     text: ret.data['product']['title'],
