@@ -165,7 +165,7 @@
                                             {else/}
                                             <li role="presentation">
                                             {/if}
-                                                <a href="#tab{$k}"  style="overflow: hidden;height: 54px;" class="tab_title{$k}" role="tab" data-toggle="tab">{$v}</a>
+                                                <a href="#tab{$k}" style="overflow: hidden;height: 55px;" class="tab_title{$k}" role="tab" data-toggle="tab">{$v}</a>
                                             </li>
                                         {/volist}
                                     </ul>
@@ -254,7 +254,8 @@
                 $('.ret-msg').html(ret.msg).show();
                 return false;
             }
-            $('.tab_title{$k}').html(ret.data['product']['articleNumber']+ '<br>' + ret.data['product']['title']);
+            var title_content = '<img src="'+ ret.data['product']['image'] +'" width="30">' + ret.data['product']['articleNumber']+ '<br>' + ret.data['product']['title'];
+            $('.tab_title{$k}').html(title_content);
             var option = {
                 title: {
                     text: ret.data['product']['title'],
