@@ -245,8 +245,8 @@ return [
         'type'        =>   '\think\mongo\Connection',
         'hostname'    =>   '144.48.9.105',
         'database'    =>   'du',
-//        'username'    =>   '用户名',
-//        'password'    =>   '密码',
+        'username'    =>   'du',
+        'password'    =>   '!!23Bayuesiri',
         'hostport'    =>   27017,
 
     ],

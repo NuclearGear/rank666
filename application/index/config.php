@@ -34,11 +34,15 @@ return [
         ['id' => '5', 'name' => 'footlocker'],
         ['id' => '6', 'name' => 'footaction'],
         ['id' => '7', 'name' => '43EINHALBGM'],
+        ['id' => '8', 'name' => 'yeezysupply'],
+        ['id' => '9', 'name' => 'snkrs(CN)'],
+        ['id' => '10', 'name' => 'nike(CN)'],
     ],
     'send_type' => [
         ['id' => '0', 'name' => '无'],
         ['id' => '1', 'name' => '转运中国'],
         ['id' => '2', 'name' => '转运四方'],
+        ['id' => '3', 'name' => '海带宝'],
     ],
     'sold_type' => [
         ['id' => '0', 'name' => '无'],
