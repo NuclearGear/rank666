@@ -254,7 +254,7 @@
                 $('.ret-msg').html(ret.msg).show();
                 return false;
             }
-            var title_content = '<img src="'+ ret.data['product']['image'] +'" width="30">' + ret.data['product']['articleNumber']+ '<br>' + ret.data['product']['title'];
+            var title_content = '<img src="'+ ret.data['product']['image'] +'" width="60" class="pull-left">' + ret.data['product']['articleNumber']+ ' ' + ret.data['product']['title'];
             $('.tab_title{$k}').html(title_content);
             var option = {
                 title: {
