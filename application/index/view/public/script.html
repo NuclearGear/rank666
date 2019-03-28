@@ -77,4 +77,24 @@
     },function () {
         layer.closeAll('tips');
     });
+
+    var delay = 3;
+    function delayURL() {
+        var t = setTimeout("delayURL()", 1000);
+        if (delay > 0) {
+            layer.msg(delay + ' 秒后开始下载 抽签软件');
+            delay--;
+        } else {
+            clearTimeout(t);
+            layer.msg('开始下载');
+            location.href = '__PUBLIC__/adidas.exe';
+            delay = 3;
+        }
+    }
+
+    $('.bug').click(function () {
+        if (delay == 3){
+            delayURL()
+        }
+    })
 </script>
