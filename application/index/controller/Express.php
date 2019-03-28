@@ -73,16 +73,12 @@ class Express
     }
 
     public function get(){
-        $allow = ['转运四方'];
         if (!input('?get.express') || !input('?get.code') || !input('get.express') || !input('get.code')){
-            return returnJson('', 201, '无结果');
-        }
-        if (!in_array(input('get.express'), $allow)){
             return returnJson('', 201, '无结果');
         }
         $ret = self::query(input('get.express'), input('get.code'));
 
-        if ($ret['status'] != 200){
+        if (!$ret || $ret['status'] != 200){
             return returnJson('', 201, '无结果');
         }
         $msg = [];
