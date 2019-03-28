@@ -62,7 +62,7 @@ class Buy extends Base
         $get_where = implode('_',array_values($get_params['where']));
         $cache_key = implode('_', [session('user.id'), $get_params['page'], $get_params['tab'], $get_where]);
         $data = Cache::tag($this->cache_tag . session('user.id'))->get($cache_key);
-        if ($data){
+        if (false){
             return view('ajax_page', ['data' => $data]);
         }
 
@@ -168,7 +168,7 @@ class Buy extends Base
             }
             // 计算预计盈利
             foreach ($buy_arr as $k => $v){
-                if ($v['sold_price'] != 0){
+                if ($v['sold_price'] == 0){
                     // 预计盈利
                     if (isset($du_arr[$v['number'] . $v['size']]) && $du_arr[$v['number'] . $v['size']]){
                         $data['profit_future'] += ($du_arr[$v['number'] . $v['size']] - $v['buy_cost']) - ($du_arr[$v['number'] . $v['size']] * 0.095) - 100;
