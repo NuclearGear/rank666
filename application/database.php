@@ -59,11 +59,11 @@ $pro_database = [
     // 服务器地址
     'hostname'        => '127.0.0.1',
     // 数据库名
-    'database'        => 'lt_test',
+    'database'        => 'rank666_com',
     // 用户名
-    'username'        => 'lt_test',
+    'username'        => 'rank666_com',
     // 密码
-    'password'        => '!!23Bayuesiri',
+    'password'        => 'RdPK775JrWY3Psnb',
     // 端口
     'hostport'        => '3306',
     // 连接dsn
