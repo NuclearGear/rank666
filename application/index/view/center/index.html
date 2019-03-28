@@ -161,9 +161,9 @@
                                     <ul class="nav nav-tabs nav-justified" role="tablist">
                                         {volist name="$data.goods_max" key="k" id="v"}
                                             {if condition="$k==1"}
-                                            <li role="presentation" class="active">
+                                            <li role="presentation" class="active" style="overflow: hidden">
                                             {else/}
-                                            <li role="presentation">
+                                            <li role="presentation" style="overflow: hidden">
                                             {/if}
                                                 <a href="#tab{$k}" class="tab_title{$k}" role="tab" data-toggle="tab">{$v}</a>
                                             </li>
