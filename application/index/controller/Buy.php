@@ -184,7 +184,7 @@ class Buy extends Base
         foreach ($data['list'] as $k => &$v){
             if (!$v['sold_price'] && isset($du_arr[$v['number'] . $v['size']]) && $du_arr[$v['number'] . $v['size']]){
                 // 增加预计利润
-                $data['list'][$k]['profit_future'] = round(($du_arr[$v['number'] . $v['size']] - $v['buy_cost']) - ($du_arr[$v['number'] . $v['size']] * 0.095), 2);
+                $data['list'][$k]['profit_future'] = round(($du_arr[$v['number'] . $v['size']] - $v['buy_cost']) - ($du_arr[$v['number'] . $v['size']] * 0.095) - 100, 2);
                 // 利率比
                 $data['list'][$k]['ceil_future'] = round($data['list'][$k]['profit_future'] / $v['buy_cost'] * 100, 2);
             }else{
