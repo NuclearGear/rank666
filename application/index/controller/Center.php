@@ -16,7 +16,7 @@ class Center extends Base
 
         $cache_key = 'index_center_index';
         $data = Cache::tag($this->cache_tag . session('user.id'))->get($cache_key);
-        if ($data){
+        if (false){
             return view('index', ['data' => $data]);
         }
 
