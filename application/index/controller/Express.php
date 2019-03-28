@@ -36,6 +36,7 @@ class Express
         $num = trim($num);
         $express = [
             "转运四方" => 'zhuanyunsifang',
+            "海带宝"   => 'haidaibao',
         ];
 
         if(key_exists($com,$express)){
