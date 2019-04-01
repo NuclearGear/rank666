@@ -64,7 +64,7 @@ class Buy extends Base
         $get_where = implode('_',array_values($get_params['where']));
         $cache_key = implode('_', [session('user.id'), $get_params['page'], $get_params['tab'], $get_where]);
         $data = Cache::tag($this->cache_tag . session('user.id'))->get($cache_key);
-        if (false){
+        if ($data){
             return view('ajax_page', ['data' => $data]);
         }
 
@@ -146,55 +146,63 @@ class Buy extends Base
         $data['profit_future'] = 0;
         $data['profit_future_du'] = 0;
         $data['ceil_future'] = 0;
-
-        $buy_arr = BuyModel::where($where)->field('number, buy_cost,size,sold_price')->select();
-        if ($buy_arr){
-            // 获取款式并且去重
-            $need_shoes = [];
-            foreach ($buy_arr as $k => $v){
-                $need_shoes[$v['number'] . $v['size']] = [
-                    'number' => $v['number'],
-                    'size'   => $v['size'],
-                ];
-            }
-            // 获取毒的价格
-            $du_arr = [];
-            foreach ($need_shoes as $k => $v){
-                // 组装条件
-                $where_profit = [
-                    'articleNumber' => $v['number'],
-                    'size'          => $v['size'],
-                ];
-                $ret_du = Db::connect("db_mongo")->name("du_size")->where($where_profit)->field('articleNumber, price,size')
-                                                                              ->order('spiderTime', 'desc')->find();
-                $du_arr[$ret_du['articleNumber'] . $ret_du['size']] = $ret_du['price'] / 100;
-            }
-            // 计算预计盈利
-            foreach ($buy_arr as $k => $v){
-                if ($v['sold_price'] == 0){
-                    // 预计盈利
-                    if (isset($du_arr[$v['number'] . $v['size']]) && $du_arr[$v['number'] . $v['size']]){
-                        $data['profit_future'] += ($du_arr[$v['number'] . $v['size']] - $v['buy_cost']) - ($du_arr[$v['number'] . $v['size']] * 0.095) - 100;
-                    }
-                }
-            }
-            $data['profit_future'] = round($data['profit_future'], 2);
-            $data['ceil_future'] = round($data['profit_future'] / $data['cost'], 2) * 100;
+//
+//        $buy_arr = BuyModel::where($where)->field('number, buy_cost,size,sold_price')->select();
+//        if ($buy_arr){
+//            // 获取款式并且去重
+//            $need_shoes = [];
+//            foreach ($buy_arr as $k => $v){
+//                $need_shoes[$v['number'] . $v['size']] = [
+//                    'number' => $v['number'],
+//                    'size'   => $v['size'],
+//                ];
+//            }
+//            // 获取毒的价格
+//            $du_arr = [];
+//            foreach ($need_shoes as $k => $v){
+//                // 组装条件
+//                $where_profit = [
+//                    'articleNumber' => $v['number'],
+//                    'size'          => $v['size'],
+//                ];
+//                $ret_du = Db::connect("db_mongo")->name("du_size")->where($where_profit)->field('articleNumber, price,size')
+//                                                                              ->order('spiderTime', 'desc')->find();
+//                $du_arr[$ret_du['articleNumber'] . $ret_du['size']] = $ret_du['price'] / 100;
+//            }
+//            // 计算预计盈利
+//            foreach ($buy_arr as $k => $v){
+//                if ($v['sold_price'] == 0){
+//                    // 预计盈利
+//                    if (isset($du_arr[$v['number'] . $v['size']]) && $du_arr[$v['number'] . $v['size']]){
+//                        $data['profit_future'] += ($du_arr[$v['number'] . $v['size']] - $v['buy_cost']) - ($du_arr[$v['number'] . $v['size']] * 0.095) - 100;
+//                    }
+//                }
+//            }
+//            $data['profit_future'] = round($data['profit_future'], 2);
+//            $data['ceil_future'] = round($data['profit_future'] / $data['cost'], 2) * 100;
+//        }
+        if (isset($get_params['start']) && $get_params['start'] && isset($get_params['end']) && $get_params['end']){
+            $start = $get_params['start'];
+            $end = $get_params['end'];
+        }else{
+            $start = '';
+            $end = '';
         }
+
 
         // 列表
-        $data['list'] = BuyModel::where($where)->order('buy_time', 'desc')->order('id', 'desc')->paginate(30,false,['path'=>"javascript:AjaxPage([PAGE], {$tab});"]);
-        foreach ($data['list'] as $k => &$v){
-            if (!$v['sold_price'] && isset($du_arr[$v['number'] . $v['size']]) && $du_arr[$v['number'] . $v['size']]){
-                // 增加预计利润
-                $data['list'][$k]['profit_future'] = round(($du_arr[$v['number'] . $v['size']] - $v['buy_cost']) - ($du_arr[$v['number'] . $v['size']] * 0.095) - 100, 2);
-                // 利率比
-                $data['list'][$k]['ceil_future'] = round($data['list'][$k]['profit_future'] / $v['buy_cost'] * 100, 2);
-            }else{
-                $data['list'][$k]['profit_future'] = '-';
-                $data['list'][$k]['ceil_future'] = '-';
-            }
-        }
+        $data['list'] = BuyModel::where($where)->order('buy_time', 'desc')->order('id', 'desc')->paginate(30,false,['path'=>"javascript:AjaxPage([PAGE], {$tab}, {$start}, {$end});"]);
+//        foreach ($data['list'] as $k => &$v){
+//            if (!$v['sold_price'] && isset($du_arr[$v['number'] . $v['size']]) && $du_arr[$v['number'] . $v['size']]){
+//                // 增加预计利润
+//                $data['list'][$k]['profit_future'] = round(($du_arr[$v['number'] . $v['size']] - $v['buy_cost']) - ($du_arr[$v['number'] . $v['size']] * 0.095) - 100, 2);
+//                // 利率比
+//                $data['list'][$k]['ceil_future'] = round($data['list'][$k]['profit_future'] / $v['buy_cost'] * 100, 2);
+//            }else{
+//                $data['list'][$k]['profit_future'] = '-';
+//                $data['list'][$k]['ceil_future'] = '-';
+//            }
+//        }
 
         Cache::tag($this->cache_tag . session('user.id'))->set($cache_key, $data, 3600 * 4);
 

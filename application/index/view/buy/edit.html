@@ -187,7 +187,7 @@
         $('.select_size').selectpicker('val', '{$data.info.size}');
         $('.select_buy').selectpicker('val', '{$data.info.buy_type_id}');
         $('.select_send').selectpicker('val', '{$data.info.send_type_id}');
-        $('.select_sold').selectpicker('val', '{$data.info.send_type_id}');
+        $('.select_sold').selectpicker('val', '{$data.info.sold_type_id}');
 
         $.get("{:url('buy/ajax_get_goods')}",{},function (ret) {
             if (ret.code == 200){
