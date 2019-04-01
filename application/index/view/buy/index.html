@@ -374,7 +374,7 @@
         // 获取 全部选项卡 第一页
         var start = $('.tab_select').eq(0).data('start');
         var end = $('.tab_select').eq(0).data('end');
-        AjaxPage(1,'0', start,end);
+        AjaxPage(1,'0', start,end, 1);
 
 
         $.get("{:url('buy/ajax_get_goods')}",{},function (ret) {
@@ -397,9 +397,9 @@
     });
 
     // 点击分页触发的ajax
-    function AjaxPage(page,tab, start, end){
+    function AjaxPage(page,tab, start, end, init){
         layer.load(2);
-        if (tab == 0){
+        if (init == 1){
             var number = '';
         }else{
             var number = $('.select_name').selectpicker('val');
