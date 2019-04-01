@@ -210,7 +210,7 @@ class Buy extends Base
         $data = Db::connect("db_mongo")->name("du_product")
                                               ->whereBetween('sellDate', ['2017.01.01', '2019.12.31'])
                                               ->order('sellDate', 'desc')
-                                              ->field('articleNumber,title,sellDate')
+                                              ->field('articleNumber,title,sellDate,logoUrl')
 //                                              ->limit(4000)
                                               ->select();
 
