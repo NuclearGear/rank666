@@ -45,6 +45,7 @@ class Buy extends Base
             array_unshift($data['month'], $now_month);
 //            $data['month'][] = $now_month;
         }
+
         // 获取尺码
         $data['size'] = config('size');
         // 获取平台

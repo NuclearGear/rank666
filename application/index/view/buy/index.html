@@ -373,6 +373,13 @@
     $(function () {
         layer.load(2);
 
+        // 获取 全部选项卡 第一页
+        var start = $('.tab_select').eq(0).data('start');
+        var end = $('.tab_select').eq(0).data('end');
+        AjaxPage(1,'0', start,end);
+        layer.closeAll('loading');
+
+
         $.get("{:url('buy/ajax_get_goods')}",{},function (ret) {
            if (ret.code == 200){
                $('.select_name').append(ret.data);
@@ -388,12 +395,6 @@
                    title:'请输入名称 或 货号',
                    placeholder:'请输入名称 或 货号',
                });
-               layer.closeAll('loading');
-
-               // 获取 全部选项卡 第一页
-               var start = $('.tab_select').eq(0).data('start');
-               var end = $('.tab_select').eq(0).data('end');
-               AjaxPage(1,'0', start,end);
            }
        });
     });
