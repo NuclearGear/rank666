@@ -134,6 +134,9 @@ class Buy extends Base
         // 成本
         $data['cost'] = BuyModel::where($where)->sum('buy_cost');
         $data['cost'] = round($data['cost'], 2);
+        // 销售
+        $data['sold_total'] = BuyModel::where($where)->sum('sold_price');
+        $data['sold_total'] = round($data['sold_total'], 2);
 
         // 利率比
         if ($data['profit'] && $data['cost']){
