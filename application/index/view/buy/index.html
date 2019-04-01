@@ -320,6 +320,7 @@
     });
 
 
+
     // 搜索框与添加框的切换
     $('.change_shoes').click(function () {
         $('.search_box').fadeOut('normal');
@@ -368,13 +369,13 @@
             }
        });
     });
-
+    var is_doen = 1;
     // 遍历插入商品
     $(function () {
         // 获取 全部选项卡 第一页
         var start = $('.tab_select').eq(0).data('start');
         var end = $('.tab_select').eq(0).data('end');
-        AjaxPage(1,'0', start,end, 1);
+        AjaxPage(1,'0', start,end);
 
 
         $.get("{:url('buy/ajax_get_goods')}",{},function (ret) {
@@ -385,6 +386,8 @@
                    title:'请输入名称 或 货号',
                    placeholder:'请输入名称 或 货号',
                });
+
+               is_doen = 2;
 
                $('.select_name_add').append(ret.data);
                $('.select_name_add').selectpicker({
@@ -397,13 +400,14 @@
     });
 
     // 点击分页触发的ajax
-    function AjaxPage(page,tab, start, end, init){
+    function AjaxPage(page,tab, start, end){
         layer.load(2);
-        if (init == 1){
-            var number = '';
-        }else{
-            var number = $('.select_name').selectpicker('val');
+        var number = '';
+        if (is_doen == 2){
+            number = $('.select_name').selectpicker('val');
         }
+        
+
         var where = {
             'number'            : number,
             'size'              : $('.select_size').selectpicker('val'),
