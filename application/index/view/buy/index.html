@@ -226,27 +226,36 @@
                                 <div role="tabpanel">
                                     <!-- Nav tabs -->
                                     <ul class="nav nav-tabs nav-justified" role="tablist">
-                                        <li role="presentation" class="tab_select active"><a href="#tab_0" role="tab" data-toggle="tab">全部</a></li>
-                                        {volist name="data.month" id="v"}
-                                            <li role="presentation" class="tab_select" data-start="{$v.start}" data-end="{$v.end}">
+                                        {volist name="data.month" key="k" id="v"}
+                                        {if condition="$k == 1"}
+                                        <li role="presentation" class="tab_select active" data-start="{$v.start}" data-end="{$v.end}">
+                                        {else/}
+                                        <li role="presentation" class="tab_select" data-start="{$v.start}" data-end="{$v.end}">
+                                        {/if}
                                                 <a href="#tab_{$v.num}" role="tab" data-toggle="tab">{$v.num} 月</a>
                                             </li>
                                         {/volist}
+                                        <li role="presentation" class="tab_select"><a href="#tab_0" role="tab" data-toggle="tab">全部</a></li>
                                     </ul>
                                     <!-- Tab panes -->
                                     <div class="tab-content">
-                                        <div role="tabpanel" class="tab-pane active fade in" id="tab_0">
-                                            <div class="ajax_page">
 
-                                            </div>
-                                        </div>
-                                        {volist name="data.month" id="v"}
+                                        {volist name="data.month" key="k" id="v"}
+                                        {if condition="$k == 1"}
+                                        <div role="tabpanel" class="tab-pane active fade in" id="tab_{$v.num}">
+                                        {else/}
                                         <div role="tabpanel" class="tab-pane fade in" id="tab_{$v.num}">
+                                        {/if}
                                             <div class="ajax_page">
 
                                             </div>
                                         </div>
                                         {/volist}
+                                        <div role="tabpanel" class="tab-pane fade in" id="tab_0">
+                                            <div class="ajax_page">
+
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -382,7 +391,9 @@
                layer.closeAll('loading');
 
                // 获取 全部选项卡 第一页
-               AjaxPage(1,'0');
+               var start = $('.tab_select').eq(0).data('start');
+               var end = $('.tab_select').eq(0).data('end');
+               AjaxPage(1,'0', start,end);
            }
        });
     });

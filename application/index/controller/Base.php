@@ -29,7 +29,7 @@ class Base extends Controller
             }
 
             if ($user_function['expire_time'] < time()){
-                $this->error('对不起。该功能已在 ' . date('Y-m-d H:i:s', $user_function['expire_time']) . ' 过期，请去再次购买!');
+                $this->error('对不起。该功能已在 ' . date('Y-m-d H:i:s', $user_function['expire_time']) . ' 过期，请去再次购买!', url('user/vip'));
             }
         }
     }

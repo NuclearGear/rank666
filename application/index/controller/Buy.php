@@ -22,7 +22,7 @@ class Buy extends Base
         // 用户最后的鞋子买到3月份 显示  1、2、3月 3月后面不显示
         $data['month'] = [];
         if ($time) {
-            $time = date('m', strtotime($time['buy_time']));
+            $time = date('m', time());
             $time = str_replace('0', '', $time);
             for ($i = 1; $i < $time; $i++) {
                 $for_month = [
@@ -30,7 +30,8 @@ class Buy extends Base
                     'start' => mktime(0, 0 , 0,date("m")-$i,1,date("Y")),
                     'end'   => mktime(23, 59 , 59,date("m")-$i + 1,0,date("Y")),
                 ];
-                array_unshift($data['month'], $for_month);
+                $data['month'][] = $for_month;
+//                array_unshift($data['month'], $for_month);
             }
             // 本月第一天
             $first_day = mktime(0,0,0,date('m'),1,date('Y'));
@@ -41,7 +42,8 @@ class Buy extends Base
                 'start' => $first_day,
                 'end'   => $last_day,
             ];
-            $data['month'][] = $now_month;
+            array_unshift($data['month'], $now_month);
+//            $data['month'][] = $now_month;
         }
         // 获取尺码
         $data['size'] = config('size');
