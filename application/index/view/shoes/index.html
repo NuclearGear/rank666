@@ -165,10 +165,11 @@
     // 遍历插入商品
     $(function () {
         $('.goods_style').hide();
+        layer.load();
 
 
         $.get("{:url('buy/ajax_get_goods')}",{},function (ret) {
-            layer.load();
+
 
             if (ret.code == 200){
                 $('.select_name').append(ret.data);
