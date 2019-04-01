@@ -402,8 +402,13 @@
     // 点击分页触发的ajax
     function AjaxPage(page,tab, start, end){
         layer.load(2);
+        if (tab == 0){
+            var number = '';
+        }else{
+            var number = $('.select_name').selectpicker('val');
+        }
         var where = {
-            'number'            : $('.select_name').selectpicker('val'),
+            'number'            : number,
             'size'              : $('.select_size').selectpicker('val'),
             'buy_type_id'       : $('.select_buy').selectpicker('val'),
             'send_type_id'      : $('.select_send').selectpicker('val'),
