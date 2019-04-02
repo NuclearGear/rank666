@@ -1,36 +1,36 @@
 <div class="row">
-    <div class="col-lg-3 tips" data-tip="未填写 [转运平台]<br>未填写 [出售价格]<br>鞋子数量合计">
+    <div class="col-lg-3 layer_tip" data-tip="未填写 [转运平台]<br>未填写 [出售价格]<br>鞋子数量合计">
         <p>待收货： {$data.buy} 双</p>
     </div>
-    <div class="col-lg-3 tips" data-tip="已填写 [转运平台]<br>未填写 [出售价格]<br>鞋子数量合计">
+    <div class="col-lg-3 layer_tip" data-tip="已填写 [转运平台]<br>未填写 [出售价格]<br>鞋子数量合计">
         <p>待出售： {$data.send} 双</p>
     </div>
-    <div class="col-lg-3 tips" data-tip="已填写 [出售价格]<br>鞋子数量合计">
+    <div class="col-lg-3 layer_tip" data-tip="已填写 [出售价格]<br>鞋子数量合计">
         <p>已出售： {$data.sold} 双</p>
     </div>
 </div>
 <div class="row">
-    <div class="col-lg-3 tips" data-tip="未填写 [出售价格] 的鞋子<br>公式： 价格(毒) - 成本 - 9.5%(手续费) - 100(转运费)<br/>注意：只计算发售后的鞋子.因为没有市场价">
+    <div class="col-lg-3 layer_tip" data-tip="未填写 [出售价格] 的鞋子<br>公式： 价格(毒) - 成本 - 9.5%(手续费) - 100(转运费)<br/>注意：只计算发售后的鞋子.因为没有市场价">
         <p>预计盈利(含手续费)：<i class="fa fa-cny" aria-hidden="true"></i> {$data.profit_future}</p>
     </div>
-    <div class="col-lg-3 tips" data-tip="[成本] 合计">
+    <div class="col-lg-3 layer_tip" data-tip="[成本] 合计">
         <p>成本：<i class="fa fa-cny" aria-hidden="true"></i> {$data.cost}</p>
     </div>
-    <div class="col-lg-3 tips" data-tip="公式： [预计盈利] / [成本]">
+    <div class="col-lg-3 layer_tip" data-tip="公式： [预计盈利] / [成本]">
         <p>预计利率比：{$data.ceil_future}%</p>
     </div>
 </div>
 <div class="row">
-    <div class="col-lg-3 tips" data-tip="[利润] 合计">
+    <div class="col-lg-3 layer_tip" data-tip="[利润] 合计">
         <p>实际盈利：<i class="fa fa-cny" aria-hidden="true"></i> {$data.profit}</p>
     </div>
-    <div class="col-lg-3 tips" data-tip="[成本] 合计">
+    <div class="col-lg-3 layer_tip" data-tip="[成本] 合计">
         <p>成本：<i class="fa fa-cny" aria-hidden="true"></i> {$data.cost}</p>
     </div>
-    <div class="col-lg-3 tips" data-tip="公式： [实际盈利] / [成本]">
+    <div class="col-lg-3 layer_tip" data-tip="公式： [实际盈利] / [成本]">
         <p>利率比：{$data.ceil}%</p>
     </div>
-    <div class="col-lg-3 tips" data-tip="公式： [出售价格] 合计">
+    <div class="col-lg-3 layer_tip" data-tip="公式： [出售价格] 合计">
         <p>总销售：{$data.sold_total}</p>
     </div>
 </div>
@@ -70,7 +70,7 @@
             <td onclick="chart($(this))" class="layer_tip" data-tip="手续费：{$v.sold_charge} 元">{$v.sold_type_id}</td>
             <td onclick="chart($(this))">{$v.sold_price}</td>
             <td onclick="chart($(this))" class="layer_tip" data-tip="利率比：{$v.ceil_future} %<br/>已减去 9.5% 手续费<br>已减去 100元 转运费">{$v.profit_future}</td>
-            <td onclick="chart($(this))">{$v.profit}</td>
+            <td onclick="chart($(this))" class="layer_tip" data-tip="公式： 出售价格 - 成本 - 手续费 - 邮费">{$v.profit}</td>
             <td onclick="chart($(this))">{$v.buy_time}</td>
             <td onclick="chart($(this))">{$v.sold_time}</td>
             <td>
@@ -90,16 +90,10 @@
 </div>
 
 <script>
-    $('.tips').hover(function () {
-        layer.tips($(this).attr('data-tip'), $(this),{
-            tips: 1,
-            time:10000,
-        });
-    },function () {
-        layer.closeAll('tips');
-    });
     $('.layer_tip').hover(function () {
         layer.tips($(this).attr('data-tip'), $(this),{
+            maxWidth:'500',
+            offset: 't',
             tips: 1,
             time:10000,
         });

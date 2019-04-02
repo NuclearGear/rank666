@@ -355,6 +355,7 @@ class Buy extends Base
 
             'sold_type_id'  => input('post.sold_type_id'),
             'sold_price'    => input('post.sold_price'),
+            'sold_express'  => input('post.sold_express'),
             'sold_time'     => strtotime(input('post.sold_time')),
         ];
 
@@ -381,6 +382,12 @@ class Buy extends Base
         if ($params['sold_type_id'] == 1 && $params['sold_price']){
             $params['profit'] = $params['profit'] - $params['sold_charge'];
         }
+
+        // 平台邮寄费
+        if ($params['sold_express']){
+            $params['profit'] = $params['profit'] - $params['sold_express'];
+        }
+        $params['profit'] = round($params['profit'], 2);
 
 
         $ret_update = BuyModel::update($params, ['id' => input('post.id')]);
