@@ -44,6 +44,7 @@
                                             </div>
                                             <div class="form-group" style="width: 200px">
                                                 <select class="form-control select_size" data-live-search="true">
+                                                    <option value="">全部</option>
                                                     {volist name="data.size" id="v"}
                                                     <option value="{$v}">{$v}</option>
                                                     {/volist}
@@ -393,13 +394,11 @@
     // 商品框输入事件
     $('#select_search').parent().find("input").on('input propertychange', function(){
         var keyword = $('#select_search').parent().find("input").val();
-        $('#select_search').empty();
         get_goods(keyword, '#select_search');
     });
     // 商品添加框输入事件
     $('#select_name_add').parent().find("input").on('input propertychange', function(){
         var keyword = $('#select_name_add').parent().find("input").val();
-        $('#select_name_add').empty();
         get_goods(keyword, '#select_name_add');
     });
 
@@ -410,9 +409,7 @@
     });
     // size框修改事件
     $('.select_size').on('changed.bs.select', function () {
-        if ($('#select_search').selectpicker('val')){
-            $('.btn_search').click();
-        }
+        $('.btn_search').click();
     });
 
 
