@@ -56,12 +56,6 @@
                                                 </a>
 
                                             </div>
-                                            <div class="form-group" style="display: none;">
-                                                <a type="submit" class="btn btn-primary btn_search" data-tab="0" style="height: 44px">
-                                                    <i class="fa fa-search"></i> 搜索
-                                                </a>
-
-                                            </div>
 
                                             <!--<div class="form-group" style="width: 150px">-->
                                                 <!--<p class="help-block">购买平台</p>-->
@@ -388,7 +382,6 @@
             }
        });
     });
-    var is_doen = 1;
 
 
     // 商品框输入事件
@@ -405,11 +398,11 @@
 
     // 商品框修改事件
     $('#select_search').on('changed.bs.select', function () {
-        $('.btn_search').click();
+        AjaxPage(1, tab_index, tab_start, tab_end)
     });
     // size框修改事件
     $('.select_size').on('changed.bs.select', function () {
-        $('.btn_search').click();
+        AjaxPage(1, tab_index, tab_start, tab_end)
     });
 
 
@@ -444,20 +437,21 @@
         });
     }
 
+    var tab_index = 0;
+    var tab_start = '';
+    var tab_end   = '';
+
     // 绑定ajax分页事件
     $('.tab_select').on('click',function () {
-        var index = $(this).index();
-        var start = $(this).data('start');
-        var end = $(this).data('end');
+        tab_index = $(this).index();
+        tab_start = $(this).data('start');
+        tab_end = $(this).data('end');
 
-        $('.btn_search').attr('data-tab', index);
-
-        AjaxPage(1, index, start, end);
+        AjaxPage(1, tab_index, tab_start, tab_end);
     });
 
     $('.btn_search').on('click',function () {
-        var index = $(this).attr('data-tab');
-        $('.tab_select').eq(index).click();
+        $('.tab_select').eq(tab_index).click();
     });
 
     function del_shoes(obj){
@@ -476,7 +470,6 @@
 
             layer.close(index);
         });
-
     };
 
     function edit(obj){
