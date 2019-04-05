@@ -217,7 +217,7 @@ class Buy extends Base
     // 获取商品
     public function ajax_get_goods(){
 
-        $cache_key = 'index_buy_ajax_get_goods';
+        $cache_key = 'index_buy_ajax_get_goods' . input('get.keyword');
         $data = cache($cache_key);
         if($data){
             return returnJson($data, 200, '获取商品成功');
@@ -225,15 +225,18 @@ class Buy extends Base
 
         $data = Db::connect("db_mongo")->name("du_product")
                                               ->whereBetween('sellDate', ['2017.01.01', '2019.12.31'])
-                                              ->order('sellDate', 'desc')
+                                              ->whereOr('articleNumber', 'like', input('get.keyword'))
+                                              ->whereOr('title', 'like', input('get.keyword'))
                                               ->field('articleNumber,title,sellDate,logoUrl')
-//                                              ->limit(4000)
+                                              ->order('sellDate', 'desc')
+                                              ->limit(15)
                                               ->select();
 
         // 拼接字符串
-        $str = '';
+        $str = '<option value="" data-content="全部"></option>';
         foreach ($data as $k => $v){
-            $str .= "<option value=\"{$v['articleNumber']}\">". $v['sellDate'] . ' [' . $v['articleNumber'] . '] ' .$v['title'] ."</option>";
+            $content = '<img src=' . $v['logoUrl'] . ' width="50" style="margin-right:5px">' . $v['sellDate'] . ' [' . $v['articleNumber'] . '] ' .$v['title'];
+            $str .= "<option value=\"{$v['articleNumber']}\" data-content='". $content ."'></option>";
         }
         $data = $str;
 
@@ -412,6 +415,11 @@ class Buy extends Base
         }
 
         return view('chart', ['data' => $data]);
+    }
+
+    // 显示商品列表
+    public function goods(){
+        return view();
     }
 
 

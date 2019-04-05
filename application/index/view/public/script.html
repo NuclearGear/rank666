@@ -97,4 +97,20 @@
             delayURL()
         }
     })
+
+    // 获取鞋子
+    function get_goods(keyword, class_name, value, event){
+        $.get("{:url('buy/ajax_get_goods')}",{keyword:keyword},function (ret) {
+            if (ret.code == 200){
+                $(class_name).empty();
+                $(class_name).append(ret.data);
+                $(class_name).selectpicker('refresh');
+                $(class_name).selectpicker('render');
+                if (value){
+                    $(class_name).selectpicker('val', value);
+                }
+                event
+            }
+        });
+    }
 </script>

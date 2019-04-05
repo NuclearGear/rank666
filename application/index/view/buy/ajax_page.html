@@ -62,17 +62,17 @@
             <th scope="row" onclick="chart($(this))">
                 <img src="{$v.image}" width="35"><span>{$v.name}</span>
             </th>
-            <td onclick="chart($(this))">{$v.number}</td>
-            <td onclick="chart($(this))">{$v.size}</td>
-            <td onclick="chart($(this))">{$v.buy_type_id}</td>
-            <td onclick="chart($(this))">{$v.buy_cost}</td>
-            <td onclick="chart($(this))" class="layer_tip" data-tip="费用：{$v.send_cost} 元">{$v.send_type_id}</td>
-            <td onclick="chart($(this))" class="layer_tip" data-tip="手续费：{$v.sold_charge} 元">{$v.sold_type_id}</td>
-            <td onclick="chart($(this))">{$v.sold_price}</td>
-            <td onclick="chart($(this))" class="layer_tip" data-tip="利率比：{$v.ceil_future} %<br/>已减去 9.5% 手续费<br>已减去 100元 转运费">{$v.profit_future}</td>
-            <td onclick="chart($(this))" class="layer_tip" data-tip="公式： 出售价格 - 成本 - 手续费 - 邮费">{$v.profit}</td>
-            <td onclick="chart($(this))">{$v.buy_time}</td>
-            <td onclick="chart($(this))">{$v.sold_time}</td>
+            <td>{$v.number}</td>
+            <td>{$v.size}</td>
+            <td>{$v.buy_type_id}</td>
+            <td>{$v.buy_cost}</td>
+            <td class="layer_tip" data-tip="费用：{$v.send_cost} 元">{$v.send_type_id}</td>
+            <td class="layer_tip" data-tip="手续费：{$v.sold_charge} 元">{$v.sold_type_id}</td>
+            <td>{$v.sold_price}</td>
+            <td class="layer_tip" data-tip="利率比：{$v.ceil_future} %<br/>已减去 9.5% 手续费<br>已减去 100元 转运费">{$v.profit_future}</td>
+            <td class="layer_tip" data-tip="公式： 出售价格 - 成本 - 手续费 - 邮费">{$v.profit}</td>
+            <td>{$v.buy_time}</td>
+            <td>{$v.sold_time}</td>
             <td>
                 <button class="btn btn-primary" onclick="edit($(this))" data-id="{$v.id}">编辑</button>
                 <button type="button" class="btn btn-white" onclick="del_shoes($(this))" data-id="{$v.id}">删 除</button>

@@ -12,15 +12,22 @@ class Base extends Controller
 {
     public function _initialize()
     {
-        if (!session('?user')){
-            $this->error('您还没有登录，请先去登录', url('User/login'));
-        }
-
 
         // 判断权限
         $controller = request()->controller();
-        $not_controller = ['User'];
-        if (!in_array($controller, $not_controller)){
+        $function   = request()->action();
+        $check_arr  = [
+            'Buy'    => ['index',],
+            'Center' => ['index',],
+            'Shoes'  => ['index','diff'],
+        ];
+
+
+        if (isset($check_arr[$controller]) && in_array($function, $check_arr[$controller])){
+            if (!session('?user')){
+                $this->error('您还没有登录，请先去登录', url('User/login'));
+            }
+
             $ret_function = FunctionModel::get(['controller' => $controller]);
 
             $user_function = UserFunctionModel::get(['user_id' => session('user.id'), 'function_id' => $ret_function['id']]);

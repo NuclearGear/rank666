@@ -1,4 +1,10 @@
 {include file="public/header"}
+<style>
+    .dropdown-toggle{
+        height:44px;
+        line-height: 32px;
+    }
+</style>
 <!-- Page Container -->
 <div class="page-container">
     <!-- Page Sidebar -->
@@ -34,17 +40,8 @@
                                         <h4 class="panel-title">输入你要查找的鞋子: 货号 或 名称</h4>
                                     </div>
                                     <div class="panel-body">
-                                        <div class="input-group">
-                                            <select class="form-control select_name" data-live-search="true" style="width: 100%;">
-                                                <option value="">无</option>
-                                            </select>
-                                            <div class="input-group-btn">
-                                                <button type="button" class="btn btn-info dropdown-toggle sure-btn"
-                                                        data-toggle="dropdown" aria-expanded="false">
-                                                    <span class="fa fa-search"></span>查找
-                                                </button>
-                                            </div>
-                                        </div>
+                                        <select class="form-control select_name" id="select_search" data-live-search="true" style="width: 100%;">
+                                        </select>
                                         <div class="alert alert-danger ret-msg" role="alert" style="margin-bottom:0;margin-top:10px;display: none">
 
                                         </div>
@@ -162,39 +159,35 @@
 
 <script>
     var init = 1;
+    $('#select_search').selectpicker({
+        size:10,
+        title:'请输入名称 或 货号',
+        placeholder:'请输入名称 或 货号',
+    });
+
     // 遍历插入商品
     $(function () {
         $('.goods_style').hide();
         layer.load();
 
-
-        $.get("{:url('buy/ajax_get_goods')}",{},function (ret) {
-
-
-            if (ret.code == 200){
-                $('.select_name').append(ret.data);
-                $('.select_name').selectpicker({
-                    size:15,
-                    title:'请输入名称 或 货号',
-                    placeholder:'请输入名称 或 货号',
-                });
-
-                $('.select_name').selectpicker('val', '{$data.articleNumber}');
-                $('.sure-btn').click();
-            }
-            layer.closeAll('loading');
-        });
+        get_goods('{$data.articleNumber}', '#select_search','{$data.articleNumber}',chart());
+        layer.closeAll('loading');
     });
 
-    // enter 键
-    $("body").keydown(function () {
-        if (event.keyCode == "13") {
-            $('.sure-btn').click();
-        }
+
+    // 商品框输入事件
+    $('#select_search').parent().find("input").on('input propertychange', function(){
+        var keyword = $('#select_search').parent().find("input").val();
+        get_goods(keyword, '#select_search');
+    });
+
+    // 商品框修改事件
+    $('#select_search').on('changed.bs.select', function () {
+        chart()
     });
 
     // 确认搜索 获取折线图
-    $('.sure-btn').click(function () {
+    function chart() {
         $('.goods_style').hide();
 
         layer.load();
@@ -203,14 +196,17 @@
         var myChart2 = echarts.init(document.getElementById('echart_2'));
 
         var day = $('.day').val();
-        var articleNumber = $('.select_name').selectpicker('val');
+        var articleNumber = $('#select_search').selectpicker('val');
 
+        if (!articleNumber) {
+            articleNumber = '{$data.articleNumber}';
+        }
 
         var form_data = {
-            'day'           : day,
-            'size_start'    : '{$data.size_start}',
-            'size_end'      : '{$data.size_end}',
-            'articleNumber' : articleNumber,
+            'day': day,
+            'size_start': '{$data.size_start}',
+            'size_end': '{$data.size_end}',
+            'articleNumber': articleNumber,
         };
 
         $.get("{:url('shoes/AjaxProductOne')}", form_data, function (ret) {
@@ -255,17 +251,17 @@
                 legend: {
                     type: 'scroll',
                     data: ret.data['sizeName'],
-                    selected:ret.data['sizeSelected']
+                    selected: ret.data['sizeSelected']
                 },
                 grid: {
                     left: '3%',
                     right: '4%',
                     bottom: '3%',
-                    top:'13%',
+                    top: '13%',
                     containLabel: true
                 },
                 toolbox: {
-                    top:'5%',
+                    top: '5%',
                     show: true,
                     feature: {
                         dataZoom: {
@@ -310,17 +306,17 @@
                 legend: {
                     type: 'scroll',
                     data: ret.data['soldSizeName'],
-                    selected:ret.data['soldSelected']
+                    selected: ret.data['soldSelected']
                 },
                 grid: {
                     left: '3%',
                     right: '4%',
                     bottom: '3%',
-                    top:'13%',
+                    top: '13%',
                     containLabel: true
                 },
                 toolbox: {
-                    top:'5%',
+                    top: '5%',
                     show: true,
                     feature: {
                         dataZoom: {
@@ -353,7 +349,7 @@
             };
             myChart2.setOption(option2, true);
 
-            if (init == 1){
+            if (init == 1) {
                 $('.tab-pane').eq(1).removeClass('active');
             }
             init = init + 1;
@@ -361,5 +357,6 @@
 
             layer.closeAll('loading');
         });
-    });
+    }
+
 </script>
