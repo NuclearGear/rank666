@@ -377,6 +377,7 @@
             layer.closeAll('loading');
             if(ret.code == 200){
                 layer.msg(ret.msg);
+                AjaxPage(1, tab_index, tab_start, tab_end);
             }else{
                 layer.msg(ret.msg,function () {});
             }
@@ -454,6 +455,7 @@
         $('.tab_select').eq(tab_index).click();
     });
 
+    // 删除鞋子
     function del_shoes(obj){
         layer.confirm('确认删除吗?', {skin:'layui-layer-lan'},function(index){
             layer.load();
@@ -462,6 +464,7 @@
                 if (ret.code == 200) {
                     obj.parent().parent().remove();
                     layer.msg(ret.msg);
+                    AjaxPage(1, tab_index, tab_start, tab_end)
                 } else {
                     layer.msg(ret.msg, function () {
                     });
@@ -491,40 +494,10 @@
                 // 提交表单
                 body.find('#my_form').ajaxSubmit(function(ret) {
                     if (ret.code == 200) {
-                        // 修改Dom 图片
-                        obj.parent().parent().find('th').find('img').attr('src', ret.data.image);
-                        // 修改Dom 名称
-                        obj.parent().parent().find('th').find('span').html(ret.data.name);
-                        // 修改Dom 货号
-                        obj.parent().parent().find('td').eq(0).html(ret.data.number);
-                        // 修改Dom 尺码
-                        obj.parent().parent().find('td').eq(1).html(ret.data.size);
-                        // 修改Dom 购买平台
-                        obj.parent().parent().find('td').eq(2).html(ret.data.buy_type_id);
-                        // 修改Dom 成本
-                        obj.parent().parent().find('td').eq(3).html(ret.data.buy_cost);
-                        // 修改Dom 转运平台
-                        obj.parent().parent().find('td').eq(4).html(ret.data.send_type_id);
-                        // 修改Dom 转运费用
-                        obj.parent().parent().find('td').eq(4).attr('data-tip', '费用：'+ ret.data.send_cost +' 元');
-                        // 修改Dom 出售平台
-                        obj.parent().parent().find('td').eq(5).html(ret.data.sold_type_id);
-                        // 修改Dom 出售手续费
-                        obj.parent().parent().find('td').eq(5).attr('data-tip', '手续费：'+ ret.data.sold_charge +' 元');
-                        // 修改Dom 出售价格
-                        obj.parent().parent().find('td').eq(6).html(ret.data.sold_price);
-                        // 修改Dom 预计利润
-                        obj.parent().parent().find('td').eq(7).html('-');
-                        // 修改Dom 利润
-                        obj.parent().parent().find('td').eq(8).html(ret.data.profit);
-                        // 修改Dom 购买日期
-                        obj.parent().parent().find('td').eq(9).html(ret.data.buy_time);
-                        // 修改Dom 出售日期
-                        obj.parent().parent().find('td').eq(10).html(ret.data.sold_time);
-
                         layer.closeAll('loading');
                         layer.msg(ret.msg);
                         layer.close(index);
+                        AjaxPage(1, tab_index, tab_start, tab_end)
                     } else {
                         layer.msg(ret.msg, function () { });
                     }

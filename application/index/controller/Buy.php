@@ -254,7 +254,7 @@ class Buy extends Base
             return returnJson('', 201, $validate->getError());
         }
 
-        $goods = Db::connect("db_mongo")->name("du_product")->where('articleNumber',input('post.number'))
+        $goods = Db::connect("db_mongo")->name("du_product")->where('articleNumber', input('post.number'))
                                               ->field('articleNumber,title,logoUrl')
                                               ->find();
 
@@ -289,12 +289,17 @@ class Buy extends Base
                 $add_data['sold_charge'] = round($add_data['sold_price'] * input('post.sold_charge'), 2);
             }
         }
-        // 计算利润
+        // 价格-成本
         if ($add_data['buy_cost'] && $add_data['sold_price']){
             $add_data['profit'] = $add_data['sold_price'] - $add_data['buy_cost'];
         }
+        // 价格-手续费
         if ($add_data['sold_type_id'] == 1 && $add_data['sold_price']){
             $add_data['profit'] = $add_data['profit'] - $add_data['sold_charge'];
+        }
+        // 价格-转运费
+        if ($add_data['send_cost']){
+            $add_data['profit'] = $add_data['profit'] - $add_data['send_cost'];
         }
 
         $ret_add = BuyModel::create($add_data);
@@ -306,7 +311,7 @@ class Buy extends Base
         // 清除查询缓存
         Cache::clear($this->cache_tag . session('user.id'));
 
-        return returnJson('', 200, '添加成功，请刷新页面后查看');
+        return returnJson('', 200, '添加成功');
     }
 
     // 删除鞋子
@@ -319,7 +324,7 @@ class Buy extends Base
         // 清除查询缓存
         Cache::clear($this->cache_tag . session('user.id'));
 
-        return returnJson('', 200, '删除成功，统计信息刷新后重置！');
+        return returnJson('', 200, '删除成功！');
     }
 
     public function edit(){
@@ -338,7 +343,7 @@ class Buy extends Base
     }
 
     public function ajax_edit(){
-        $goods = Db::connect("db_mongo")->name("du_product")->where('articleNumber',input('post.number'))
+        $goods = Db::connect("db_mongo")->name("du_product")->where('articleNumber', '=', input('post.number'))
                                                                         ->field('articleNumber,title,logoUrl')
                                                                         ->find();
 
@@ -378,15 +383,15 @@ class Buy extends Base
             $params['profit'] = 0;
         }
 
-        // 计算利润
+        // 价格-成本
         if ($params['buy_cost'] && $params['sold_price']){
             $params['profit'] = $params['sold_price'] - $params['buy_cost'];
         }
+        // 价格-手续费
         if ($params['sold_type_id'] == 1 && $params['sold_price']){
             $params['profit'] = $params['profit'] - $params['sold_charge'];
         }
-
-        // 平台邮寄费
+        // 价格-平台邮寄费
         if ($params['sold_express']){
             $params['profit'] = $params['profit'] - $params['sold_express'];
         }
@@ -401,7 +406,7 @@ class Buy extends Base
         // 清除查询缓存
         Cache::clear($this->cache_tag . session('user.id'));
 
-        return returnJson($ret_update, 200, '修改成功，统计信息刷新后重置！！');
+        return returnJson($ret_update, 200, '修改成功！！');
     }
 
     // 显示折线图
