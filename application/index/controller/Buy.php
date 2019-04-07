@@ -213,6 +213,9 @@ class Buy extends Base
                 $data['list'][$k]['ceil_future']   = round($data['list'][$k]['profit_future'] / $v['buy_cost'] * 100, 2);
                 $data['list'][$k]['price_future']  = $du_arr[$v['number'] . $v['size']];
                 $data['list'][$k]['charge_future'] = round($du_arr[$v['number'] . $v['size']] * 0.095, 2);
+                if ($data['list'][$k]['charge_future'] > '299') {
+                    $data['list'][$k]['charge_future'] = '299';
+                }
                 $data['list'][$k]['send_future']   = $send_cost;
             }else{
                 $data['list'][$k]['profit_future'] = '-';
@@ -222,7 +225,6 @@ class Buy extends Base
                 $data['list'][$k]['send_future']   = '-';
             }
         }
-
         Cache::tag($this->cache_tag . session('user.id'))->set($cache_key, $data, 3600 * 4);
 
         return view('ajax_page', ['data' => $data]);
