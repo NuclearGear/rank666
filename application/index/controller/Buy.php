@@ -290,6 +290,7 @@ class Buy extends Base
                 $add_data['sold_charge'] = round($add_data['sold_price'] * input('post.sold_charge'), 2);
             }
         }
+        $add_data['profit'] = 0;
         // 价格-成本
         if ($add_data['buy_cost'] && $add_data['sold_price']){
             $add_data['profit'] = $add_data['sold_price'] - $add_data['buy_cost'];
@@ -383,7 +384,7 @@ class Buy extends Base
             $params['sold_charge'] = 0;
             $params['profit'] = 0;
         }
-
+        $params['profit'] = 0;
         // 价格-成本
         if ($params['buy_cost'] && $params['sold_price']){
             $params['profit'] = $params['sold_price'] - $params['buy_cost'];
