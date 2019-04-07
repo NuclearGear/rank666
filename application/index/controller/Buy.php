@@ -204,9 +204,11 @@ class Buy extends Base
                 $data['list'][$k]['profit_future'] = round(($du_arr[$v['number'] . $v['size']] - $v['buy_cost']) - ($du_arr[$v['number'] . $v['size']] * 0.095) - 100, 2);
                 // 利率比
                 $data['list'][$k]['ceil_future'] = round($data['list'][$k]['profit_future'] / $v['buy_cost'] * 100, 2);
+                $data['list'][$k]['price_future'] = $du_arr[$v['number'] . $v['size']];
             }else{
                 $data['list'][$k]['profit_future'] = '-';
                 $data['list'][$k]['ceil_future'] = '-';
+                $data['list'][$k]['price_future'] = '暂无';
             }
         }
 
