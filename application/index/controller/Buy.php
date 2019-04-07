@@ -295,14 +295,15 @@ class Buy extends Base
         if ($add_data['buy_cost'] && $add_data['sold_price']){
             $add_data['profit'] = $add_data['sold_price'] - $add_data['buy_cost'];
         }
-        // 价格-手续费
-        if ($add_data['sold_type_id'] == 1 && $add_data['sold_price']){
-            $add_data['profit'] = $add_data['profit'] - $add_data['sold_charge'];
-        }
         // 价格-转运费
         if ($add_data['send_cost']){
             $add_data['profit'] = $add_data['profit'] - $add_data['send_cost'];
         }
+        // 价格-手续费
+        if ($add_data['sold_type_id'] == 1 && $add_data['sold_price']){
+            $add_data['profit'] = $add_data['profit'] - $add_data['sold_charge'];
+        }
+
 
         $ret_add = BuyModel::create($add_data);
 
@@ -389,7 +390,11 @@ class Buy extends Base
         if ($params['buy_cost'] && $params['sold_price']){
             $params['profit'] = $params['sold_price'] - $params['buy_cost'];
         }
-        // 价格-手续费
+        // 价格-转运费
+        if ($params['send_cost']){
+            $params['profit'] = $params['profit'] - $params['send_cost'];
+        }
+        // 价格-平台手续费
         if ($params['sold_type_id'] == 1 && $params['sold_price']){
             $params['profit'] = $params['profit'] - $params['sold_charge'];
         }
