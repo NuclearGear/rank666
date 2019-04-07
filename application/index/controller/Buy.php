@@ -201,8 +201,8 @@ class Buy extends Base
         foreach ($data['list'] as $k => &$v){
             if (!$v['sold_price'] && isset($du_arr[$v['number'] . $v['size']]) && $du_arr[$v['number'] . $v['size']]){
                 // 转运价格判断
-                if ($data['send_cost']){
-                    $send_cost = $data['send_cost'];
+                if ($v['send_cost']){
+                    $send_cost = $v['send_cost'];
                 }else{
                     $send_cost = 100;
                 }
