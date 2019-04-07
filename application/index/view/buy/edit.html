@@ -203,7 +203,7 @@
         $('.select_send').selectpicker('val', '{$data.info.send_type_id}');
         $('.select_sold').selectpicker('val', '{$data.info.sold_type_id}');
 
-        get_goods('', '#select_search', '{$data.info.number}');
+        get_goods('{$data.info.number}', '#select_search', '{$data.info.number}');
 
         // 商品框输入事件
         $('#select_search').parent().find("input").on('input propertychange', function(){
