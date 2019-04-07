@@ -322,12 +322,16 @@
         placeholder:'请选择平台'
     });
 
+    var tab_index = 0;
+    var tab_start = '';
+    var tab_end   = '';
+
     // 遍历插入商品
     $(function () {
         // 获取 全部选项卡 第一页
-        var start = $('.tab_select').eq(0).data('start');
-        var end = $('.tab_select').eq(0).data('end');
-        AjaxPage(1,'0', start,end);
+        tab_start = $('.tab_select').eq(0).data('start');
+        tab_end = $('.tab_select').eq(0).data('end');
+        AjaxPage(1,'0', tab_start,tab_end);
 
         get_goods('', '#select_search');
         get_goods('', '#select_name_add')
@@ -356,9 +360,7 @@
         $('.add_box').toggle('slow')
     });
 
-    var tab_index = 0;
-    var tab_start = '';
-    var tab_end   = '';
+
 
     // 添加鞋子
     $('.btn_add').click(function () {
@@ -496,7 +498,7 @@
                     if (ret.code == 200) {
                         layer.closeAll('loading');
                         layer.close(index);
-                        AjaxPage(1, tab_index, tab_start, tab_end)
+                        AjaxPage(1, tab_index, tab_start, tab_end);
                         layer.msg(ret.msg);
                     } else {
                         layer.msg(ret.msg, function () { });
