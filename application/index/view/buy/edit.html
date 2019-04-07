@@ -25,7 +25,7 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">名称</label>
                             <div class="col-sm-10">
-                                <select class="form-control select_name" name="number">
+                                <select class="form-control" id="select_search" name="number">
                                     <option value="">无</option>
                                 </select>
                             </div>
@@ -166,6 +166,13 @@
 <script>
     // 遍历插入商品
     $(function () {
+        $('#select_search').selectpicker({
+            size:10,
+            title:'请输入名称 或 货号',
+            placeholder:'请输入名称 或 货号',
+            liveSearch:true,
+            liveSearchPlaceholder:'请选择平台',
+        });
         $('.select_size').selectpicker({
             size:15,
             title:'尺码',
@@ -196,18 +203,14 @@
         $('.select_send').selectpicker('val', '{$data.info.send_type_id}');
         $('.select_sold').selectpicker('val', '{$data.info.sold_type_id}');
 
-        $.get("{:url('buy/ajax_get_goods')}",{},function (ret) {
-            if (ret.code == 200){
-                $('.select_name').append(ret.data);
-                $('.select_name').selectpicker({
-                    size:5,
-                    liveSearch:true,
-                    liveSearchPlaceholder:'请输入名称 或 货号',
-                    title:'请输入名称 或 货号'
-                });
-                $('.select_name').selectpicker('val', "{$data.info.number}");
-            }
+        get_goods('', '#select_search', '{$data.info.number}');
+
+        // 商品框输入事件
+        $('#select_search').parent().find("input").on('input propertychange', function(){
+            var keyword = $('#select_search').parent().find("input").val();
+            get_goods(keyword, '#select_search');
         });
     });
+
 
 </script>
