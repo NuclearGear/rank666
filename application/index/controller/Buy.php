@@ -212,7 +212,7 @@ class Buy extends Base
                 // 利率比
                 $data['list'][$k]['ceil_future']   = round($data['list'][$k]['profit_future'] / $v['buy_cost'] * 100, 2);
                 $data['list'][$k]['price_future']  = $du_arr[$v['number'] . $v['size']];
-                $data['list'][$k]['charge_future'] = $du_arr[$v['number'] . $v['size']] * 0.095;
+                $data['list'][$k]['charge_future'] = round($du_arr[$v['number'] . $v['size']] * 0.095, 2);
                 $data['list'][$k]['send_future']   = $send_cost;
             }else{
                 $data['list'][$k]['profit_future'] = '-';
