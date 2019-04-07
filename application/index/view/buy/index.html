@@ -376,8 +376,8 @@
        $.post("{:url('buy/ajax_add')}",form_data,function (ret) {
             layer.closeAll('loading');
             if(ret.code == 200){
-                layer.msg(ret.msg);
                 AjaxPage(1, tab_index, tab_start, tab_end);
+                layer.msg(ret.msg);
             }else{
                 layer.msg(ret.msg,function () {});
             }
@@ -495,9 +495,9 @@
                 body.find('#my_form').ajaxSubmit(function(ret) {
                     if (ret.code == 200) {
                         layer.closeAll('loading');
-                        layer.msg(ret.msg);
                         layer.close(index);
                         AjaxPage(1, tab_index, tab_start, tab_end)
+                        layer.msg(ret.msg);
                     } else {
                         layer.msg(ret.msg, function () { });
                     }
