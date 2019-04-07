@@ -356,6 +356,10 @@
         $('.add_box').toggle('slow')
     });
 
+    var tab_index = 0;
+    var tab_start = '';
+    var tab_end   = '';
+
     // 添加鞋子
     $('.btn_add').click(function () {
         layer.load();
@@ -437,10 +441,6 @@
             $('.ajax_page').eq(tab).find('table').fadeIn('normal');
         });
     }
-
-    var tab_index = 0;
-    var tab_start = '';
-    var tab_end   = '';
 
     // 绑定ajax分页事件
     $('.tab_select').on('click',function () {

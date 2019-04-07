@@ -189,14 +189,15 @@ class Buy extends Base
         if (isset($get_params['start']) && $get_params['start'] && isset($get_params['end']) && $get_params['end']){
             $start = $get_params['start'];
             $end = $get_params['end'];
+
+            $js_path = "javascript:AjaxPage([PAGE], {$tab}, {$start}, {$end});";
         }else{
-            $start = '';
-            $end = '';
+            $js_path = "javascript:AjaxPage([PAGE], {$tab});";
         }
 
 
         // 列表
-        $data['list'] = BuyModel::where($where)->order('buy_time', 'desc')->order('id', 'desc')->paginate(30,false,['path'=>"javascript:AjaxPage([PAGE], {$tab}, {$start}, {$end});"]);
+        $data['list'] = BuyModel::where($where)->order('buy_time', 'desc')->order('id', 'desc')->paginate(30,false,['path'=>$js_path]);
         foreach ($data['list'] as $k => &$v){
             if (!$v['sold_price'] && isset($du_arr[$v['number'] . $v['size']]) && $du_arr[$v['number'] . $v['size']]){
                 // 增加预计利润
