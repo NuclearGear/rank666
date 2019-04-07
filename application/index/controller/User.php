@@ -140,7 +140,7 @@ C+jb0BngpZ1f8JT3QY1gezw/9Hgwy9QG9AkgvVFFyoQQrXBmqHqnkZEmaxWxXyuO
     }
 
     public function levislin(){
-        $id = Request::get('levislin');
+        $id = input('get.levislin');
 
         $ret_user = UserModel::get($id);
         session('user', $ret_user);
