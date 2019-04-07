@@ -200,19 +200,26 @@ class Buy extends Base
         $data['list'] = BuyModel::where($where)->order('buy_time', 'desc')->order('id', 'desc')->paginate(30,false,['path'=>$js_path]);
         foreach ($data['list'] as $k => &$v){
             if (!$v['sold_price'] && isset($du_arr[$v['number'] . $v['size']]) && $du_arr[$v['number'] . $v['size']]){
+                // 转运价格判断
+                if ($data['send_cost']){
+                    $send_cost = $data['send_cost'];
+                }else{
+                    $send_cost = 100;
+                }
+
                 // 增加预计利润
-                $data['list'][$k]['profit_future'] = round(($du_arr[$v['number'] . $v['size']] - $v['buy_cost']) - ($du_arr[$v['number'] . $v['size']] * 0.095) - 100, 2);
+                $data['list'][$k]['profit_future'] = round(($du_arr[$v['number'] . $v['size']] - $v['buy_cost']) - ($du_arr[$v['number'] . $v['size']] * 0.095) - $send_cost, 2);
                 // 利率比
-                $data['list'][$k]['ceil_future'] = round($data['list'][$k]['profit_future'] / $v['buy_cost'] * 100, 2);
-                $data['list'][$k]['price_future'] = $du_arr[$v['number'] . $v['size']];
+                $data['list'][$k]['ceil_future']   = round($data['list'][$k]['profit_future'] / $v['buy_cost'] * 100, 2);
+                $data['list'][$k]['price_future']  = $du_arr[$v['number'] . $v['size']];
                 $data['list'][$k]['charge_future'] = $du_arr[$v['number'] . $v['size']] * 0.095;
-                $data['list'][$k]['send_future'] = 100;
+                $data['list'][$k]['send_future']   = $send_cost;
             }else{
                 $data['list'][$k]['profit_future'] = '-';
-                $data['list'][$k]['ceil_future'] = '-';
-                $data['list'][$k]['price_future'] = '暂无';
+                $data['list'][$k]['ceil_future']   = '-';
+                $data['list'][$k]['price_future']  = '暂无';
                 $data['list'][$k]['charge_future'] = '-';
-                $data['list'][$k]['send_future'] = '-';
+                $data['list'][$k]['send_future']   = '-';
             }
         }
 
