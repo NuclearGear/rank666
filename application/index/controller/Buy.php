@@ -238,7 +238,6 @@ class Buy extends Base
         }
 
         $data = Db::connect("db_mongo")->name("du_product")
-                                              ->whereBetween('sellDate', ['2017.01.01', '2019.12.31'])
                                               ->whereOr('articleNumber', 'like', input('get.keyword'))
                                               ->whereOr('title', 'like', input('get.keyword'))
                                               ->field('articleNumber,title,sellDate,logoUrl')
