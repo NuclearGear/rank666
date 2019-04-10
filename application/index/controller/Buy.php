@@ -182,7 +182,6 @@ class Buy extends Base
                     if (isset($du_arr[$v['number'] . $v['size']]) && $du_arr[$v['number'] . $v['size']]){
                         $data['profit_future'] += ($du_arr[$v['number'] . $v['size']] - $v['buy_cost']) - ($du_arr[$v['number'] . $v['size']] * 0.095) - $temp_send;
                     }
-                    $data['cost_future'] += $v['buy_cost'] + $temp_send;
                 }
             }
             $data['profit_future'] = round($data['profit_future'], 2);
