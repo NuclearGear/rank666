@@ -142,7 +142,7 @@ class Buy extends Base
 
         // 利率比
         if ($data['profit'] && $data['cost']){
-            $data['ceil'] = round($data['profit'] / $data['cost'], 2) * 100;
+            $data['ceil'] = round($data['profit'] / $data['total_cost'], 2) * 100;
         }else{
             $data['ceil'] = 0;
         }
