@@ -185,7 +185,7 @@ class Buy extends Base
                 }
             }
             $data['profit_future'] = round($data['profit_future'], 2);
-            $data['ceil_future'] = round($data['profit_future'] / $data['cost_future'], 2) * 100;
+            $data['ceil_future'] = round($data['profit_future'] / $data['buy_cost'], 2) * 100;
         }
 
 
