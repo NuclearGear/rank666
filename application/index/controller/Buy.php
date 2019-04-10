@@ -132,8 +132,10 @@ class Buy extends Base
         $data['profit'] = BuyModel::where($where)->sum('profit');
         $data['profit'] = round($data['profit'], 2);
         // 成本
-        $data['cost'] = BuyModel::where($where)->sum('buy_cost');
-        $data['cost'] = round($data['cost'], 2);
+        $data['total_buy_cost'] = BuyModel::where($where)->sum('buy_cost');
+        $data['total_send_cost'] = BuyModel::where($where)->sum('send_cost');
+        $data['total_sold_express'] = BuyModel::where($where)->sum('sold_express');
+        $data['total_cost'] = round($data['total_buy_cost'] + $data['total_send_cost'] + $data['total_sold_express'], 2);
         // 销售
         $data['sold_total'] = BuyModel::where($where)->sum('sold_price');
         $data['sold_total'] = round($data['sold_total'], 2);
@@ -177,15 +179,17 @@ class Buy extends Base
             foreach ($buy_arr as $k => $v){
                 if ($v['sold_price'] == 0){
                     $temp_send = $v['send_cost'] == 0?100:$v['send_cost'];
+                    $temp_express = $v['sold_express'] == 0?15:$v['sold_express'];
 
                     // 预计盈利
                     if (isset($du_arr[$v['number'] . $v['size']]) && $du_arr[$v['number'] . $v['size']]){
-                        $data['profit_future'] += ($du_arr[$v['number'] . $v['size']] - $v['buy_cost']) - ($du_arr[$v['number'] . $v['size']] * 0.095) - $temp_send;
+                        $data['profit_future'] += ($du_arr[$v['number'] . $v['size']] - $v['buy_cost']) - ($du_arr[$v['number'] . $v['size']] * 0.095) - $temp_send - $temp_express;
                     }
+                    $data['cost_future'] = $data['total_cost'] + $temp_send + $temp_express;
                 }
             }
             $data['profit_future'] = round($data['profit_future'], 2);
-            $data['ceil_future'] = round($data['profit_future'] / $data['buy_cost'], 2) * 100;
+            $data['ceil_future'] = round($data['profit_future'] / $data['cost_future'], 2) * 100;
         }
 
 
@@ -204,18 +208,23 @@ class Buy extends Base
         foreach ($data['list'] as $k => &$v){
             if (!$v['sold_price'] && isset($du_arr[$v['number'] . $v['size']]) && $du_arr[$v['number'] . $v['size']]){
                 // 转运价格判断
-                if ($v['send_cost']){
-                    $send_cost = $v['send_cost'];
-                }else{
-                    $send_cost = 100;
-                }
+                $send_cost = $v['send_cost'] == 0?100:$v['send_cost'];
+                // 邮寄价格判断
+                $express_cost = $v['sold_express'] == 0?15:$v['sold_express'];
 
+                $du_price = $du_arr[$v['number'] . $v['size']];
+                $temp_cost = $v['buy_cost'] + $send_cost + $express_cost;
                 // 增加预计利润
-                $data['list'][$k]['profit_future'] = round(($du_arr[$v['number'] . $v['size']] - $v['buy_cost']) - ($du_arr[$v['number'] . $v['size']] * 0.095) - $send_cost, 2);
+                $data['list'][$k]['profit_future'] = $du_price - ($du_arr[$v['number'] . $v['size']] * 0.095) - $temp_cost;
+                $data['list'][$k]['profit_future'] = round($data['list'][$k]['profit_future'], 2);
                 // 利率比
-                $data['list'][$k]['ceil_future']   = round($data['list'][$k]['profit_future'] / $v['buy_cost'] * 100, 2);
-                $data['list'][$k]['price_future']  = $du_arr[$v['number'] . $v['size']];
-                $data['list'][$k]['charge_future'] = round($du_arr[$v['number'] . $v['size']] * 0.095, 2);
+                $data['list'][$k]['ceil_future']   = $data['list'][$k]['profit_future'] / $temp_cost * 100;
+                $data['list'][$k]['ceil_future']   = round($data['list'][$k]['ceil_future'], 2);
+                // 毒价格
+                $data['list'][$k]['price_future']  = $du_price;
+                // 毒手续费
+                $data['list'][$k]['charge_future'] = $du_price * 0.095;
+                $data['list'][$k]['charge_future'] = round($data['list'][$k]['charge_future'], 2);
                 if ($data['list'][$k]['charge_future'] > '299') {
                     $data['list'][$k]['charge_future'] = '299';
                 }
