@@ -229,6 +229,7 @@ class Buy extends Base
                     $data['list'][$k]['charge_future'] = '299';
                 }
                 $data['list'][$k]['send_future']   = $send_cost;
+                $data['list'][$k]['express_future']   = $express_cost;
             }else{
                 $data['list'][$k]['profit_future'] = '-';
                 $data['list'][$k]['ceil_future']   = '-';
