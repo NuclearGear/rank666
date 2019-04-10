@@ -236,11 +236,12 @@ class Buy extends Base
                 $data['list'][$k]['ceil_future']    = $data['list'][$k]['profit_future'] / $temp_cost * 100;
                 $data['list'][$k]['ceil_future']    = round($data['list'][$k]['ceil_future'], 2);
             }else{
-                $data['list'][$k]['profit_future'] = '-';
-                $data['list'][$k]['ceil_future']   = '-';
-                $data['list'][$k]['price_future']  = '暂无';
-                $data['list'][$k]['charge_future'] = '-';
-                $data['list'][$k]['send_future']   = '-';
+                $data['list'][$k]['profit_future']  = '-';
+                $data['list'][$k]['express_future'] = '-';
+                $data['list'][$k]['ceil_future']    = '-';
+                $data['list'][$k]['price_future']   = '暂无';
+                $data['list'][$k]['charge_future']  = '-';
+                $data['list'][$k]['send_future']    = '-';
             }
         }
         Cache::tag($this->cache_tag . session('user.id'))->set($cache_key, $data, 3600 * 4);
