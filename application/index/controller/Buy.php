@@ -178,14 +178,17 @@ class Buy extends Base
             // 计算预计盈利
             foreach ($buy_arr as $k => $v){
                 if ($v['sold_price'] == 0){
+                    $temp_du = $du_arr[$v['number'] . $v['size']];
                     $temp_send = $v['send_cost'] == 0?100:$v['send_cost'];
                     $temp_express = $v['sold_express'] == 0?15:$v['sold_express'];
+                    $temp_charge = $temp_du * 0.095;
+                    $temp_charge = $temp_charge > 299 ?299:round($temp_charge, 2);
 
                     // 预计盈利
                     if (isset($du_arr[$v['number'] . $v['size']]) && $du_arr[$v['number'] . $v['size']]){
-                        $data['profit_future'] += ($du_arr[$v['number'] . $v['size']] - $v['buy_cost']) - ($du_arr[$v['number'] . $v['size']] * 0.095) - $temp_send - $temp_express;
+                        $data['profit_future'] += $temp_du - $v['buy_cost'] - $temp_charge - $temp_send - $temp_express;
                     }
-                    $data['cost_future'] = $data['total_cost'] + $temp_send + $temp_express;
+                    $data['cost_future'] = $v['buy_cost'] + $temp_send + $temp_express;
                 }
             }
             $data['profit_future'] = round($data['profit_future'], 2);
@@ -214,22 +217,23 @@ class Buy extends Base
 
                 $du_price = $du_arr[$v['number'] . $v['size']];
                 $temp_cost = $v['buy_cost'] + $send_cost + $express_cost;
-                // 增加预计利润
-                $data['list'][$k]['profit_future'] = $du_price - ($du_arr[$v['number'] . $v['size']] * 0.095) - $temp_cost;
-                $data['list'][$k]['profit_future'] = round($data['list'][$k]['profit_future'], 2);
+
                 // 利率比
-                $data['list'][$k]['ceil_future']   = $data['list'][$k]['profit_future'] / $temp_cost * 100;
-                $data['list'][$k]['ceil_future']   = round($data['list'][$k]['ceil_future'], 2);
+                $data['list'][$k]['ceil_future']    = $data['list'][$k]['profit_future'] / $temp_cost * 100;
+                $data['list'][$k]['ceil_future']    = round($data['list'][$k]['ceil_future'], 2);
                 // 毒价格
-                $data['list'][$k]['price_future']  = $du_price;
+                $data['list'][$k]['price_future']   = $du_price;
                 // 毒手续费
-                $data['list'][$k]['charge_future'] = $du_price * 0.095;
-                $data['list'][$k]['charge_future'] = round($data['list'][$k]['charge_future'], 2);
+                $data['list'][$k]['charge_future']  = $du_price * 0.095;
+                $data['list'][$k]['charge_future']  = round($data['list'][$k]['charge_future'], 2);
                 if ($data['list'][$k]['charge_future'] > '299') {
                     $data['list'][$k]['charge_future'] = '299';
                 }
-                $data['list'][$k]['send_future']   = $send_cost;
-                $data['list'][$k]['express_future']   = $express_cost;
+                $data['list'][$k]['send_future']    = $send_cost;
+                $data['list'][$k]['express_future'] = $express_cost;
+                // 增加预计利润
+                $data['list'][$k]['profit_future'] = $du_price - $data['list'][$k]['charge_future'] - $temp_cost;
+                $data['list'][$k]['profit_future'] = round($data['list'][$k]['profit_future'], 2);
             }else{
                 $data['list'][$k]['profit_future'] = '-';
                 $data['list'][$k]['ceil_future']   = '-';
