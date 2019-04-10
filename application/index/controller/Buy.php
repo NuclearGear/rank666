@@ -150,7 +150,7 @@ class Buy extends Base
         $data['profit_future'] = 0;
         $data['profit_future_du'] = 0;
         $data['ceil_future'] = 0;
-        $data['total_cost'] = 0;
+        $data['cost_future'] = 0;
 
         $buy_arr = BuyModel::where($where)->field('number, buy_cost,size,sold_price,send_cost')->select();
         if ($buy_arr){
@@ -182,11 +182,11 @@ class Buy extends Base
                     if (isset($du_arr[$v['number'] . $v['size']]) && $du_arr[$v['number'] . $v['size']]){
                         $data['profit_future'] += ($du_arr[$v['number'] . $v['size']] - $v['buy_cost']) - ($du_arr[$v['number'] . $v['size']] * 0.095) - $temp_send;
                     }
-                    $data['total_cost'] += $v['buy_cost'] + $temp_send;
+                    $data['cost_future'] += $v['buy_cost'] + $temp_send;
                 }
             }
             $data['profit_future'] = round($data['profit_future'], 2);
-            $data['ceil_future'] = round($data['profit_future'] / $data['total_cost'], 2) * 100;
+            $data['ceil_future'] = round($data['profit_future'] / $data['cost_future'], 2) * 100;
         }
 
 
