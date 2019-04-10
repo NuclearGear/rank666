@@ -176,11 +176,12 @@ class Buy extends Base
             // 计算预计盈利
             foreach ($buy_arr as $k => $v){
                 if ($v['sold_price'] == 0){
+                    $temp_send = $v['send_cost'] == 0?100:$v['send_cost'];
+
                     // 预计盈利
                     if (isset($du_arr[$v['number'] . $v['size']]) && $du_arr[$v['number'] . $v['size']]){
-                        $data['profit_future'] += ($du_arr[$v['number'] . $v['size']] - $v['buy_cost']) - ($du_arr[$v['number'] . $v['size']] * 0.095) - 100;
+                        $data['profit_future'] += ($du_arr[$v['number'] . $v['size']] - $v['buy_cost']) - ($du_arr[$v['number'] . $v['size']] * 0.095) - $temp_send;
                     }
-                    $temp_send = $v['send_cost'] == 0?100:$v['send_cost'];
                     $data['total_cost'] += $v['buy_cost'] + $temp_send;
                 }
             }
