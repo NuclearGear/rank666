@@ -154,7 +154,7 @@ class Buy extends Base
         $data['ceil_future'] = 0;
         $data['cost_future'] = 0;
 
-        $buy_arr = BuyModel::where($where)->field('number, buy_cost,size,sold_price,send_cost,sold_express')->select();
+        $buy_arr = BuyModel::where($where)->where(['sold_price' => 0])->field('number, buy_cost,size,sold_price,send_cost,sold_express')->select();
         if ($buy_arr){
             // 获取款式并且去重
             $need_shoes = [];
@@ -177,7 +177,6 @@ class Buy extends Base
             }
             // 计算预计盈利
             foreach ($buy_arr as $k => $v){
-                if ($v['sold_price'] == 0){
                     $temp_du = $du_arr[$v['number'] . $v['size']];
                     $temp_send = $v['send_cost'] == 0?100:$v['send_cost'];
                     $temp_express = $v['sold_express'] == 0?15:$v['sold_express'];
@@ -189,7 +188,6 @@ class Buy extends Base
                         $data['profit_future'] += ($temp_du - $v['buy_cost'] - $temp_charge - $temp_send - $temp_express);
                     }
                     $data['cost_future'] += ($v['buy_cost'] + $temp_send + $temp_express);
-                }
             }
             $data['profit_future'] = round($data['profit_future'], 2);
             $data['ceil_future'] = round($data['profit_future'] / $data['cost_future'], 2) * 100;
