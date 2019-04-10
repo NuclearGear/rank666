@@ -210,17 +210,15 @@ class Buy extends Base
         $data['list'] = BuyModel::where($where)->order('buy_time', 'desc')->order('id', 'desc')->paginate(30,false,['path'=>$js_path]);
         foreach ($data['list'] as $k => &$v){
             if (!$v['sold_price'] && isset($du_arr[$v['number'] . $v['size']]) && $du_arr[$v['number'] . $v['size']]){
-                // 转运价格判断
+                // 转运费
                 $send_cost = $v['send_cost'] == 0?100:$v['send_cost'];
-                // 邮寄价格判断
+                // 平台邮寄费
                 $express_cost = $v['sold_express'] == 0?15:$v['sold_express'];
-
+                // 毒
                 $du_price = $du_arr[$v['number'] . $v['size']];
+                // 总成本
                 $temp_cost = $v['buy_cost'] + $send_cost + $express_cost;
 
-                // 利率比
-                $data['list'][$k]['ceil_future']    = $data['list'][$k]['profit_future'] / $temp_cost * 100;
-                $data['list'][$k]['ceil_future']    = round($data['list'][$k]['ceil_future'], 2);
                 // 毒价格
                 $data['list'][$k]['price_future']   = $du_price;
                 // 毒手续费
@@ -229,11 +227,16 @@ class Buy extends Base
                 if ($data['list'][$k]['charge_future'] > '299') {
                     $data['list'][$k]['charge_future'] = '299';
                 }
+                // 转运费
                 $data['list'][$k]['send_future']    = $send_cost;
+                // 平台邮寄费
                 $data['list'][$k]['express_future'] = $express_cost;
                 // 增加预计利润
                 $data['list'][$k]['profit_future'] = $du_price - $data['list'][$k]['charge_future'] - $temp_cost;
                 $data['list'][$k]['profit_future'] = round($data['list'][$k]['profit_future'], 2);
+                // 利率比
+                $data['list'][$k]['ceil_future']    = $data['list'][$k]['profit_future'] / $temp_cost * 100;
+                $data['list'][$k]['ceil_future']    = round($data['list'][$k]['ceil_future'], 2);
             }else{
                 $data['list'][$k]['profit_future'] = '-';
                 $data['list'][$k]['ceil_future']   = '-';
