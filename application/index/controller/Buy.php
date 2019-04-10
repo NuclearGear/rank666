@@ -152,7 +152,7 @@ class Buy extends Base
         $data['ceil_future'] = 0;
         $data['total_cost'] = 0;
 
-        $buy_arr = BuyModel::where($where)->field('number, buy_cost,size,sold_price')->select();
+        $buy_arr = BuyModel::where($where)->field('number, buy_cost,size,sold_price,send_cost')->select();
         if ($buy_arr){
             // 获取款式并且去重
             $need_shoes = [];
