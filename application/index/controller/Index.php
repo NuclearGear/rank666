@@ -388,6 +388,11 @@ class Index extends Controller
         cache::rm('index_money');
     }
 
+    public function getJson(){
+        $json = input('post.json');
+        return $json;
+    }
+
 
 
 }
