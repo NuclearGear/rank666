@@ -393,6 +393,12 @@ class Index extends Controller
         return $json;
     }
 
+    public function test_302(){
+        if (input('?get.yes') && input('get.yes')){
+            $this->redirect('www.baidu.com');
+        }
+    }
+
 
 
 }
