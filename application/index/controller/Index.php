@@ -409,7 +409,7 @@ class Index extends Controller
         $secret = input('post.secret');
 
         $ret = $this->request_post('https://www.recaptcha.net/recaptcha/api/siteverify', $data);
-        return returnJson($ret, 200, '成功');
+        return returnJson(json_decode($ret,true), 200, '成功');
     }
 
     function request_post($url = '', $param = '') {
