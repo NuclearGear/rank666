@@ -399,6 +399,10 @@ class Index extends Controller
         }
     }
 
+    public function captcha(){
+        return view('captcha');
+    }
+
 
 
 }
