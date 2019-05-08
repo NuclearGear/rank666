@@ -15,6 +15,15 @@
             grecaptcha.ready(function() {
                     grecaptcha.execute('6Lf4VKIUAAAAAOCr_4iHelhU4_jRMzO2DadER7A_', {action: 'homepage'}).then(function(token) {
                         console.log(token)
+
+                        var url = 'https://www.recaptcha.net/recaptcha/api/siteverify';
+                        $.post(url,{
+                            'secret':'6Lf4VKIUAAAAAFfqpMsIlZkPoPTdhgIh7eoddhHg',
+                            'response':token,
+                            'remoteip':''
+                        },function (ret) {
+                            console.log(ret)
+                        });
                     });
             });
         })
