@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>reCAPTCHA demo: Simple page</title>
+    <script src="https://www.recaptcha.net/recaptcha/api.js" async defer></script>
+</head>
+<body>
+<form action="{:url('index/ajaxCaptcha2')}" method="POST">
+    <div class="g-recaptcha" data-sitekey="6Lf4VKIUAAAAAOCr_4iHelhU4_jRMzO2DadER7A_"></div>
+    <br/>
+    <input type="submit" value="Submit">
+</form>
+</body>
+</html>
+<script src="__PUBLIC__/ecaps/plugins/jquery/jquery-3.1.0.min.js"></script>
+<script type="text/javascript">
+    var onloadCallback = function() {
+        alert("grecaptcha is ready!");
+    };
+</script>
+</html>
