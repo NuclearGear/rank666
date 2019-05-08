@@ -5,17 +5,19 @@
     <title>Title</title>
 </head>
 <body>
-
+    <button class="test">测试</button>
 </body>
 <script src="__PUBLIC__/ecaps/plugins/jquery/jquery-3.1.0.min.js"></script>
 <script src="https://www.recaptcha.net/recaptcha/api.js?render=6Lf4VKIUAAAAAOCr_4iHelhU4_jRMzO2DadER7A_"></script>
 <script>
     $(function(){
-        grecaptcha.ready(function() {
-                grecaptcha.execute('6Lf4VKIUAAAAAOCr_4iHelhU4_jRMzO2DadER7A_', {action: 'homepage'}).then(function(token) {
-                    console.log(token)
-                });
-        });
+        $('.test').on('click',function () {
+            grecaptcha.ready(function() {
+                    grecaptcha.execute('6Lf4VKIUAAAAAOCr_4iHelhU4_jRMzO2DadER7A_', {action: 'homepage'}).then(function(token) {
+                        console.log(token)
+                    });
+            });
+        })
     })
 </script>
 </html>
