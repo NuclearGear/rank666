@@ -406,7 +406,7 @@ class Index extends Controller
     public function ajaxCaptcha(){
         $data['secret'] = '6Lf4VKIUAAAAAFfqpMsIlZkPoPTdhgIh7eoddhHg';
         $data['response'] = input('post.response');
-        $secret = input('post.secret');
+        $data['remoteip'] = $_SERVER["REMOTE_ADDR"];
 
         $ret = $this->request_post('https://www.recaptcha.net/recaptcha/api/siteverify', $data);
         return returnJson(json_decode($ret,true), 200, '成功');
