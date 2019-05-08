@@ -11,20 +11,18 @@
 <script src="https://www.recaptcha.net/recaptcha/api.js?render=6Lf4VKIUAAAAAOCr_4iHelhU4_jRMzO2DadER7A_"></script>
 <script>
     $(function(){
-        $('.test').on('click',function () {
-            grecaptcha.ready(function() {
-                    grecaptcha.execute('6Lf4VKIUAAAAAOCr_4iHelhU4_jRMzO2DadER7A_', {action: 'homepage'}).then(function(token) {
-                        console.log(token)
+        grecaptcha.ready(function() {
+                grecaptcha.execute('6Lf4VKIUAAAAAOCr_4iHelhU4_jRMzO2DadER7A_', {action: 'homepage'}).then(function(token) {
+                    console.log(token)
 
-                        var url = "{:url('index/ajaxCaptcha')}";
-                        $.post(url,{
-                            'response':token,
-                        },function (ret) {
-                            console.log(ret)
-                        });
+                    var url = "{:url('index/ajaxCaptcha')}";
+                    $.post(url,{
+                        'response':token,
+                    },function (ret) {
+                        console.log(ret)
                     });
-            });
-        })
+                });
+        });
     })
 </script>
 </html>
