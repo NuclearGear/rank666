@@ -412,8 +412,14 @@ class Index extends Controller
         return returnJson(json_decode($ret,true), 200, $data['remoteip']);
     }
 
+    public function captcha2(){
+
+        return view('captcha2');
+    }
+
     public function ajaxCaptcha2(){
         dump(input('post.'));
+
     }
 
     function request_post($url = '', $param = '') {
