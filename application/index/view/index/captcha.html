@@ -5,21 +5,32 @@
     <title>Title</title>
 </head>
 <body>
-    <button class="test">测试</button>
+    <center>
+        <div class="info_1"></div>
+        <div class="info_2"></div><br>
+        <div class="info_3"></div>
+    </center>
 </body>
 <script src="__PUBLIC__/ecaps/plugins/jquery/jquery-3.1.0.min.js"></script>
 <script src="https://www.recaptcha.net/recaptcha/api.js?render=6Lf4VKIUAAAAAOCr_4iHelhU4_jRMzO2DadER7A_"></script>
 <script>
     $(function(){
+        $('.info_1').html('1.页面加载完毕,开始调用谷歌验证码');
         grecaptcha.ready(function() {
                 grecaptcha.execute('6Lf4VKIUAAAAAOCr_4iHelhU4_jRMzO2DadER7A_', {action: 'homepage'}).then(function(token) {
-                    console.log(token)
+                    $('.info_2').html('2.获取token:' + token);
+
 
                     var url = "{:url('index/ajaxCaptcha')}";
                     $.post(url,{
                         'response':token,
                     },function (ret) {
-                        console.log(ret)
+                        var str = '';
+                        str += 'action:' + ret.data['action'] + '<br>';
+                        str += 'challenge_ts:' + ret.data['challenge_ts'] + '<br>';
+                        str += 'hostname:' + ret.data['hostname'] + '<br>';
+                        str += 'success:' + ret.data['success'] + '<br>';
+                        $('.info_3').html('3.' + str);
                     });
                 });
         });
