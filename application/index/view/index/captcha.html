@@ -5,11 +5,9 @@
     <title>Title</title>
 </head>
 <body>
-    <center>
         <div class="info_1"></div>
         <div class="info_2"></div><br>
         <div class="info_3"></div>
-    </center>
 </body>
 <script src="__PUBLIC__/ecaps/plugins/jquery/jquery-3.1.0.min.js"></script>
 <script src="https://www.recaptcha.net/recaptcha/api.js?render=6Lf4VKIUAAAAAOCr_4iHelhU4_jRMzO2DadER7A_"></script>
@@ -29,6 +27,7 @@
                         str += 'action:' + ret.data['action'] + '<br>';
                         str += 'challenge_ts:' + ret.data['challenge_ts'] + '<br>';
                         str += 'hostname:' + ret.data['hostname'] + '<br>';
+                        str += 'score:' + ret.data['score'] + '<br>';
                         str += 'success:' + ret.data['success'] + '<br>';
                         $('.info_3').html('3.' + str);
                     });
