@@ -1,0 +1,327 @@
+{include file="public/header"}
+<style>
+    .dropdown-toggle{
+        height:44px;
+    }
+    .form-control{
+        height: 44px;
+    }
+</style>
+
+<!-- Page Container -->
+<div class="page-container">
+    <!-- Page Sidebar -->
+    <!-- /Page Sidebar -->
+    {include file="public/sidebar"}
+
+    <!-- Page Content -->
+    <div class="page-content">
+        <!-- Page Header -->
+        {include file="public/page_header"}
+        <!-- /Page Header -->
+
+
+        <!-- Page Inner -->
+        <div class="page-inner">
+            <div class="page-title">
+                <h3 class="breadcrumb-header">购买统计</h3>
+            </div>
+            <div id="main-wrapper">
+
+                <!-- 盈利情况 -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- 搜索框 -->
+                        <div class="panel panel-white">
+                            <div class="panel-body header_box">
+                                <!-- 搜索框 -->
+                                <div class="search_box">
+                                    <form class="form-inline form_search">
+                                        <div class="row">
+                                            <div class="form-group" style="width: 600px;">
+                                                <select class="form-control select_name" id="select_search" data-live-search="true" >
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <input class="form-control search_taobao_id"  style="width: 300px"  type="text" placeholder="请输入要查找的淘宝ID">
+                                            </div>
+                                            <div class="form-group">
+                                                <a class="btn btn-default btn-lg btn_search">
+                                                    <i class="fa fa-search"></i> 查找
+                                                </a>
+                                                <a class="btn btn-success open_add btn-lg">
+                                                    <i class="fa fa-mail-forward"></i> 添加鞋子
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- 搜索框 -->
+
+                            </div>
+                        </div>
+                        <!-- 搜索框 -->
+
+                        <!-- 添加框 -->
+                        <div class="panel panel-white add_box" style="display: none">
+                            <div class="panel-body header_box">
+                                <div>
+                                    <form class="form-inline">
+                                        <div class="row">
+                                            <div class="form-group" style="width: 600px">
+                                                <p class="help-block"><span style="color: darkred">(必选)</span>对应鞋款</p>
+                                                <select class="form-control select_name_add" id="select_name_add" data-live-search="true" style="width: 100%">
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <p class="help-block"><span style="color: darkred">(必填)</span>淘宝宝贝ID</p>
+                                                <input class="form-control taobao_id"  style="width: 600px"  type="text">
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group" style="width: 600px">
+                                                <p class="help-block"><span style="color: darkred">(黑名单)</span>尺码</p>
+                                                <select class="form-control" id="select_size_add" data-live-search="true" multiple="multiple">
+                                                    {volist name="data.size" id="v"}
+                                                    <option value="{$v}">{$v}</option>
+                                                    {/volist}
+                                                </select>
+                                            </div>
+                                            <div class="form-group" style="width: 600px">
+                                                <p class="help-block"><span style="color: darkred">(填写负号代表降价)</span>溢价价格</p>
+                                                <input class="form-control taobao_price"  style="width: 600px" type="number" step="0.01" placeholder="例：90为涨价90  -90为降价90">
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group">
+                                                <p class="help-block"><span style="color: darkred"></span>淘宝链接</p>
+                                                <input class="form-control taobao_link"  style="width: 1200px" type="text" placeholder="方便点击查看，建议填写">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group">
+                                                <p class="help-block"><span style="color: darkred"></span>备注说明</p>
+                                                <input class="form-control note"  style="width: 1200px" type="text" placeholder="用于备注">
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="form-group">
+                                                <p class="help-block">&nbsp;</p>
+                                                <a type="submit" class="btn btn-primary btn_add">
+                                                    <i class="fa fa-plus"></i> 添加
+                                                </a>
+                                                <a class="btn btn-default add_close">
+                                                    <i class="fa fa-close"></i> 关闭
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 添加框 -->
+
+
+
+                        <!-- 内容框 -->
+                        <div class="panel panel-white">
+                            <div class="panel-body">
+
+                                <div class="ajax_page">
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- 内容框 -->
+
+                    </div>
+                </div>
+                <!-- 盈利情况 -->
+
+            </div><!-- Main Wrapper -->
+
+        </div><!-- /Page Inner -->
+
+    </div><!-- /Page Content -->
+</div><!-- /Page Container -->
+
+
+
+{include file="public/script"}
+{include file="public/footer"}
+<script>
+    $('#select_search').selectpicker({
+        size:10,
+        title:'请输入查找的名称 或 货号',
+        placeholder:'请输入查找的名称 或 货号',
+    });
+    $('#select_name_add').selectpicker({
+        size:10,
+        title:'请输入名称 或 货号',
+        placeholder:'请输入名称 或 货号',
+    });
+
+    $('#select_size_add').selectpicker({
+        size:10,
+        title:'默认全尺码改价。选中的尺码将不会进入改价列表',
+        placeholder:'请选择尺码',
+    });
+
+    var tab_index = 0;
+    var tab_start = '';
+    var tab_end   = '';
+
+    // 遍历插入商品
+    $(function () {
+        AjaxPage(1);
+
+        get_goods('', '#select_search');
+        get_goods('', '#select_name_add')
+
+    });
+
+    // 显示添加框
+    $('.open_add').click(function () {
+        $('.add_box').toggle('slow')
+    });
+    // 关闭添加框
+    $('.add_close').click(function () {
+        $('.add_box').toggle('slow')
+    });
+
+
+
+    // 添加鞋子
+    $('.btn_add').click(function () {
+        layer.load();
+        var form_data = {
+            'article_number' : $('#select_name_add').selectpicker('val'),
+            'taobao_id'      : $('.taobao_id').val(),
+
+            'size_list'      : $('#select_size_add').selectpicker('val'),
+            'price'          : $('.taobao_price').val(),
+
+            'title'          : $('.taobao_title').val(),
+            'link'           : $('.taobao_link').val(),
+
+            'note'           : $('.note').val(),
+        };
+        console.log(form_data)
+       $.post("{:url('ajax_add')}",form_data,function (ret) {
+            layer.closeAll('loading');
+            if(ret.code == 200){
+                AjaxPage(1);
+                layer.msg(ret.msg);
+            }else{
+                layer.msg(ret.msg,function () {});
+            }
+       });
+    });
+
+
+    // 商品框输入事件
+    $('#select_search').parent().find("input").on('input propertychange', function(){
+        var keyword = $('#select_search').parent().find("input").val();
+        get_goods(keyword, '#select_search');
+    });
+    // 商品添加框输入事件
+    $('#select_name_add').parent().find("input").on('input propertychange', function(){
+        var keyword = $('#select_name_add').parent().find("input").val();
+        get_goods(keyword, '#select_name_add');
+    });
+
+
+    // 商品框修改事件
+    $('#select_search').on('changed.bs.select', function () {
+        AjaxPage(1, tab_index, tab_start, tab_end)
+    });
+    // size框修改事件
+    $('.select_size').on('changed.bs.select', function () {
+        AjaxPage(1, tab_index, tab_start, tab_end)
+    });
+
+
+    // 点击分页触发的ajax
+    function AjaxPage(page){
+        layer.load(2);
+
+        var where = {
+            'article_number'    : $('#select_search').selectpicker('val'),
+            'taobao_id'         : $('.search_taobao_id').val(),
+        };
+        var form_data = {
+            'page':page,
+            'where':where,
+        };
+
+        console.log(form_data);
+        $.get("{:url('ajax_page')}",form_data,function (ret) {
+            layer.closeAll('loading');
+            $('.ajax_page').html(ret);
+            $('.ajax_page').find('table').fadeIn('normal');
+        });
+    }
+
+    $('.btn_search').on('click',function () {
+        AjaxPage(1)
+    });
+
+    // 删除鞋子
+    function del_shoes(obj){
+        layer.confirm('确认删除吗?', {skin:'layui-layer-lan'},function(index){
+            layer.load();
+            $.post("{:url('ajax_del')}", {'id': obj.data('id')}, function (ret) {
+                layer.closeAll('loading');
+                if (ret.code == 200) {
+                    obj.parent().parent().remove();
+                    layer.msg(ret.msg);
+                    AjaxPage(1, tab_index, tab_start, tab_end)
+                } else {
+                    layer.msg(ret.msg, function () {
+                    });
+                }
+            });
+
+            layer.close(index);
+        });
+    };
+
+    function edit(obj){
+        var id = obj.attr('data-id');
+        layer.open({
+            type: 2,
+            title: '编辑',
+            shadeClose: true,
+            offset: ['100px', '20%'],
+            shade: 0.5,
+            scrollbar:false,
+            maxmin: true, //开启最大化最小化按钮
+            area: ['1200px', '700px'],
+            content: "{:url('edit')}" + '?id='+id,
+            btn:['确认修改', '取消'],
+            yes:function (index) {
+                layer.load();
+                var body = layer.getChildFrame('body', index);//通过该对象可以获取iframe中的dom元素
+                // 提交表单
+                body.find('#my_form').ajaxSubmit({
+                    success:function(ret) {
+                        if (ret.code == 200) {
+                            layer.closeAll('loading');
+                            layer.close(index);
+                            AjaxPage(1);
+                            layer.msg(ret.msg);
+                        } else {
+                            layer.msg(ret.msg, function () { });
+                            layer.closeAll('loading');
+                        }
+                    },
+                });
+            }
+        });
+    }
+</script>
+

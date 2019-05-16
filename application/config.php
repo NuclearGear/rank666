@@ -243,11 +243,10 @@ return [
     ],
     'db_mongo' => [
         'type'        =>   '\think\mongo\Connection',
-        'hostname'    =>   '127.0.0.1',
+        'hostname'    =>   '144.48.9.105',
         'database'    =>   'du',
         'username'    =>   'du',
         'password'    =>   '!!23Bayuesiri',
         'hostport'    =>   27017,
-
     ],
 ];

@@ -19,6 +19,9 @@ class User extends Controller
 
     public function ajax_register()
     {
+        $username = input('post.username');
+        $password = input('post.password');
+
         // 验证 注册 场景
         $validate = validate('UserCheck');
         if (!$validate->scene('register')->check(input('post.'))){
@@ -27,8 +30,8 @@ class User extends Controller
 
         // 添加注册用户
         $ret_add = UserModel::create([
-            'username' => input('post.username'),
-            'password' => md5(input('post.password')),
+            'username' => $username,
+            'password' => md5($password),
             'phone'    => input('post.phone'),
         ]);
         if (!$ret_add){
@@ -37,11 +40,15 @@ class User extends Controller
 
         // 登录
         session('user', $ret_add);
+        cookie('login_info', ['username' => $username, 'password' => md5($password)]);
+
 
         return returnJson($ret_add, 200, '注册成功, 正在登录..');
     }
 
     public function ajax_login(){
+        $username = input('post.username');
+        $password = input('post.password');
         // 验证 登录 场景
         $validate = validate('UserCheck');
         if (!$validate->scene('login')->check(input('post.'))){
@@ -49,18 +56,19 @@ class User extends Controller
         }
 
         // 查看用户是否存在
-        $ret_add = UserModel::get(['username' => input('post.username'),]);
+        $ret_add = UserModel::get(['username' => $username]);
 
         if (!$ret_add){
             return returnJson('', 201, '用户名不存在！');
         }
 
-        if ($ret_add['password'] != md5(input('post.password'))){
+        if ($ret_add['password'] != md5($password)){
             return returnJson('', 201, '密码错误，请重新输入！');
         }
 
         // 登录
         session('user', $ret_add);
+        cookie('login_info', ['username' => $username, 'password' => md5($password)]);
 
         return returnJson($ret_add, 200, '登录成功！');
     }

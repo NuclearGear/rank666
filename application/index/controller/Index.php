@@ -1,13 +1,23 @@
 <?php
 namespace app\index\controller;
 use app\index\model\BuyModel;
+use app\index\model\UserModel;
 use think\Controller;
 use think\Cache;
 
 class Index extends Controller
 {
     public function index(){
+        if (cookie('login_info') && !session('user')){
+            $cookie_arr = cookie('login_info');
+            $username = $cookie_arr['username'];
+            $password = $cookie_arr['password'];
+            $ret = UserModel::get(['username' => $username, 'password' => md5($password)]);
+            if ($ret){
+                session('user', $ret);
+            }
 
+        }
         $this->redirect(url('center/index'));
     }
 
@@ -91,7 +101,7 @@ class Index extends Controller
         if ($data){
             return returnJson($data, 200, '成功');
         }
-//        $_GET['articleNumber'] = 'CD0461-401';
+
         $data = [];
         // 获取商品信息
         $product = db('du_product')->whereOr('title', 'like', input('get.articleNumber'))->whereOr('articleNumber', input('get.articleNumber'))->find();

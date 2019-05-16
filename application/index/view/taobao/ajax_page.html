@@ -1,0 +1,55 @@
+
+<div class="panel-body">
+    <table class="table table-hover" style="display: none">
+        <thead>
+        <tr>
+            <th>名称</th>
+            <th>货号</th>
+            <th>淘宝ID</th>
+            <th>尺码列表（黑名单）</th>
+            <th>溢价</th>
+            <th>备注</th>
+            <th>上次价格更新时间</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {volist name="data.list" id="v"}
+        <tr>
+            <th scope="row" width="30%" class="layer_tip" data-tip="{$v.title}">
+                <a href="{$v.link}" target="_blank"><img src="{$v.image}" width="35"><span>{$v.title|msubstr=0,54,'utf-8',true}</span></a>
+            </th>
+            <td width="10%">{$v.article_number}</td>
+            <td width="10%">
+                <a href="{$v.link}" target="_blank">{$v.taobao_id}</a>
+            </td>
+            <td width="10%" class="layer_tip" data-tip="{$v->getData('size_list')}">{$v->getData('size_list')|msubstr=0,20,'utf-8',true}</td>
+            <td width="5%">{$v.price}</td>
+            <td width="15%" class="layer_tip" data-tip="{$v.note}">{$v.note|msubstr=0,14,'utf-8',true}</td>
+            <td width="10%">{$v.update_time}</td>
+            <td width="20%">
+                <button class="btn btn-primary" onclick="edit($(this))" data-id="{$v.id}">编辑</button>
+                <button type="button" class="btn btn-white" onclick="del_shoes($(this))" data-id="{$v.id}">删 除</button>
+            </td>
+        </tr>
+        {/volist}
+        </tbody>
+    </table>
+    <center>
+        {$data.list->render()}
+    </center>
+</div>
+
+<script>
+    $('.layer_tip').hover(function () {
+        layer.tips($(this).attr('data-tip'), $(this),{
+            maxWidth:'500',
+            offset: 't',
+            tips: 1,
+            time:10000,
+        });
+    },function () {
+        layer.closeAll('tips');
+    });
+</script>
+

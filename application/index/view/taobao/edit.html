@@ -1,0 +1,125 @@
+{include file="public/header"}
+<link rel="stylesheet" href="__PUBLIC__/vip/css/style.css" type="text/css" media="all">
+
+
+<!-- Page Container -->
+<div class="page-inner">
+    <div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-white">
+            <div class="panel-heading clearfix">
+                <h4 class="panel-title">
+                    <img src="{$data.info.image}" width="35">
+                    {$data.info.title}
+                </h4>
+            </div>
+            <div class="panel-body">
+                <form class="form-horizontal" id="my_form" method="post" action="{:url('ajax_edit')}">
+                    <!-- ID -->
+                    <input type="hidden" class="form-control" value="{$data.info.id}" name="id">
+                    <!-- ID -->
+
+                    <!-- 基本信息 -->
+                    <div class="panel panel-white">
+                        <h4 class="panel-title">基本信息</h4>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">名称</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" id="select_search" name="article_number">
+                                    <option value="">无</option>
+                                </select>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">淘宝ID</label>
+                            <div class="col-sm-10">
+                                <input type="number" class="form-control" value="{$data.info.taobao_id}" name="taobao_id" placeholder="淘宝ID" >
+                                <span class="help-block">注：淘宝宝贝对应的ID</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">价格溢价</label>
+                            <div class="col-sm-10">
+                                <input type="number" class="form-control" value="{$data.info->getData('price')}" name="price" placeholder="价格溢价">
+                                <span class="help-block">例：90为涨价90  -90为降价90</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">尺码</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" id="select_size" data-live-search="true" multiple="multiple">
+                                    {volist name="data.size" id="v"}
+                                        <option value="{$v}">{$v}</option>
+                                    {/volist}
+                                </select>
+                                <input type="hidden" id="input_size" name="size_list">
+                                <span class="help-block">注：这是黑名单,选择你不想进行改价的尺码即可。默认全部尺码修改</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">淘宝链接</label>
+                            <div class="col-sm-10">
+                                <input type="number" class="form-control" value="{$data.info.link}" name="link" placeholder="淘宝链接" >
+                                <span class="help-block">注：方便点击名称查看淘宝链接，确认修改价格的宝贝是否正确</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">备注</label>
+                            <div class="col-sm-10">
+                                <input type="number" class="form-control" value="{$data.info.note}" name="note" placeholder="备注" >
+                                <span class="help-block">注：用于一些说明</span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- 基本信息 -->
+
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div><!-- Row -->
+</div>
+
+
+
+{include file="public/script"}
+{include file="public/footer"}
+<script>
+    // 遍历插入商品
+    $(function () {
+        $('#select_search').selectpicker({
+            size:10,
+            title:'请输入名称 或 货号',
+            placeholder:'请输入名称 或 货号',
+            liveSearch:true,
+            liveSearchPlaceholder:'请选择平台',
+        });
+        $('#select_size').selectpicker({
+            size:5,
+            title:'尺码',
+            liveSearch:true,
+            liveSearchPlaceholder:'请选择尺码',
+        });
+
+        $('#select_size').selectpicker('val', {$data.info.size_list});
+
+        get_goods('{$data.info.article_number}', '#select_search', '{$data.info.article_number}');
+
+        // 商品框输入事件
+        $('#select_search').parent().find("input").on('input propertychange', function(){
+            var keyword = $('#select_search').parent().find("input").val();
+            get_goods(keyword, '#select_search');
+        });
+    });
+
+    // 商品框修改事件
+    $('#select_size').on('changed.bs.select', function () {
+        var sel_val = $('#select_size').selectpicker('val');
+        $('#input_size').val(sel_val);
+    });
+
+
+</script>
