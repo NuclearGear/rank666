@@ -104,7 +104,7 @@ class Taobao extends Base
 
     // 删除鞋子
     public function ajax_del(){
-        $ret_del = TaobaoModel::destroy(input('post.id'));
+        $ret_del = TaobaoModel::destroy(input('post.id'), true);
         if (!$ret_del){
             return returnJson($ret_del, 201, '删除失败，请刷新页面后重试！');
         }
