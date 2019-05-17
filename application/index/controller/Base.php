@@ -20,6 +20,7 @@ class Base extends Controller
             'Buy' => ['index',],
             'Center' => ['index',],
             'Shoes' => ['index', 'diff'],
+            'Taobao' => ['index'],
         ];
 
 
