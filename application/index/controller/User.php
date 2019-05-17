@@ -92,17 +92,13 @@ class User extends Controller
             return returnJson('', 203, '你已试用， 每个账号限试用一次！');
         }
 
-        $function = FunctionModel::all();
-        $expire_time = time() + 3600 * 24 * 30;
-        foreach ($function as $k => $v){
-            $ret_user = UserFunctionModel::create([
-               'user_id'     => session('user.id'),
-               'function_id' => $v['id'],
-               'expire_time' => $expire_time,
-            ]);
-            if (!$ret_user){
-                return returnJson($ret_user, 201, '试用失败，请重试！');
-            }
+        $expire_time = time() + 3600 * 24 * 3;
+        $ret_user = UserFunctionModel::create([
+           'user_id'     => session('user.id'),
+           'expire_time' => $expire_time,
+        ]);
+        if (!$ret_user){
+            return returnJson($ret_user, 201, '试用失败，请重试！');
         }
 
         $ret = UserModel::update([
