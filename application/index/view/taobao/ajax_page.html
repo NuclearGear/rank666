@@ -17,7 +17,7 @@
         {volist name="data.list" id="v"}
         <tr>
             <th scope="row" width="30%" class="layer_tip" data-tip="{$v.title}">
-                <a href="{$v.link}" target="_blank"><img src="{$v.image}" width="35"><span>{$v.title|msubstr=0,54,'utf-8',true}</span></a>
+                <a href="{$v.link}" target="_blank"><img src="{$v.image}" width="35"><span>{$v.title|msubstr=0,50,'utf-8',true}</span></a>
             </th>
             <td width="10%">{$v.article_number}</td>
             <td width="10%">
