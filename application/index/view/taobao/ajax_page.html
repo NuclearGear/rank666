@@ -21,7 +21,7 @@
             </th>
             <td width="10%">{$v.article_number}</td>
             <td width="10%">
-                <a href="{$v.link}" target="_blank">{$v.taobao_id}</a>
+                {$v.taobao_id}
             </td>
             <td width="10%" class="layer_tip" data-tip="{$v->getData('size_list')}">{$v->getData('size_list')|msubstr=0,20,'utf-8',true}</td>
             <td width="5%">{$v.price}</td>
