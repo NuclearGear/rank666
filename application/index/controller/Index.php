@@ -415,7 +415,7 @@ class Index extends Controller
 
     public function ajaxCaptcha(){
 
-        return returnJson(json_decode($ret,true), 200, $data['remoteip']);
+//        return returnJson(json_decode($ret,true), 200, $data['remoteip']);
     }
 
     public function captcha2(){
@@ -429,7 +429,7 @@ class Index extends Controller
         $data['remoteip'] = $_SERVER["REMOTE_ADDR"];
 
         $ret = $this->request_post('https://www.recaptcha.net/recaptcha/api/siteverify', $data);
-        dump($ret)
+        dump($ret);
 
     }
 
