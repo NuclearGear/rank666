@@ -414,11 +414,7 @@ class Index extends Controller
     }
 
     public function ajaxCaptcha(){
-        $data['secret'] = '6Lf4VKIUAAAAAFfqpMsIlZkPoPTdhgIh7eoddhHg';
-        $data['response'] = input('post.response');
-        $data['remoteip'] = $_SERVER["REMOTE_ADDR"];
 
-        $ret = $this->request_post('https://www.recaptcha.net/recaptcha/api/siteverify', $data);
         return returnJson(json_decode($ret,true), 200, $data['remoteip']);
     }
 
@@ -428,7 +424,12 @@ class Index extends Controller
     }
 
     public function ajaxCaptcha2(){
-        dump(input('post.'));
+        $data['secret'] = '6Lf4VKIUAAAAAFfqpMsIlZkPoPTdhgIh7eoddhHg';
+        $data['response'] = input('post.response');
+        $data['remoteip'] = $_SERVER["REMOTE_ADDR"];
+
+        $ret = $this->request_post('https://www.recaptcha.net/recaptcha/api/siteverify', $data);
+        dump($ret)
 
     }
 
