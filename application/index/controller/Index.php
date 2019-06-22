@@ -425,7 +425,7 @@ class Index extends Controller
 
     public function ajaxCaptcha2(){
         $data['secret'] = '6Lf4VKIUAAAAAFfqpMsIlZkPoPTdhgIh7eoddhHg';
-        $data['response'] = input('post.response');
+        $data['response'] = input('post.g-recaptcha-response');
         $data['remoteip'] = $_SERVER["REMOTE_ADDR"];
         dump($data['response']);
 
