@@ -172,7 +172,7 @@ class Buy extends Base
                     'articleNumber' => $v['number'],
                     'size'          => $v['size'],
                 ];
-                $ret_du = Db::connect("db_mongo")->name("du_size")->where($where_profit)->order('spiderTime', 'desc')->field('articleNumber, price,size')->find();
+                $ret_du = Db::connect("db_mongo")->name("price")->where($where_profit)->order('spiderTime', 'desc')->field('articleNumber, price,size')->find();
                 $du_arr[$ret_du['articleNumber'] . $ret_du['size']] = $ret_du['price'] / 100;
             }
             // 计算预计盈利
