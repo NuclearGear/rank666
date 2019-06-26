@@ -5,6 +5,7 @@ namespace app\index\controller;
 
 use app\index\model\FunctionModel;
 use app\index\model\UserFunctionModel;
+use app\index\model\UserFunctionTaobaoModel;
 use app\index\model\UserModel;
 use mikkle\tp_alipay\Alipay;
 use think\Controller;
@@ -101,6 +102,15 @@ class User extends Controller
             return returnJson($ret_user, 201, '试用失败，请重试！');
         }
 
+        $expire_time = time() + 3600 * 24 * 3;
+        $ret_user = UserFunctionTaobaoModel::create([
+            'user_id'     => session('user.id'),
+            'expire_time' => $expire_time,
+        ]);
+        if (!$ret_user){
+            return returnJson($ret_user, 201, '试用失败，请重试！');
+        }
+
         $ret = UserModel::update([
             'is_test' => 1
         ], ['id' => session('user.id')]);
@@ -109,6 +119,36 @@ class User extends Controller
         }
 
         return returnJson('', 200, '试用成功，时间将在 ' . date('Y-m-d H:i:s', $expire_time) . ' 到期！');
+    }
+
+    public function checkTaobao(){
+        if (!input('?post.username')){
+            return returnJson('', 201, '请输入用户名！');
+        }
+        if (!input('?post.password')){
+            return returnJson('', 202, '请输入密码！');
+        }
+
+        $ret = UserModel::get([
+            'username' => input('post.username'),
+        ]);
+        if (!$ret){
+            return returnJson('', 203, '该账号不存在！' . input('post.username'));
+        }
+        if ($ret['password'] != md5(input('post.password'))){
+            return returnJson('', 204, '密码错误！请重新输入！');
+        }
+        $ret = UserFunctionTaobaoModel::get([
+            'user_id' => $ret['id']
+        ]);
+        if (!$ret){
+            return returnJson('', 205, '该账号无权使用，请先去购买');
+        }
+        if ($ret['expire_time'] < time()){
+            return returnJson('', 205, '该账号已在 ' . date('Y-m-d H:i:s', $ret['expire_time']) . ' 过期，请续费');
+        }
+
+        return returnJson('', '账号登录成功', '过期时间：' . date('Y-m-d H:i:s', $ret['expire_time']));
     }
 
     // 购买
