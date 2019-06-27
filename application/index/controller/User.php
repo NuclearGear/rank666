@@ -135,10 +135,10 @@ class User extends Controller
             'username' => input('post.username'),
         ]);
         if (!$user){
-            return returnJson('', 203, '该账号不存在！' . input('post.username') . ' 请先去 http://www.rank666.com 注册账号');
+            return returnJson('', 404, '该账号不存在！' . input('post.username') . ' 请先去 http://www.rank666.com 注册账号');
         }
         if ($user['password'] != md5(input('post.password'))){
-            return returnJson('', 204, '密码错误！请重新输入！');
+            return returnJson('', 500, '密码错误！请重新输入！');
         }
         $ret = UserFunctionTaobaoModel::get([
             'user_id' => $user['id']
