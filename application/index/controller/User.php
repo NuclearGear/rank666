@@ -29,11 +29,15 @@ class User extends Controller
             return returnJson('', 201, $validate->getError());
         }
 
+        $obj = new \GetMac(PHP_OS);
+        $mac_addr = $obj->macAddr;
+
         // 添加注册用户
         $ret_add = UserModel::create([
             'username' => $username,
             'password' => md5($password),
             'phone'    => input('post.phone'),
+            'mac'      => $mac_addr,
         ]);
         if (!$ret_add){
             return returnJson('', 201, '注册失败！');
@@ -66,6 +70,8 @@ class User extends Controller
         if ($ret_add['password'] != md5($password)){
             return returnJson('', 201, '密码错误，请重新输入！');
         }
+
+        // 记录ip
 
         // 登录
         session('user', $ret_add);
@@ -129,26 +135,26 @@ class User extends Controller
             return returnJson('', 202, '请输入密码！');
         }
 
-        $ret = UserModel::get([
+        $user = UserModel::get([
             'username' => input('post.username'),
         ]);
-        if (!$ret){
-            return returnJson('', 203, '该账号不存在！' . input('post.username'));
+        if (!$user){
+            return returnJson('', 203, '该账号不存在！' . input('post.username') . ' 请先去 http://www.rank666.com 注册账号');
         }
-        if ($ret['password'] != md5(input('post.password'))){
+        if ($user['password'] != md5(input('post.password'))){
             return returnJson('', 204, '密码错误！请重新输入！');
         }
         $ret = UserFunctionTaobaoModel::get([
-            'user_id' => $ret['id']
+            'user_id' => $user['id']
         ]);
         if (!$ret){
-            return returnJson('', 205, '该账号无权使用，请先去购买');
+            return returnJson('', 205, '该账号无权使用，请先去开通该功能！');
         }
         if ($ret['expire_time'] < time()){
             return returnJson('', 205, '该账号已在 ' . date('Y-m-d H:i:s', $ret['expire_time']) . ' 过期，请续费');
         }
 
-        return returnJson('', '账号登录成功', '过期时间：' . date('Y-m-d H:i:s', $ret['expire_time']));
+        return returnJson($user, '账号登录成功', '过期时间：' . date('Y-m-d H:i:s', $ret['expire_time']));
     }
 
     // 购买
