@@ -150,7 +150,7 @@ class User extends Controller
             return returnJson('', 205, '该账号已在 ' . date('Y-m-d H:i:s', $ret['expire_time']) . ' 过期，请续费');
         }
 
-        return returnJson($user, 200, '登录成功！过期时间：' . date('Y-m-d H:i:s', $ret['expire_time']));
+        return returnJson($user, 200, '过期时间：' . date('Y-m-d H:i:s', $ret['expire_time']));
     }
 
     // 购买
