@@ -29,15 +29,11 @@ class User extends Controller
             return returnJson('', 201, $validate->getError());
         }
 
-        $obj = new \GetMac(PHP_OS);
-        $mac_addr = $obj->macAddr;
-
         // 添加注册用户
         $ret_add = UserModel::create([
             'username' => $username,
             'password' => md5($password),
             'phone'    => input('post.phone'),
-            'mac'      => $mac_addr,
         ]);
         if (!$ret_add){
             return returnJson('', 201, '注册失败！');
