@@ -427,7 +427,7 @@ class Index extends Controller
         $data['secret'] = '6Lf4VKIUAAAAAFfqpMsIlZkPoPTdhgIh7eoddhHg';
         $data['response'] = input('post.g-recaptcha-response');
         $data['remoteip'] = $_SERVER["REMOTE_ADDR"];
-        dump($data['response']);
+        dump($data);
 
         $ret = $this->request_post('https://www.recaptcha.net/recaptcha/api/siteverify', $data);
         dump($ret);
